@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+<f:view contentType="text/html" locale="en">
+    <h:head>
+        <f:facet name="first">
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+            <meta http-equiv="pragma" content="no-cache"/>
+            <meta http-equiv="cache-control" content="no-cache"/>
+            <meta http-equiv="expires" content="0"/>
+        </f:facet>
+    </h:head>
+    <h:body>
+      <h:form id="mainForm" prependId="false">
+        <h:panelGrid style="width:100%">
+            <p:toolbar style="width:100%">
+                <p:toolbarGroup align="left">
+                    <p:commandButton type="push" value="New" icon="ui-icon-document" />
+                    <p:commandButton type="push" value="Open" icon="ui-icon-folder-open"/>
+
+                    <p:separator />
+
+                    <p:commandButton type="push" title="Save" icon="ui-icon-disk"/>
+                    <p:commandButton type="push" title="Delete" icon="ui-icon-trash"/>
+                    <p:commandButton type="push" title="Print" icon="ui-icon-print"/>
+                </p:toolbarGroup>
+
+                <p:toolbarGroup align="right">
+                    <p:menuButton value="Navigate">
+                        <p:menuitem value="Home" url="#" />
+                        <p:menuitem value="Logout" url="#" />
+                    </p:menuButton>
+                </p:toolbarGroup>
+            </p:toolbar>
+        </h:panelGrid>
+        </h:form>
+    </h:body>
+</f:view>
+</html>
