@@ -35,15 +35,12 @@
               <p class="lead">Paatashaala is where teachers, students, school management and parents join hands to collaboratively build an efficient Knowledge and Information sharing medium Learn.Share.Collaborate.Manage.</p>
               <a class="btn btn-large btn-primary" href="#">Sign up today</a>
               </div>
-        <form class="form-signin">
+        <h:form class="form-signin">
         <h2 class="form-signin-heading">Please sign in</h2>
-        <input type="text" class="input-block-level" placeholder="Email address"></input>
-        <input type="password" class="input-block-level" placeholder="Password"></input>
-        <label class="checkbox">
-          <input type="checkbox" value="remember-me"> Remember me</input>
-        </label>
-        <button class="btn btn-large btn-primary" type="submit">Sign in</button>
-      </form>
+        <h:inputText class="input-block-level" placeholder="Email address" value="#{managedLoginBean.username}"/>
+        <h:inputSecret class="input-block-level" placeholder="Password" value="#{managedLoginBean.password}"/>
+        <h:commandButton class="btn btn-large btn-primary" value="Sign in" action="#{loginController.verifyLogin}"></h:commandButton>
+      </h:form>
             </div>
        
       <!-- FOOTER -->
