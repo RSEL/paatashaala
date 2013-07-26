@@ -22,7 +22,6 @@ public class LoginController implements Serializable{
 	}
 	@Inject
     private ServiceInterface serInface;
-	
 	public void setSerInface(ServiceInterface serInface) {
 		this.serInface = serInface;
 	}
