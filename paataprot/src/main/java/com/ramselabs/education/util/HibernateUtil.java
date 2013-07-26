@@ -16,7 +16,8 @@ public class HibernateUtil {
 	static private ConfigReader configReader=null;
 	static SessionFactory sf=null;
 	static{
-		InputStream is=HibernateUtil.class.getResourceAsStream("/../"+"config.xml");
+		InputStream is=HibernateUtil.class.getResourceAsStream("/config.xml");
+		System.out.println(is);
 		try{
 			configReader=new ConfigReader(is);
 		}catch(Exception e){
