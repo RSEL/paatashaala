@@ -1,15 +1,15 @@
-package com.ramselabs.education.interfaces.implementation;
+package com.ramselabs.education.service.impl;
 
 import java.io.Serializable;
 
 import javax.inject.Named;
 
-import com.ramselabs.education.interfaces.ServiceInterface;
 import com.ramselabs.education.managedbean.ManagedLoginBean;
+import com.ramselabs.education.service.UserService;
 import com.ramselabs.education.util.HibernateCRUD;
 
 @Named
-public class ServiceImplementation implements ServiceInterface,Serializable {
+public class UserServiceImpl implements UserService,Serializable {
 
 	private static final long serialVersionUID = 1L;
 

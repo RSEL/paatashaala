@@ -1,8 +1,8 @@
-package com.ramselabs.education.interfaces;
+package com.ramselabs.education.service;
 
 import com.ramselabs.education.managedbean.ManagedLoginBean;
 
-public interface ServiceInterface {
+public interface UserService {
 	public boolean doLogin(ManagedLoginBean login);
 
 }
