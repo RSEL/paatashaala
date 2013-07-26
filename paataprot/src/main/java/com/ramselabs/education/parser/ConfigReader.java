@@ -55,7 +55,6 @@ public class ConfigReader extends DefaultHandler {
 	   }
 	  
 	   if("value".equals(qName)){
-		   System.out.println(content);
 		   hiberProps.setAnnotatedClass(content);
 	   }
    }

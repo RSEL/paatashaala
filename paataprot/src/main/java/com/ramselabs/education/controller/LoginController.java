@@ -28,7 +28,7 @@ public class LoginController implements Serializable{
 
 	public String verifyLogin(){
 		 if(serInface.doLogin(login))
-			 return "success";
-		 return "failure";
+			 return "success?faces-redirect=true";
+		 return "failure?faces-redirect=true";
 	}
 }

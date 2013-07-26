@@ -11,9 +11,6 @@ import org.springframework.context.annotation.Scope;
 public class ManagedLoginBean implements Serializable{
 
 	private static final long serialVersionUID = 1L;
-	ManagedLoginBean(){
-		System.out.println("ManagedBeanobj");
-	}
 	private String username;
 	private String password;
 	public String getUsername() {
