@@ -36,10 +36,13 @@
               <a class="btn btn-large btn-primary" href="#">Sign up today</a>
               </div>
         <h:form class="form-signin">
+        <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
         <h2 class="form-signin-heading">Please sign in</h2>
-        <h:inputText class="input-block-level" placeholder="Email address" value="#{managedLoginBean.username}"/>
-        <h:inputSecret class="input-block-level" placeholder="Password" value="#{managedLoginBean.password}"/>
-        <h:commandButton class="btn btn-large btn-primary" value="Sign in" action="#{loginController.verifyLogin}"></h:commandButton>
+        <p:inputText styleClass="input-block-level"  value="#{managedLoginBean.username}" id="username" required="true" label="Email"/>
+        <p:watermark for="username" value="Enter your Email"/>
+        <p:password styleClass="input-block-level" value="#{managedLoginBean.password}" id="password" required="true" label="Password"/>
+        <p:watermark for="password" value="Enter password"/>
+        <p:commandButton styleClass="btn btn-large btn-primary" value="Sign in" action="#{loginController.verifyLogin}" update="messages" onclick="PrimeFaces.cleanWatermarks();" oncomplete="PrimeFaces.showWatermarks();"/>
       </h:form>
             </div>
        
