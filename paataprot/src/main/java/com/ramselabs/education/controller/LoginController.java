@@ -7,6 +7,7 @@ import javax.inject.Named;
 
 import org.springframework.context.annotation.Scope;
 
+import com.ramselabs.education.entity.LoginBean;
 import com.ramselabs.education.managedbean.ManagedLoginBean;
 import com.ramselabs.education.service.UserService;
 
@@ -33,7 +34,8 @@ public class LoginController implements Serializable {
 	}
 
 	public String verifyLogin() {
-		if (serInface.doLogin(login))
+		LoginBean loginBean=ManagedLoginBean.mappToLoginBean(login);
+		if (serInface.doLogin(loginBean))
 			return "success?faces-redirect=true";
 		return "failure?faces-redirect=true";
 	}

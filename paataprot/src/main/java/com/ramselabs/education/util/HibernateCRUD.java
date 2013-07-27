@@ -3,7 +3,7 @@ package com.ramselabs.education.util;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
-import com.ramselabs.education.managedbean.ManagedLoginBean;
+import com.ramselabs.education.entity.LoginBean;
 
 
 public class HibernateCRUD {
@@ -11,9 +11,9 @@ public class HibernateCRUD {
 	static{
 		s1=HibernateUtil.getSession();
 	}
-    public static boolean loginAuthenticate(ManagedLoginBean login){
+    public static boolean loginAuthenticate(LoginBean login){
     	Session s1=HibernateUtil.getSession();
-		Query query=s1.createSQLQuery("select * from loginbean where username='"+login.getUsername()+"' and password='"+login.getPassword()+"'");
+		Query query=s1.createQuery("from LoginBean where username='"+login.getUsername()+"' and password='"+login.getPassword()+"'");
 		if(query.list().size()==0)
 		    return false;
 		else

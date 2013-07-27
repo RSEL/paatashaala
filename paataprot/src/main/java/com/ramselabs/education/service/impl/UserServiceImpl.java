@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import javax.inject.Named;
 
-import com.ramselabs.education.managedbean.ManagedLoginBean;
+import com.ramselabs.education.entity.LoginBean;
 import com.ramselabs.education.service.UserService;
 import com.ramselabs.education.util.HibernateCRUD;
 
@@ -14,7 +14,7 @@ public class UserServiceImpl implements UserService,Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	public boolean doLogin(ManagedLoginBean login) {
+	public boolean doLogin(LoginBean login) {
 		
 		return HibernateCRUD.loginAuthenticate(login);
 	}
