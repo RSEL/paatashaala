@@ -2,6 +2,8 @@ package com.ramselabs.education.controller;
 
 import java.io.Serializable;
 
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -36,7 +38,11 @@ public class LoginController implements Serializable {
 	public String verifyLogin() {
 		LoginBean loginBean=ManagedLoginBean.mappToLoginBean(login);
 		if (serInface.doLogin(loginBean))
-			return "success?faces-redirect=true";
-		return "failure?faces-redirect=true";
+			return "homePage?faces-redirect=true";
+		else{
+			    FacesContext facesContext = FacesContext.getCurrentInstance();
+		        facesContext.addMessage(null, new FacesMessage("Invalid username or password"));
+		        return null;
+		}
 	}
 }

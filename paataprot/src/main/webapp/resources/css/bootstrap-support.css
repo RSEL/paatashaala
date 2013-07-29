@@ -293,3 +293,9 @@ font-style: italic;
 font-size:12px;
 font-weight:bold;
 }
+.ui-menubutton .ui-state-default .ui-icon  {
+    border: 1px solid #aed0ea !important;
+    background: #74b2e2 url("#{resource['img:icon-setting.png']}") 4% 4% no-repeat !important;
+    color: #ffffff !important;
+    font-weight: bolder !important;
+}

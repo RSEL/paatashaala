@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+<f:view contentType="text/html" locale="en">
+    <h:head>
+  <f:facet name="first">
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+            <meta http-equiv="pragma" content="no-cache"/>
+            <meta http-equiv="cache-control" content="no-cache"/>
+            <meta http-equiv="expires" content="0"/>
+        </f:facet>
+        <h:outputStylesheet library="css" name="bootstrap-responsive.css"/>
+        <h:outputStylesheet library="css" name="bootstrap.css"/>
+        <h:outputStylesheet library="css" name="bootstrap-support.css"/>
+    </h:head>
+
+  <h:body style="background:url(resources/img/back2.png) fixed no-repeat" >
+  
+  <div class="logo">
+      <table>
+  <tr>
+    <td width="5%"><img src="resources/img/logo3.jpg" class="fleft1" /></td>
+    <td width="90%"><span class="coname">Paathsaala</span><br /><span class="pername">Learn.Share.Collaborate.Manage</span></td>
+  </tr>
+</table>
+</div>
+
+          
+          <div class="container" >
+            <div class="carousel-caption">
+              <h1>Welcome to Paatashaala</h1>
+              <p class="lead">Paatashaala is where teachers, students, school management and parents join hands to collaboratively build an efficient Knowledge and Information sharing medium Learn.Share.Collaborate.Manage.</p>
+              <a class="btn btn-large btn-primary" href="#">Sign up today</a>
+              </div>
+        <h:form id="loginForm" class="form-signin">
+        <h2 class="form-signin-heading">Please sign in</h2>
+        <h:messages style="color:red"/>
+        <p:inputText styleClass="input-block-level"  value="#{managedLoginBean.username}" id="username" required="true" label="Email" />
+        <p:watermark for="username" value="Enter your Email"/>
+        <p:password styleClass="input-block-level" value="#{managedLoginBean.password}" id="pass" required="true" label="Password"/>
+        <p:watermark for="pass" value="Enter password"/>
+        <p:commandButton styleClass="btn btn-large btn-primary" value="Sign in" update="loginForm" action="#{loginController.verifyLogin}"  onclick="PrimeFaces.cleanWatermarks();" oncomplete="PrimeFaces.showWatermarks();"/>
+      </h:form>
+            </div>
+       
+      <!-- FOOTER -->
+      <!-- <footer>
+        <p class="pull-right"><a href="#">Back to top</a></p>
+        <p>&copy; 2013 Company, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
+      </footer> -->
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+   
+  </h:body>
+  </f:view>
+</html>

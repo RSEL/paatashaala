@@ -6,7 +6,7 @@
       xmlns:p="http://primefaces.org/ui">
 <f:view contentType="text/html" locale="en">
     <h:head>
-  <f:facet name="first">
+        <f:facet name="first">
             <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
             <meta http-equiv="pragma" content="no-cache"/>
             <meta http-equiv="cache-control" content="no-cache"/>
@@ -16,49 +16,47 @@
         <h:outputStylesheet library="css" name="bootstrap.css"/>
         <h:outputStylesheet library="css" name="bootstrap-support.css"/>
     </h:head>
-
-  <h:body style="background:url(resources/img/back2.png) fixed no-repeat" >
-  
-  <div class="logo">
-      <table>
-  <tr>
-    <td width="5%"><img src="resources/img/logo3.jpg" class="fleft1" /></td>
-    <td width="90%"><span class="coname">Paathsaala</span><br /><span class="pername">Learn.Share.Collaborate.Manage</span></td>
-  </tr>
-</table>
-</div>
-
-          
-          <div class="container" >
-            <div class="carousel-caption">
-              <h1>Welcome to Paatashaala</h1>
-              <p class="lead">Paatashaala is where teachers, students, school management and parents join hands to collaboratively build an efficient Knowledge and Information sharing medium Learn.Share.Collaborate.Manage.</p>
-              <a class="btn btn-large btn-primary" href="#">Sign up today</a>
-              </div>
-        <h:form id="loginForm" class="form-signin">
-        <h2 class="form-signin-heading">Please sign in</h2>
-        <p:message for="username"/>
-        <p:inputText styleClass="input-block-level"  value="#{managedLoginBean.username}" id="username" required="true" label="Email" />
+    <h:body>
+       <h:form>
+        <p:toolbar style="width:99.9%;background-color:#157FF0">
+                <p:toolbarGroup align="left">
+                    <p:separator />
+                    <p:separator />
+                    <p:commandLink type="push" title="Home" >
+                       <p:graphicImage url="#{resource['img:home-icon.png']}" />      
+                    </p:commandLink>
+                    <p:separator />
+                    <p:separator />
+                    <p:commandLink type="push" title="Library" >
+                        <p:graphicImage url="#{resource['img:icon-library.png']}" />
+                    </p:commandLink>
+                    <h:form>
+                    <p:inputText  style="margin:5px 0px 5px 400px;padding:.4em .2em .4em 0.2em" id="search"/>
+                    <p:watermark for="search" value="Search people,groups"/>
+                    <p:commandLink type="push" title="Search" >
+                       <p:graphicImage url="#{resource['img:icon-search.png']}" />      
+                    </p:commandLink>
+                    </h:form>
+                 </p:toolbarGroup>
+                <p:toolbarGroup align="right">
+                   <p:commandLink type="push" title="Notifications" >
+                       <p:graphicImage url="#{resource['img:notification-icon.png']}" />      
+                    </p:commandLink>
+                    <p:menuButton value="Settings" style="margin:.7em 1em .4em 1.4em">
+                        <p:menuitem value="security" url="#" />
+                        <p:menuitem value="Logout" url="#" />
+                    </p:menuButton>
+                    <p:separator/>
+                </p:toolbarGroup>
+            </p:toolbar>
         
-        <p:watermark for="username" value="Enter your Email"/>
-        <p:message for="pass"/>
-        <p:password styleClass="input-block-level" value="#{managedLoginBean.password}" id="pass" required="true" label="Password"/>
-        <p:watermark for="pass" value="Enter password"/>
-        
-        <p:commandButton styleClass="btn btn-large btn-primary" value="Sign in" update="loginForm" action="#{loginController.verifyLogin}"  onclick="PrimeFaces.cleanWatermarks();" oncomplete="PrimeFaces.showWatermarks();"/>
-      </h:form>
-            </div>
-       
-      <!-- FOOTER -->
-      <!-- <footer>
-        <p class="pull-right"><a href="#">Back to top</a></p>
-        <p>&copy; 2013 Company, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
-      </footer> -->
-
-    <!-- Le javascript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-   
-  </h:body>
-  </f:view>
+          <p:dock id="dock" position="bottom" itemWidth="60" maxWidth="70">
+            <p:menuitem value="Store" icon="/resources/img/cart-icon.png" url="#"/>
+            <p:menuitem value="Manage" icon="/resources/img/icon-setting.png" url="#"/>
+            <p:menuitem value="Apps Launcher" icon="/resources/img/apps-launcher1.jpg" url="#"/>
+            <p:menuitem value="Planner" icon="/resources/img/planner1.png" url="#"/>
+        </p:dock>
+        </h:form>
+    </h:body>
+</f:view>
 </html>
