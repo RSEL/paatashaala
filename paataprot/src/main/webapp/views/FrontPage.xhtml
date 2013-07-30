@@ -36,6 +36,7 @@
               <a class="btn btn-large btn-primary" href="#">Sign up today</a>
               </div>
         <h:form id="loginForm" class="form-signin">
+          <p:focus context="loginForm"/>
         <h2 class="form-signin-heading">Please sign in</h2>
         <h:messages style="color:red"/>
         <p:inputText styleClass="input-block-level"  value="#{managedLoginBean.username}" id="username" required="true" label="Email" />
