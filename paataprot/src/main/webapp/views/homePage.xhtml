@@ -16,9 +16,9 @@
         <h:outputStylesheet library="css" name="bootstrap.css"/>
         <h:outputStylesheet library="css" name="bootstrap-support.css"/>
     </h:head>
-    <h:body style="background-color:#F0F8FF">
-       <h:form>
-        <p:toolbar style="width:99.9%;background-color:#157FF0">
+    <h:body style="background-color:#F0F8FF;padding:0px 0px;margin:0px 0px">
+       <h:form style="margin:0px 0px">
+        <p:toolbar style="width:auto;background-color:#157FF0">
                 <p:toolbarGroup align="left">
                     <p:commandLink type="push" title="Profile picture" style="margin:5px 0px 5px 15px">
                        <p:graphicImage url="#{resource['img:default-profile1.jpg']}" />      
@@ -30,7 +30,7 @@
                     <p:commandLink type="push" title="Library" style="margin:5px 10px 5px 7px">
                         <p:graphicImage url="#{resource['img:icon-library.png']}" />
                     </p:commandLink>
-                    <h:form>
+                    <h:form style="margin:0px 0px">
                     <p:inputText  style="margin:5px 0px 5px 50px;padding:.4em .2em .4em 0.2em" id="search"/>
                     <p:watermark for="search" value="Search people,groups"/>
                     <p:commandLink type="push" title="Search" >
@@ -54,7 +54,7 @@
          </p:toolbarGroup>
     </p:toolbar>
         
-            <p:dock id="dock" position="bottom" itemWidth="60" maxWidth="70" >
+        <p:dock id="dock" position="bottom" itemWidth="60" maxWidth="70" >
             <p:menuitem value="Store" icon="/resources/img/cart-icon.png" url="#"/>
             <p:menuitem value="Manage" icon="/resources/img/icon-setting.png" url="#"/>
             <p:menuitem value="Apps Launcher" icon="/resources/img/apps-launcher1.jpg" url="#"/>
@@ -62,9 +62,9 @@
         </p:dock>
         
         </h:form>
-        <p:scrollPanel style="width:1363px;height:510px" mode="native" >  
-          <p:layout style="min-width:400px;min-height:900px;" id="layout">  
-            <p:layoutUnit position="west" size="290" style="border:1">  
+        <p:scrollPanel style="width:1363px;height:588px;border:0" mode="native" >  
+          <p:layout style="min-width:400px;min-height:900px" id="layout">  
+            <p:layoutUnit position="west" size="290" style="border:0">  
               <h:panelGrid columns="2" cellpadding="10">  
                      <p:graphicImage url="#{resource['img:profile-icon1.jpg']}" />  
                      <h:outputText  value="Ramlabs"/>  
@@ -85,8 +85,8 @@
                </p:accordionPanel>      
             </p:layoutUnit>  
   
-         <p:layoutUnit position="center">  
-           <p:tabView id="tabView">  
+         <p:layoutUnit position="center" >  
+           <p:tabView id="tabView" >  
              <p:tab id="tab1" title="Note">  
                  <h:panelGrid columns="2" cellpadding="10">  
                     <p:graphicImage id="tab1Img" value="/images/godfather/godfather1.jpg" />  
@@ -110,7 +110,7 @@
   
             </p:tabView>  
           </p:layoutUnit>  
-         <p:layoutUnit position="east" size="290">  
+         <p:layoutUnit position="east" size="290" style="border:0">  
            East  
          </p:layoutUnit>
 </p:layout> 
