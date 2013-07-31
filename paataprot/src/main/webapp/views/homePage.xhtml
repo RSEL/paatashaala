@@ -15,6 +15,11 @@
         <h:outputStylesheet library="css" name="bootstrap-responsive.css"/>
         <h:outputStylesheet library="css" name="bootstrap.css"/>
         <h:outputStylesheet library="css" name="bootstrap-support.css"/>
+         <script type="text/javascript">
+                         function addElement() {
+                            var ni = document.getElementById('clickedText').innerHTML = '<textarea placeholder="send to..." id="sendToText" name="sendToText" style="width:684px"></textarea><br></br><input type="submit" value="send" class="btn btn-large btn-primary" style="width:80px;height:40px;padding:3px 3px;margin-left:615px"/>';
+                         }    
+              </script>
     </h:head>
     <h:body style="background-color:#F0F8FF;padding:0px 0px;margin:0px 0px">
        <h:form style="margin:0px 0px">
@@ -86,12 +91,18 @@
             </p:layoutUnit>  
   
          <p:layoutUnit position="center" style="border:0">  
-           <p:tabView id="tabView" style="background:#dfe4e8">  
+           <p:tabView id="tabView" style="background:#dfe4e8" effect="fade">  
              <p:tab id="tab1" title="Post">  
-                 <h:panelGrid columns="2" cellpadding="10">  
+                 <!-- <h:panelGrid columns="2" cellpadding="10">  
                     <p:graphicImage id="tab1Img" value="/images/godfather/godfather1.jpg" />  
                     <h:outputText id="tab1Text" value="RamLabs" />  
-                 </h:panelGrid>  
+                 </h:panelGrid> -->
+                 <h:form style="margin:0px 0px" id="postForm">
+                     <p:inputTextarea rows="1"  autoResize="true" id="postText" onclick="addElement()" style="width:687px"/> 
+                     <p:watermark for="postText" value="Type your post here..." />
+                     <div id="clickedText"/>
+                 </h:form> 
+                  
               </p:tab>  
   
              <p:tab id="tab2" title="Alert">  
