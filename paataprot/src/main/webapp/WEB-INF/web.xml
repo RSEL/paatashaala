@@ -42,4 +42,8 @@
             /WEB-INF/applicationContext.xml
         </param-value>
 	</context-param>
+  <context-param>
+    <param-name>primefaces.THEME</param-name>
+    <param-value>#{userSettingsController.currentTheme.name}</param-value>
+  </context-param> 
 </web-app>
