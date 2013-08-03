@@ -2,27 +2,22 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
   <display-name>Pathsala</display-name>
   <welcome-file-list>
-    <welcome-file>views/FrontPage.xhtml</welcome-file>
+    <welcome-file>secured/homePage.xhtml</welcome-file>
   </welcome-file-list>
-  <!-- Add Support for Spring -->
   <listener>
-	<listener-class>
+    <listener-class>
 		org.springframework.web.context.ContextLoaderListener
 	</listener-class>
   </listener>
   <listener>
-	<listener-class>
+    <listener-class>
 		org.springframework.web.context.request.RequestContextListener
 	</listener-class>
   </listener>
-
-  <!-- Change to "Production" when you are ready to deploy -->
   <context-param>
     <param-name>javax.faces.PROJECT_STAGE</param-name>
     <param-value>Development</param-value>
   </context-param>
-
-  <!-- JSF Mapping -->
   <servlet>
     <servlet-name>facesServlet</servlet-name>
     <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
@@ -36,14 +31,23 @@
     <servlet-name>facesServlet</servlet-name>
     <url-pattern>*.xhtml</url-pattern>
   </servlet-mapping>
-   <context-param>
-		<param-name>contextConfigLocation</param-name>
-		<param-value>
+  <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>
             /WEB-INF/applicationContext.xml
         </param-value>
-	</context-param>
+  </context-param>
   <context-param>
     <param-name>primefaces.THEME</param-name>
     <param-value>#{userSettingsController.currentTheme.name}</param-value>
-  </context-param> 
+  </context-param>
+      <!-- Login filter -->
+    <filter>
+        <filter-name>LoginFilter</filter-name>
+        <filter-class>com.ramselabs.education.filter.LoginFilter</filter-class>
+    </filter> 
+    <filter-mapping>
+        <filter-name>LoginFilter</filter-name>
+        <url-pattern>/secured/*</url-pattern>
+    </filter-mapping>
 </web-app>
