@@ -4,6 +4,8 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Properties;
 
+import javax.inject.Named;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -16,12 +18,13 @@ import com.ramselabs.education.security.EncryptDecryptUtil;
  * @author root
  * 
  */
+@Named
 @SuppressWarnings("rawtypes")
-public class HibernateUtil {
+public class HibernateDAO {
 	static private ConfigReader configReader = null;
 	static SessionFactory sf = null;
 	static {
-		InputStream is = HibernateUtil.class.getResourceAsStream("/config.xml");
+		InputStream is = HibernateDAO.class.getResourceAsStream("/config.xml");
 		try {
 			configReader = new ConfigReader(is);
 		} catch (Exception e) {
@@ -44,7 +47,7 @@ public class HibernateUtil {
 		sf = config.buildSessionFactory();
 	}
 
-	public static Session getSession() {
+	public Session getSession() {
 		return sf.openSession();
 	}
 

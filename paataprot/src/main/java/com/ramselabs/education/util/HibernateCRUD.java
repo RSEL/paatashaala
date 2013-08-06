@@ -1,18 +1,26 @@
 package com.ramselabs.education.util;
 
+import javax.inject.Inject;
+import javax.inject.Named;
+
 import org.hibernate.Query;
 import org.hibernate.Session;
 
 import com.ramselabs.education.entity.LoginBean;
 
-
+@Named
 public class HibernateCRUD {
-	static Session s1=null;
-	static{
-		s1=HibernateUtil.getSession();
+	@Inject
+	private HibernateDAO hibernateDAO;
+	
+	Session s1=null;
+	
+	public void setHibernateDAO(HibernateDAO hibernateDAO) {
+		this.hibernateDAO = hibernateDAO;
 	}
-    public static boolean loginAuthenticate(LoginBean login){
-    	Session s1=HibernateUtil.getSession();
+
+	public boolean loginAuthenticate(LoginBean login){
+    	Session s1=hibernateDAO.getSession();
 		Query query=s1.createQuery("from LoginBean where username='"+login.getUsername()+"' and password='"+login.getPassword()+"'");
 		if(query.list().size()==0)
 		    return false;

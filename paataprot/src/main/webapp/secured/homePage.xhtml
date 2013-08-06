@@ -1,99 +1,116 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui">
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
 <f:view contentType="text/html" locale="en">
-    <h:head>
-        <f:facet name="first">
-            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-            <meta http-equiv="pragma" content="no-cache"/>
-            <meta http-equiv="cache-control" content="no-cache"/>
-            <meta http-equiv="expires" content="0"/>
-            
-        </f:facet>
-        <f:facet name="last">
-        <h:outputStylesheet library="css" name="bootstrap-responsive.css"/>
-        <h:outputStylesheet library="css" name="bootstrap.css"/>
-        <h:outputStylesheet library="css" name="bootstrap-support.css"/>
-        </f:facet>
-         <script type="text/javascript">
-                         function addElement() {
-                        	 document.getElementById('clickedText').style.display='inline';
-                             document.getElementById('clickedText').innerHTML = '<input type="text" placeholder="send to..." id="sendToText" name="sendToText" style="width:684px"></input><br></br><input type="submit" value="send" class="btn btn-large btn-primary" style="width:60px;height:35px;padding:1px 1px;margin-left:640px"/>';
-                         }  
-                         function hidePostText(){
-                        	 document.getElementById('clickedText').style.display='none';
-                        	 document.getElementById('clickedAlertText').style.display='none';
-                         }
-                         function addAlertText(){
-                        	 document.getElementById('clickedAlertText').style.display='inline';
-                             document.getElementById('clickedAlertText').innerHTML = '<input type="text" placeholder="send to..." id="alertToText" name="alertToText" style="width:684px"></input><br></br><input type="submit" value="send" class="btn btn-large btn-primary" style="width:60px;height:35px;padding:1px 1px;margin-left:640px"/>'; 
-                         }
-              </script>
-    </h:head>
-    <h:body style="background-color:#F0F8FF;padding:0px 0px;margin:0px 0px">
-       <h:form style="margin:0px 0px">
-        <p:toolbar style="width:auto;background-color:#157FF0 !important">
-                <p:toolbarGroup align="left">
-                    <p:commandLink type="push" title="Profile picture" style="margin:5px 0px 5px 15px">
-                       <p:graphicImage url="#{resource['img:default-profile1.jpg']}" />      
-                    </p:commandLink>
-                    <h:outputText value="School Name" style="font-size:30px;margin:4px 0px 0px 16px"/>
-                    <p:commandLink type="push" title="Home" style="margin:5px 10px 5px 180px">
-                       <p:graphicImage url="#{resource['img:home-icon.png']}" />      
-                    </p:commandLink>
-                    <p:commandLink type="push" title="Library" style="margin:5px 10px 5px 7px">
-                        <p:graphicImage url="#{resource['img:icon-library.png']}" />
-                    </p:commandLink>
-                    <h:form style="margin:0px 0px">
-                    <p:inputText  style="margin:5px 0px 5px 50px;padding:.4em .2em .4em 0.2em" id="search"/>
-                    <p:watermark for="search" value="Search people,groups"/>
-                    <p:commandLink type="push" title="Search" >
-                       <p:graphicImage url="#{resource['img:icon-search.png']}" />      
-                    </p:commandLink>
-                    </h:form>
-                 </p:toolbarGroup>
-                <p:toolbarGroup align="right">
-                   <p:commandLink type="push" title="Notifications" style="margin:10px 7px 10px 70px">
-                       <p:graphicImage url="#{resource['img:bell1.png']}" />      
-                    </p:commandLink>
-           
-              <p:commandLink id="dynaButton" type="push" title="Settings" style="margin:5px 15px 5px 0px">
-                 <p:graphicImage url="#{resource['img:sett-icon1.png']}" />
-              </p:commandLink>  
-                     <p:menu overlay="true" trigger="dynaButton" my="left top" at="left bottom" >    
-                         <p:menuitem value="Save" url="#" />  
-                         <p:menuitem value="Update" url="#"/> 
-                         <p:menuitem value="Logout" action="#{loginController.doLogout}"/> 
-                         <p:menuitem value="Themes" onclick="dlg1.show(); return false;" type="button"/> 
-                 
-                     </p:menu>  
-         </p:toolbarGroup>
-    </p:toolbar>
-        
-        <p:dock id="dock" position="bottom" itemWidth="60" maxWidth="70" >
-            <p:menuitem value="Store" icon="/resources/img/cart-icon.png" url="/views/FrontPage.xhtml" update="centerLayout"/>
-            <p:menuitem value="Manage" icon="/resources/img/icon-setting.png" url="#"/>
-            <p:menuitem value="Apps Launcher" icon="/resources/img/apps-launcher1.jpg" url="#"/>
-            <p:menuitem value="Planner" icon="/resources/img/planner1.png" url="#"/>
-        </p:dock>
-        
-        </h:form>
-        <p:scrollPanel style="width:1363px;height:588px;border:0" mode="native" >  
-          <p:layout style="min-width:400px;min-height:900px" id="layout">  
-            <p:layoutUnit position="west" size="290" style="border:0">  
-              <h:panelGrid columns="2" cellpadding="10">  
-                     <p:graphicImage url="#{resource['img:profile-icon1.jpg']}" />  
-                     <h:outputText  value="Ramlabs"/>  
-               </h:panelGrid>  
-              <p:accordionPanel multiple="true">  
+	<h:head>
+		<f:facet name="first">
+			<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+			<meta http-equiv="pragma" content="no-cache" />
+			<meta http-equiv="cache-control" content="no-cache" />
+			<meta http-equiv="expires" content="0" />
+
+		</f:facet>
+		<f:facet name="last">
+			<h:outputStylesheet library="css" name="bootstrap-responsive.css" />
+			<h:outputStylesheet library="css" name="bootstrap.css" />
+			<h:outputStylesheet library="css" name="bootstrap-support.css" />
+			<h:outputStylesheet library="css" name="themeSwitcher.css" />
+		</f:facet>
+		<script type="text/javascript">
+			function addElement() {
+				document.getElementById('clickedText').style.display = 'inline';
+				document.getElementById('clickedText').innerHTML = '<input type="text" placeholder="send to..." id="sendToText" name="sendToText" style="width:684px"></input><br></br><input type="submit" value="send" class="btn btn-large btn-primary" style="width:60px;height:35px;padding:1px 1px;margin-left:640px"/>';
+			}
+			function hidePostText() {
+				document.getElementById('clickedText').style.display = 'none';
+				document.getElementById('clickedAlertText').style.display = 'none';
+			}
+			function addAlertText() {
+				document.getElementById('clickedAlertText').style.display = 'inline';
+				document.getElementById('clickedAlertText').innerHTML = '<input type="text" placeholder="send to..." id="alertToText" name="alertToText" style="width:684px"></input><br></br><input type="submit" value="send" class="btn btn-large btn-primary" style="width:60px;height:35px;padding:1px 1px;margin-left:640px"/>';
+			}
+		</script>
+	</h:head>
+	<h:body style="background-color:#F0F8FF;padding:0px 0px;margin:0px 0px">
+		<h:form style="margin:0px 0px">
+			<p:toolbar style="width:auto;background-color:#157FF0 !important">
+				<p:toolbarGroup align="left">
+					<p:commandLink type="push" title="Profile picture"
+						style="margin:5px 0px 5px 15px">
+						<p:graphicImage url="#{resource['img:default-profile1.jpg']}" />
+					</p:commandLink>
+					<h:outputText value="School Name"
+						style="font-size:30px;margin:4px 0px 0px 16px" />
+					<p:commandLink type="push" title="Home"
+						style="margin:5px 10px 5px 180px">
+						<p:graphicImage url="#{resource['img:home-icon.png']}" />
+					</p:commandLink>
+					<p:commandLink type="push" title="Library"
+						style="margin:5px 10px 5px 7px">
+						<p:graphicImage url="#{resource['img:icon-library.png']}" />
+					</p:commandLink>
+					<h:form style="margin:0px 0px">
+						<p:inputText
+							style="margin:5px 0px 5px 50px;padding:.4em .2em .4em 0.2em"
+							id="search" />
+						<p:watermark for="search" value="Search people,groups" />
+						<p:commandLink type="push" title="Search">
+							<p:graphicImage url="#{resource['img:icon-search.png']}" />
+						</p:commandLink>
+					</h:form>
+				</p:toolbarGroup>
+				<p:toolbarGroup align="right">
+					<p:commandLink type="push" title="Notifications"
+						style="margin:10px 7px 10px 70px">
+						<p:graphicImage url="#{resource['img:bell1.png']}" />
+					</p:commandLink>
+
+					<p:commandLink id="dynaButton" type="push" title="Settings"
+						style="margin:5px 15px 5px 0px">
+						<p:graphicImage url="#{resource['img:sett-icon1.png']}" />
+					</p:commandLink>
+					<p:menu overlay="true" trigger="dynaButton" my="left top"
+						at="left bottom">
+						<p:menuitem value="Save" url="#" />
+						<p:menuitem value="Update" url="#" />
+						<p:menuitem value="Logout" action="#{loginController.doLogout}" />
+						<p:menuitem value="Themes" onclick="dlg1.show(); return false;"
+							type="button" />
+
+					</p:menu>
+				</p:toolbarGroup>
+			</p:toolbar>
+
+			<p:dock id="dock" position="bottom" itemWidth="60" maxWidth="70">
+				<p:menuitem value="Store" icon="/resources/img/cart-icon.png"
+					url="/views/FrontPage.xhtml" update="centerLayout" />
+				<p:menuitem value="Manage" icon="/resources/img/icon-setting.png"
+					url="#" />
+				<p:menuitem value="Apps Launcher"
+					icon="/resources/img/apps-launcher1.jpg" url="#" />
+				<p:menuitem value="Planner" icon="/resources/img/planner1.png"
+					url="#" />
+			</p:dock>
+
+		</h:form>
+		<p:scrollPanel style="width:1363px;height:588px;border:0"
+			mode="native">
+			<p:layout style="min-width:400px;min-height:900px" id="layout">
+				<p:layoutUnit position="west" size="290" style="border:0">
+					<h:panelGrid columns="2" cellpadding="10">
+						<p:graphicImage url="#{resource['img:profile-icon1.jpg']}" />
+						<h:outputText value="Ramlabs" />
+					</h:panelGrid>
+					<!--  <p:accordionPanel multiple="true">  
                    <p:tab title="Groups">  
-                      <h:panelGrid columns="2" cellpadding="10">  
-                          <p:graphicImage value="/images/default-profile.jpg" />  
-                           <h:outputText  value="Ramlabs"/>  
-                      </h:panelGrid>  
+                      <h:panelGrid cellpadding="10">  
+                          <p:graphicImage value="/resources/img/group.png" />
+                             
+                      </h:panelGrid> 
+                
                     </p:tab>  
                    <p:tab title="Communities">  
                       <h:panelGrid columns="2" cellpadding="10">  
@@ -101,55 +118,171 @@
                            <h:outputText  value="Ramlabs"/>  
                       </h:panelGrid>  
                     </p:tab> 
-               </p:accordionPanel>      
-            </p:layoutUnit>  
-  
-         <p:layoutUnit position="center" style="border:0" id="centerLayout">  
-           <p:tabView id="tabView" style="background:#dfe4e8" effect="drop" onTabShow="hidePostText()">  
-             <p:tab id="tab1" title="Post" titleStyle="">  
-                 <h:form style="margin:0px 0px" id="postForm">
-                     <p:inputTextarea rows="1"  autoResize="true" id="postText" onclick="addElement()" cols="450" style="width:687px"/> 
-                     <p:watermark for="postText" value="Type your post here..." />
-                     <div id="clickedText"/>
-                 </h:form> 
-                  
-              </p:tab>  
-  
-             <p:tab id="tab2" title="Alert">    
-                     <h:form style="margin:0px 0px" id="alertForm">
-                         <p:inputTextarea rows="1"  autoResize="true" id="alertText" onclick="addAlertText()" cols="450" style="width:687px"/> 
-                         <p:watermark for="alertText" value="Type your alert here..." />
-                         <div id="clickedAlertText"/>
-                      </h:form> 
-              </p:tab>     
-            </p:tabView>  
-          </p:layoutUnit>  
-         <p:layoutUnit position="east" size="290" style="border:0">
-               <h:form> 
-                <!-- <p:panelGrid columns="2" cellpadding="10" style="border:0;width:95%"> 
+               </p:accordionPanel> -->
+					<h:form>
+						<p:panel id="pnl" header="Groups" toggleable="true"
+							style="border:0;margin-right:10px">
+
+							<p:graphicImage value="/resources/img/group.png" />
+
+							<f:facet name="options">
+								<p:menu>
+									<p:menuitem value="Create" onclick="dlg2.show(); return false;" type="button"/>
+									<p:menuitem value="Join" url="#" />
+								</p:menu>
+							</f:facet>
+
+						</p:panel>
+						<p:panel id="pnl1" header="Communities" toggleable="true"
+							style="border:0;margin-right:10px">
+							<p:graphicImage value="/resources/img/group.png" />
+
+							<f:facet name="options">
+								<p:menu>
+									<p:menuitem value="Create" url="#" />
+									<p:menuitem value="Join" url="#" />
+								</p:menu>
+							</f:facet>
+
+						</p:panel>
+					</h:form>
+				</p:layoutUnit>
+
+				<p:layoutUnit position="center" style="border:0" id="centerLayout">
+					<p:tabView id="tabView" style="background:#dfe4e8" effect="drop"
+						onTabShow="hidePostText()">
+						<p:tab id="tab1" title="Post" titleStyle="">
+							<h:form style="margin:0px 0px" id="postForm">
+								<p:inputTextarea rows="1" autoResize="true" id="postText"
+									onclick="addElement()" cols="450" style="width:687px" />
+								<p:watermark for="postText" value="Type your post here..." />
+								<div id="clickedText" />
+							</h:form>
+
+						</p:tab>
+
+						<p:tab id="tab2" title="Alert">
+							<h:form style="margin:0px 0px" id="alertForm">
+								<p:inputTextarea rows="1" autoResize="true" id="alertText"
+									onclick="addAlertText()" cols="450" style="width:687px" />
+								<p:watermark for="alertText" value="Type your alert here..." />
+								<div id="clickedAlertText" />
+							</h:form>
+						</p:tab>
+					</p:tabView>
+					<br></br>
+					<p:dataList value="#{newsFeed.persons}" var="person" id="persons"
+						type="none" style="padding-top:10px">
+						<p:graphicImage
+							value="/resources/img/profile-photo/#{person.personPic}.png"
+							width="60" height="60" />
+						<p:panel>
+							<h:outputText value="#{person.description}"
+								style="margin-left:10px" />
+							
+							<h:outputText value="#{person.description}"
+								style="margin-left:10px" />
+							
+
+						</p:panel>
+					</p:dataList>
+				</p:layoutUnit>
+				<p:layoutUnit position="east" size="290" style="border:0">
+					<h:form>
+						<!-- <p:panelGrid columns="2" cellpadding="10" style="border:0;width:95%"> 
                      <h:graphicImage url="#{resource['img:default-profile1.jpg']}" />    
                      <h:outputText value="Ram Software Engineering Lab Pvt. Ltd." />               
                 </p:panelGrid> -->
-                <p:dataList var="noti" value="#{notificationBean.notif}" style="width:100%;margin:0px 0px">
-                   <f:facet name="header">Notifications</f:facet>
+						<p:dataList var="noti" value="#{notificationBean.notif}"
+							style="width:100%;margin:0px 0px">
+							<f:facet name="header">Notifications</f:facet>
                       #{noti.text}
                 </p:dataList>
-                <br></br>
-                     <p:calendar showButtonPanel="true" navigator="true" mode="inline" id="enCal" style="width:100%;margin:0px 0px"/>
-                </h:form>    
-         </p:layoutUnit>
-       </p:layout> 
-    </p:scrollPanel> 
-       <p:dialog id="basicDialog" header="Chose your theme" widgetVar="dlg1" modal="true"> 
-        <h:form id="themeForm"> 
-            <p:themeSwitcher id="statefulSwitcher1" value="#{userSettingsController.theme}" var="theme" style="width:165px" effect="drop">
-            <f:selectItem itemLabel="Choose Theme" itemValue=""/>
-            <f:selectItems value="#{userSettingsController.themes}"/>
-            <p:ajax listener="#{userSettingsController.saveTheme}" oncomplete="dlg1.hide(); return false;"/>
-         </p:themeSwitcher> 
-        </h:form> 
-   </p:dialog>
-   
-</h:body>
+						<br></br>
+						<p:calendar showButtonPanel="true" navigator="true" mode="inline"
+							id="enCal" style="width:100%;margin:0px 0px" />
+					</h:form>
+				</p:layoutUnit>
+			</p:layout>
+		</p:scrollPanel>
+		<p:dialog id="basicDialog" header="Chose your theme" widgetVar="dlg1"
+			modal="true">
+			<h:form id="themeForm">
+				<p:themeSwitcher id="statefulSwitcher1"
+					value="#{userSettingsController.theme}" var="theme"
+					style="width:165px" effect="drop">
+					<f:selectItem itemLabel="Choose Theme" itemValue="" />
+					<f:selectItems value="#{userSettingsController.themes}" />
+					<p:ajax listener="#{userSettingsController.saveTheme}"
+						oncomplete="dlg1.hide(); return false;" />
+				</p:themeSwitcher>
+			</h:form>
+		</p:dialog>
+		
+		<p:dialog id="createGroupDia" header="Create Group" widgetVar="dlg2"
+			modal="true" style="background:#dfe4e8;height:30%;width:40%">
+			
+				   <p><p:commandLink value="Important:Learn about Group Management features" style="text-decoration:none"/></p>
+				   
+				      <p:tabView style="border:0">
+				            <p:tab id="tab1" title="Basic" titleStyle="" >
+				            <h:form id="groupFormBasic">
+								<p:inputText id="groupText" style="width: 330px" label="Group Name" required="true"/>
+								<p:message for="groupText"/>
+								<p:watermark for="groupText" value="Group Name" />
+								<hr/>
+								<p:selectOneMenu id="gradeMenu">  
+                                   <f:selectItem itemLabel="[Select Grade]" itemValue="" />  
+                                   <f:selectItem itemLabel="None" itemValue="no" />  
+                                   <f:selectItem itemLabel="Prekindergarten" itemValue="pkg" />  
+                                   <f:selectItem itemLabel="Kindergarten" itemValue="kg" />  
+                                   <f:selectItem itemLabel="1st" itemValue="1" />  
+                                   <f:selectItem itemLabel="2nd" itemValue="2" />  
+                                   <f:selectItem itemLabel="3rd" itemValue="3" />  
+                                   <f:selectItem itemLabel="4th" itemValue="4" />  
+                                   <f:selectItem itemLabel="5th" itemValue="5" />  
+                                   <f:selectItem itemLabel="6th" itemValue="6" />  
+                                   <f:selectItem itemLabel="7th" itemValue="7" />  
+                                   <f:selectItem itemLabel="8th" itemValue="8" />  
+                                   <f:selectItem itemLabel="9th" itemValue="9" />  
+                                   <f:selectItem itemLabel="10th" itemValue="10" />  
+                                   <f:selectItem itemLabel="11th" itemValue="11" />  
+                                   <f:selectItem itemLabel="12th" itemValue="12" />
+                                   <f:selectItem itemLabel="Higher Education" itemValue="he" />  
+                                </p:selectOneMenu>
+                                <hr/>
+                                 <p:selectOneMenu id="areaMenu">  
+                                   <f:selectItem itemLabel="[Select Area]" itemValue="" />  
+                                   <f:selectItem itemLabel="All" itemValue="all" />  
+                                   <f:selectItem itemLabel="Computer Technology" itemValue="pkg" />  
+                                   <f:selectItem itemLabel="Mathemetics" itemValue="mth" />  
+                                   <f:selectItem itemLabel="Science" itemValue="sc" />  
+                                   <f:selectItem itemLabel="Art" itemValue="art" />  
+                                   <f:selectItem itemLabel="World Language" itemValue="wl" />  
+                                   <f:selectItem itemLabel="Professional Developement" itemValue="pd" />  
+                                   <f:selectItem itemLabel="Social Studies" itemValue="ss" />  
+                                   <f:selectItem itemLabel="Health/P.E." itemValue="hl" /> 
+                                  </p:selectOneMenu>
+                                  <hr/>
+                                  <p:commandButton value="Create" update="groupFormBasic"/>  
+						    </h:form>
+							</p:tab>
+							<p:tab id="tab2" title="Advance" titleStyle="" >
+				            <h:form id="groupFormAdvance">
+								<p:selectManyCheckbox layout="pageDirection">  
+                                    <f:selectItem itemLabel="Default all new members to read-only" itemValue="readOnly" /> 
+                                    <f:selectItem itemLabel="Moderate all Posts and Replies" itemValue="moderate" />  
+                                 </p:selectManyCheckbox> 
+                                 <hr/>
+                                 <p:inputText id="groupDescription" style="width:330px;margin-bottom:0px"/>
+                                 <p:watermark for="groupDescription" value="GroupDescription"/>
+                                 <hr/>
+                                 <p:commandButton value="Create" />
+						    </h:form>
+							</p:tab>	
+				      </p:tabView>
+		</p:dialog>
+
+	</h:body>
 </f:view>
 </html>
