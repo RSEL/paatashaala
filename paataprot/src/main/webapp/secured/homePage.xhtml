@@ -34,7 +34,7 @@
 			}
 		</script>
 	</h:head>
-	<h:body style="background-color:#F0F8FF;padding:0px 0px;margin:0px 0px">
+	<h:body style="padding:0px 0px;margin:0px 0px">
 		<h:form style="margin:0px 0px">
 			<p:toolbar style="width:auto;background-color:#157FF0 !important">
 				<p:toolbarGroup align="left">
@@ -96,7 +96,7 @@
 			</p:dock>
 
 		</h:form>
-		<p:scrollPanel style="width:1363px;height:588px;border:0"
+		<p:scrollPanel style="width:1363px;height:610px;border:0"
 			mode="native">
 			<p:layout style="min-width:400px;min-height:900px" id="layout">
 				<p:layoutUnit position="west" size="290" style="border:0">
@@ -127,7 +127,8 @@
 
 							<f:facet name="options">
 								<p:menu>
-									<p:menuitem value="Create" onclick="dlg2.show(); return false;" type="button"/>
+									<p:menuitem value="Create" onclick="dlg2.show(); return false;"
+										type="button" />
 									<p:menuitem value="Join" url="#" />
 								</p:menu>
 							</f:facet>
@@ -170,21 +171,25 @@
 							</h:form>
 						</p:tab>
 					</p:tabView>
-					<br></br>
+					<p:panel style="background:#ffffff">
+						<h:outputText value="Latest Posts" styleClass="postHeader" />
+					</p:panel>
+
 					<p:dataList value="#{newsFeed.persons}" var="person" id="persons"
-						type="none" style="padding-top:10px">
+						type="none">
+					<p:panel style="background: #ffffff"> 	
+                       <p:panel style="border:0;float:left;background: #ffffff">  
 						<p:graphicImage
 							value="/resources/img/profile-photo/#{person.personPic}.png"
-							width="60" height="60" />
-						<p:panel>
-							<h:outputText value="#{person.description}"
-								style="margin-left:10px" />
-							
-							<h:outputText value="#{person.description}"
-								style="margin-left:10px" />
-							
-
+							width="60" height="60" style="margin-left:0px" />
 						</p:panel>
+						<p:panel style="border:0;background: #ffffff">	
+							<h:outputText value="#{person.description}" style=""/>
+						<p:panel style="margin-left: 80px">
+							<h:outputText value="Ram Softwere Engineering Labs Pvt. Ltd. National Village Games KHB #2 Arun Kumar Krishnamurthy" />
+						</p:panel>
+					    </p:panel>
+					  </p:panel>  	
 					</p:dataList>
 				</p:layoutUnit>
 				<p:layoutUnit position="east" size="290" style="border:0">
@@ -218,69 +223,84 @@
 				</p:themeSwitcher>
 			</h:form>
 		</p:dialog>
-		
+
 		<p:dialog id="createGroupDia" header="Create Group" widgetVar="dlg2"
 			modal="true" style="background:#dfe4e8;height:30%;width:40%">
-			
-				   <p><p:commandLink value="Important:Learn about Group Management features" style="text-decoration:none"/></p>
-				   
-				      <p:tabView style="border:0">
-				            <p:tab id="tab1" title="Basic" titleStyle="" >
-				            <h:form id="groupFormBasic">
-								<p:inputText id="groupText" style="width: 330px" label="Group Name" required="true"/>
-								<p:message for="groupText"/>
-								<p:watermark for="groupText" value="Group Name" />
-								<hr/>
-								<p:selectOneMenu id="gradeMenu">  
-                                   <f:selectItem itemLabel="[Select Grade]" itemValue="" />  
-                                   <f:selectItem itemLabel="None" itemValue="no" />  
-                                   <f:selectItem itemLabel="Prekindergarten" itemValue="pkg" />  
-                                   <f:selectItem itemLabel="Kindergarten" itemValue="kg" />  
-                                   <f:selectItem itemLabel="1st" itemValue="1" />  
-                                   <f:selectItem itemLabel="2nd" itemValue="2" />  
-                                   <f:selectItem itemLabel="3rd" itemValue="3" />  
-                                   <f:selectItem itemLabel="4th" itemValue="4" />  
-                                   <f:selectItem itemLabel="5th" itemValue="5" />  
-                                   <f:selectItem itemLabel="6th" itemValue="6" />  
-                                   <f:selectItem itemLabel="7th" itemValue="7" />  
-                                   <f:selectItem itemLabel="8th" itemValue="8" />  
-                                   <f:selectItem itemLabel="9th" itemValue="9" />  
-                                   <f:selectItem itemLabel="10th" itemValue="10" />  
-                                   <f:selectItem itemLabel="11th" itemValue="11" />  
-                                   <f:selectItem itemLabel="12th" itemValue="12" />
-                                   <f:selectItem itemLabel="Higher Education" itemValue="he" />  
-                                </p:selectOneMenu>
-                                <hr/>
-                                 <p:selectOneMenu id="areaMenu">  
-                                   <f:selectItem itemLabel="[Select Area]" itemValue="" />  
-                                   <f:selectItem itemLabel="All" itemValue="all" />  
-                                   <f:selectItem itemLabel="Computer Technology" itemValue="pkg" />  
-                                   <f:selectItem itemLabel="Mathemetics" itemValue="mth" />  
-                                   <f:selectItem itemLabel="Science" itemValue="sc" />  
-                                   <f:selectItem itemLabel="Art" itemValue="art" />  
-                                   <f:selectItem itemLabel="World Language" itemValue="wl" />  
-                                   <f:selectItem itemLabel="Professional Developement" itemValue="pd" />  
-                                   <f:selectItem itemLabel="Social Studies" itemValue="ss" />  
-                                   <f:selectItem itemLabel="Health/P.E." itemValue="hl" /> 
-                                  </p:selectOneMenu>
-                                  <hr/>
-                                  <p:commandButton value="Create" update="groupFormBasic"/>  
-						    </h:form>
-							</p:tab>
-							<p:tab id="tab2" title="Advance" titleStyle="" >
-				            <h:form id="groupFormAdvance">
-								<p:selectManyCheckbox layout="pageDirection">  
-                                    <f:selectItem itemLabel="Default all new members to read-only" itemValue="readOnly" /> 
-                                    <f:selectItem itemLabel="Moderate all Posts and Replies" itemValue="moderate" />  
-                                 </p:selectManyCheckbox> 
-                                 <hr/>
-                                 <p:inputText id="groupDescription" style="width:330px;margin-bottom:0px"/>
-                                 <p:watermark for="groupDescription" value="GroupDescription"/>
-                                 <hr/>
-                                 <p:commandButton value="Create" />
-						    </h:form>
-							</p:tab>	
-				      </p:tabView>
+
+			<h:form id="commandLink">
+				<p>
+					<p:commandLink
+						value="Important:Learn about Group Management features"
+						style="text-decoration:none" />
+				</p>
+			</h:form>
+
+			<p:tabView style="border:0">
+				<p:tab id="tab1" title="Basic" titleStyle="">
+					<h:form id="groupFormBasic">
+						<p:inputText id="groupText" style="width: 330px"
+							label="Group Name" required="true" />
+						<p:message for="groupText" />
+						<p:watermark for="groupText" value="Group Name" />
+						<hr />
+						<p:selectOneMenu id="gradeMenu" label="Grade" required="true">
+							<f:selectItem itemLabel="[Select Grade]" itemValue="" />
+							<f:selectItem itemLabel="None" itemValue="no" />
+							<f:selectItem itemLabel="Prekindergarten" itemValue="pkg" />
+							<f:selectItem itemLabel="Kindergarten" itemValue="kg" />
+							<f:selectItem itemLabel="1st" itemValue="1" />
+							<f:selectItem itemLabel="2nd" itemValue="2" />
+							<f:selectItem itemLabel="3rd" itemValue="3" />
+							<f:selectItem itemLabel="4th" itemValue="4" />
+							<f:selectItem itemLabel="5th" itemValue="5" />
+							<f:selectItem itemLabel="6th" itemValue="6" />
+							<f:selectItem itemLabel="7th" itemValue="7" />
+							<f:selectItem itemLabel="8th" itemValue="8" />
+							<f:selectItem itemLabel="9th" itemValue="9" />
+							<f:selectItem itemLabel="10th" itemValue="10" />
+							<f:selectItem itemLabel="11th" itemValue="11" />
+							<f:selectItem itemLabel="12th" itemValue="12" />
+							<f:selectItem itemLabel="Higher Education" itemValue="he" />
+						</p:selectOneMenu>
+						<p:message for="gradeMenu" />
+						<hr />
+						<p:selectOneMenu id="areaMenu" label="Area" required="true">
+							<f:selectItem itemLabel="[Select Area]" itemValue="" />
+							<f:selectItem itemLabel="All" itemValue="all" />
+							<f:selectItem itemLabel="Computer Technology" itemValue="pkg" />
+							<f:selectItem itemLabel="Mathemetics" itemValue="mth" />
+							<f:selectItem itemLabel="Science" itemValue="sc" />
+							<f:selectItem itemLabel="Art" itemValue="art" />
+							<f:selectItem itemLabel="World Language" itemValue="wl" />
+							<f:selectItem itemLabel="Professional Developement"
+								itemValue="pd" />
+							<f:selectItem itemLabel="Social Studies" itemValue="ss" />
+							<f:selectItem itemLabel="Health/P.E." itemValue="hl" />
+						</p:selectOneMenu>
+						<p:message for="areaMenu"/>
+						<hr />
+						<p:commandButton value="Create" update="groupFormBasic" />
+					</h:form>
+				</p:tab>
+				<p:tab id="tab2" title="Advance" titleStyle="">
+					<h:form id="groupFormAdvance">
+						<p:selectManyCheckbox layout="pageDirection" label="Check" required="true" id="checkBox">
+							<f:selectItem itemLabel="Default all new members to read-only"
+								itemValue="readOnly" />
+							<f:selectItem itemLabel="Moderate all Posts and Replies"
+								itemValue="moderate" />
+						</p:selectManyCheckbox>
+						<p:message for="checkBox"/>
+						<hr />
+						<p:inputText id="groupDescription"
+							style="width:330px;margin-bottom:0px" label="Group Description" required="true"/>
+							<p:message for="groupDescription"/>
+						<p:watermark for="groupDescription" value="GroupDescription" />
+						<hr />
+						<p:commandButton value="Create" />
+					</h:form>
+				</p:tab>
+			</p:tabView>
 		</p:dialog>
 
 	</h:body>

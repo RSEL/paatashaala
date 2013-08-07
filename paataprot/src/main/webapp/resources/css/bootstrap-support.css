@@ -97,17 +97,17 @@
     }
     .carousel-caption h1,
     .carousel-caption .lead {
-      margin: 11px;
-      line-height: 130%;
+      margin-right: 110px;
+      font-size:18px;
+      line-height: 165%;
       color: #303030;
       text-shadow: 0 0px 0px rgba(0,0,0,0);
       text-align: justify;
       word-spacing: 1px;
       font-family:Arial,Helvetica,sans-serif;
-      font-style:italic;
     }
     .carousel-caption .btn {
-      margin-top: 10px;
+      margin-top: 30px;
     }
 
 
@@ -301,4 +301,24 @@ font-weight:bold;
 }  */
 .ui-dock-bottom{
 	z-index:25;
+}
+.welcome_txt{
+font-weight: 200;
+font-size: 40px;
+margin: 25% 0 35px 0;
+line-height: 40px;
+}
+.postHeader{
+background: transparent;
+color: #383d48;
+border-color: lightgrey;
+padding-left: 5px;
+padding-bottom: 20px;
+font-size: 18px;
+font-weight: 400;
+line-height: 26px
+}
+.ui-datalist-content .ui-datalist{
+border:1px;
+background:#ffffff;
 }

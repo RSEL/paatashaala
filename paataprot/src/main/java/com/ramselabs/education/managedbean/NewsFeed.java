@@ -25,7 +25,6 @@ public class NewsFeed implements Serializable{
 	}
 
 	public List<Person> getPersons() {
-		System.out.println("listSize"+persons.size());
 		return persons;
 	}
 
