@@ -1,8 +1,12 @@
 package com.ramselabs.education.service;
 
-import com.ramselabs.education.entity.LoginBean;
+import java.util.List;
+
+import com.ramselabs.education.entity.Share;
+import com.ramselabs.education.entity.User;
 
 public interface UserService {
-	public boolean doLogin(LoginBean login);
+	public boolean doLogin(User user);
+	public List<Share> getAutocompleteUserList();
 
 }

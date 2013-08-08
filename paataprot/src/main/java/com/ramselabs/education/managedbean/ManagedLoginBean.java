@@ -6,7 +6,7 @@ import javax.inject.Named;
 
 import org.springframework.context.annotation.Scope;
 
-import com.ramselabs.education.entity.LoginBean;
+import com.ramselabs.education.entity.User;
 
 @Named
 @Scope("session")
@@ -27,10 +27,10 @@ public class ManagedLoginBean implements Serializable{
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public static LoginBean mappToLoginBean(ManagedLoginBean mngBean){
-		LoginBean loginBean=new LoginBean();
-		loginBean.setUsername(mngBean.getUsername());
-		loginBean.setPassword(mngBean.getPassword());
-		return loginBean;
+	public static User mappToLoginBean(ManagedLoginBean mngBean){
+		User userBean=new User();
+		userBean.setUsername(mngBean.getUsername());
+		userBean.setPassword(mngBean.getPassword());
+		return userBean;
 	}
 }

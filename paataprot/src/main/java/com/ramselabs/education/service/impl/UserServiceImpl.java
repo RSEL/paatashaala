@@ -1,11 +1,13 @@
 package com.ramselabs.education.service.impl;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import com.ramselabs.education.entity.LoginBean;
+import com.ramselabs.education.entity.Share;
+import com.ramselabs.education.entity.User;
 import com.ramselabs.education.service.UserService;
 import com.ramselabs.education.util.HibernateCRUD;
 
@@ -22,9 +24,15 @@ public class UserServiceImpl implements UserService,Serializable {
 	}
 
 	@Override
-	public boolean doLogin(LoginBean login) {
+	public boolean doLogin(User user) {
 		
-		return hCrud.loginAuthenticate(login);
+		return hCrud.loginAuthenticate(user);
+	}
+
+	@Override
+	public List<Share> getAutocompleteUserList() {
+		
+		return hCrud.getUserAutoCompleteList();
 	}
 
 }

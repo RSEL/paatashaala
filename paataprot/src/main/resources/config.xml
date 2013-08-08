@@ -32,7 +32,7 @@
   </prop>
   <prop name="annotatedClass">
      <list>
-        <value>com.ramselabs.education.entity.LoginBean</value>
+        <value>com.ramselabs.education.entity.User</value>
      </list> 
   </prop>
 </config-hibernate>

@@ -10,7 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.context.annotation.Scope;
 
-import com.ramselabs.education.entity.LoginBean;
+import com.ramselabs.education.entity.User;
 import com.ramselabs.education.managedbean.ManagedLoginBean;
 import com.ramselabs.education.managedbean.NavigationBean;
 import com.ramselabs.education.service.UserService;
@@ -52,9 +52,9 @@ public class LoginController implements Serializable {
 	}
 
 	public String verifyLogin() {
-		LoginBean loginBean=ManagedLoginBean.mappToLoginBean(login);
+		User userBean=ManagedLoginBean.mappToLoginBean(login);
 		System.out.println("Login-verify");
-		if (serInface.doLogin(loginBean)){
+		if (serInface.doLogin(userBean)){
 			loggedIn=true;
 			return navigationBean.redirectToWelcome();
 		}

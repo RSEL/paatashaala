@@ -1,12 +1,17 @@
 package com.ramselabs.education.util;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 
-import com.ramselabs.education.entity.LoginBean;
+import com.ramselabs.education.entity.Share;
+import com.ramselabs.education.entity.User;
 
 @Named
 public class HibernateCRUD {
@@ -14,14 +19,15 @@ public class HibernateCRUD {
 	private HibernateDAO hibernateDAO;
 	
 	Session s1=null;
-	
+	int userId;
 	public void setHibernateDAO(HibernateDAO hibernateDAO) {
 		this.hibernateDAO = hibernateDAO;
 	}
 
-	public boolean loginAuthenticate(LoginBean login){
+	public boolean loginAuthenticate(User user){
     	Session s1=hibernateDAO.getSession();
-		Query query=s1.createQuery("from LoginBean where username='"+login.getUsername()+"' and password='"+login.getPassword()+"'");
+    	userId=getUserId(user);
+    	Query query=s1.createQuery("from User where username='"+user.getUsername()+"' and password='"+user.getPassword()+"'");
 		if(query.list().size()==0)
 		    return false;
 		else
@@ -44,4 +50,18 @@ public class HibernateCRUD {
 			s2=i;
 		return s2;
     }*/
+	@SuppressWarnings("unchecked")
+	public List<Share> getUserAutoCompleteList(){
+		Session s1=hibernateDAO.getSession();
+		Criteria ctr=s1.createCriteria(Share.class);
+		ctr.add(Restrictions.ne("userId",userId ));
+		return (List<Share>)ctr.list();
+	}
+	private int getUserId(User user){
+		Session s1=hibernateDAO.getSession();
+    	Query query=s1.createQuery("select userId from User where username='"+user.getUsername()+"' and password='"+user.getPassword()+"'");
+    	List<Integer> i=(List<Integer>)query.list();
+		Integer j=i.get(0);
+		return j;
+	}
 }

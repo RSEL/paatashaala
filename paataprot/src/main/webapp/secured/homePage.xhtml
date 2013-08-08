@@ -22,6 +22,7 @@
 		<script type="text/javascript">
 			function addElement() {
 				document.getElementById('clickedText').style.display = 'inline';
+				document.getElementById('tabView:postForm:hide1').style.display = 'inline';
 				document.getElementById('clickedText').innerHTML = '<input type="text" placeholder="send to..." id="sendToText" name="sendToText" style="width:684px"></input><br></br><input type="submit" value="send" class="btn btn-large btn-primary" style="width:60px;height:35px;padding:1px 1px;margin-left:640px"/>';
 			}
 			function hidePostText() {
@@ -102,7 +103,7 @@
 				<p:layoutUnit position="west" size="290" style="border:0">
 					<h:panelGrid columns="2" cellpadding="10">
 						<p:graphicImage url="#{resource['img:profile-icon1.jpg']}" />
-						<h:outputText value="Ramlabs" />
+						<h:outputText value="Hi #{managedLoginBean.username}" />
 					</h:panelGrid>
 					<h:form>
 						<p:panel id="pnl" header="Groups" toggleable="true"
@@ -142,7 +143,8 @@
 								<p:inputTextarea rows="1" autoResize="true" id="postText"
 									onclick="addElement()" cols="450" style="width:687px" />
 								<p:watermark for="postText" value="Type your post here..." />
-								<div id="clickedText" />
+								<!-- <div id="clickedText" /> -->
+								<p:inputText id="hide1" style="display:none"/>
 							</h:form>
 
 						</p:tab>
