@@ -57,10 +57,12 @@ public class HibernateCRUD {
 		ctr.add(Restrictions.ne("userId",userId ));
 		return (List<Share>)ctr.list();
 	}
+	@SuppressWarnings("unchecked")
 	private int getUserId(User user){
 		Session s1=hibernateDAO.getSession();
     	Query query=s1.createQuery("select userId from User where username='"+user.getUsername()+"' and password='"+user.getPassword()+"'");
-    	List<Integer> i=(List<Integer>)query.list();
+    	
+		List<Integer> i=(List<Integer>)query.list();
 		Integer j=i.get(0);
 		return j;
 	}
