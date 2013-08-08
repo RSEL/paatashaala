@@ -7,7 +7,7 @@
 	<version>0.1-SNAPSHOT</version>
 	<name>Paatashaala prototype</name>
 	<description>School collaboration platform</description>
-	<url>https://github.com/tharagit/Paatashaala</url>
+	<url>https://github.com/RSEL/Paatashaala/tree/master/paataprot</url>
 	<packaging>war</packaging>
 
 	<repositories>
