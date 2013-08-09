@@ -21,7 +21,7 @@
 			<name>MVN Repo</name>
 			<url>http://mvnrepository.com/artifact</url>
 		</repository>
-		
+
 	</repositories>
 
 	<dependencies>
@@ -51,12 +51,12 @@
 			<version>1.2</version>
 		</dependency>
 
-		<dependency> 
-		   <groupId>javax.servlet</groupId> 
-		    <artifactId>servlet-api</artifactId> 
-			<version>2.5</version> 
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.5</version>
 			<scope>provided</scope>
-	    </dependency>
+		</dependency>
 
 		<dependency>
 			<groupId>javax.servlet.jsp</groupId>
@@ -73,20 +73,20 @@
 
 		<!-- Tomcat 6 need this <dependency> <groupId>com.sun.el</groupId> <artifactId>el-ri</artifactId> 
 			<version>1.0</version> </dependency> -->
-      <!--JUnit deoendency  -->
+		<!--JUnit deoendency -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.8</version>
 			<scope>test</scope>
 		</dependency>
-		
-   <!-- MySQL database driver -->
-	<dependency>
-		<groupId>mysql</groupId>
-		<artifactId>mysql-connector-java</artifactId>
-		<version>5.1.9</version>
-	</dependency>
+
+		<!-- MySQL database driver -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.9</version>
+		</dependency>
 		<!-- Spring framework -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -101,12 +101,12 @@
 		</dependency>
 
 		<!-- Hibernate core -->
-        <dependency>
-	      <groupId>org.hibernate</groupId>
-	      <artifactId>hibernate-core</artifactId>
-	      <version>3.6.4.Final</version>
-        </dependency>
-  <!-- Hibernate core library dependecy start -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>3.6.4.Final</version>
+		</dependency>
+		<!-- Hibernate core library dependecy start -->
 		<dependency>
 			<groupId>dom4j</groupId>
 			<artifactId>dom4j</artifactId>
@@ -139,52 +139,49 @@
 			<version>2.7.6</version>
 		</dependency>
 		<!-- Hibernate query library dependecy end -->
-		
-		<!--CDI dependency  -->
-   <dependency>
-      <groupId>javax.inject</groupId>
-      <artifactId>javax.inject</artifactId>
-      <version>1</version>
-    </dependency>
-    <!--common-codec dependency  -->
-    <dependency>
-	    <groupId>commons-codec</groupId>
-	    <artifactId>commons-codec</artifactId>
-	    <version>1.8</version>
-    </dependency>
-    
-    <!--javassist dependency  --> 
-      <dependency>
+
+		<!--CDI dependency -->
+		<dependency>
+			<groupId>javax.inject</groupId>
+			<artifactId>javax.inject</artifactId>
+			<version>1</version>
+		</dependency>
+		<!--common-codec dependency -->
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+			<version>1.8</version>
+		</dependency>
+
+		<!--javassist dependency -->
+		<dependency>
 			<groupId>javassist</groupId>
 			<artifactId>javassist</artifactId>
 			<version>3.12.1.GA</version>
-      </dependency>  
-      
-      <dependency>
-	       <groupId>org.slf4j</groupId>
-	       <artifactId>slf4j-log4j12</artifactId>
-	       <version>1.7.5</version>
-      </dependency>
-      <!--Primefaces Dependency  -->
-      <dependency>
-	     <groupId>org.primefaces.extensions</groupId>
-	     <artifactId>all-themes</artifactId>
-	     <version>1.0.7</version>
-      </dependency>
-      <!-- lang3  -->
-      <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>3.1</version>
-        </dependency>
-      <!-- servlet-api -->             
-<!--        <dependency>
-	     <groupId>javax.servlet</groupId>
-	     <artifactId>javax.servlet-api</artifactId>
-	     <version>3.0.1</version>
-      </dependency> -->
-            
-                                   
+		</dependency>
+
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>1.7.5</version>
+		</dependency>
+		<!--Primefaces Dependency -->
+		<dependency>
+			<groupId>org.primefaces.extensions</groupId>
+			<artifactId>all-themes</artifactId>
+			<version>1.0.7</version>
+		</dependency>
+		<!-- lang3 -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.1</version>
+		</dependency>
+		<!-- servlet-api -->
+		<!-- <dependency> <groupId>javax.servlet</groupId> <artifactId>javax.servlet-api</artifactId> 
+			<version>3.0.1</version> </dependency> -->
+
+
 		<!-- <dependency> <groupId>javax.faces</groupId> <artifactId>jsf-api</artifactId> 
 			<version>1.2-b19</version> </dependency> -->
 
@@ -302,11 +299,11 @@
 					</execution>
 				</executions>
 			</plugin>
-	<plugin>
-        <groupId>org.mortbay.jetty</groupId>
-        <artifactId>jetty-maven-plugin</artifactId>
-        <version>7.6.8.v20121106</version>
-      </plugin>
+			<plugin>
+				<groupId>org.mortbay.jetty</groupId>
+				<artifactId>jetty-maven-plugin</artifactId>
+				<version>7.6.8.v20121106</version>
+			</plugin>
 		</plugins>
 	</build>
 </project>
