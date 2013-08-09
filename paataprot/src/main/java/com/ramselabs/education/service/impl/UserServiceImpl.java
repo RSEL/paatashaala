@@ -30,9 +30,9 @@ public class UserServiceImpl implements UserService,Serializable {
 	}
 
 	@Override
-	public List<Share> getAutocompleteUserList() {
-		
-		return hCrud.getUserAutoCompleteList();
+	public List<Share> getAutocompleteUserList(User user) {
+		int userId=hCrud.getUserId(user);
+		return hCrud.getUserAutoCompleteList(userId);
 	}
 
 }

@@ -22,8 +22,8 @@
 		<script type="text/javascript">
 			function addElement() {
 				document.getElementById('clickedText').style.display = 'inline';
-				document.getElementById('tabView:postForm:hide1').style.display = 'inline';
-				document.getElementById('clickedText').innerHTML = '<input type="text" placeholder="send to..." id="sendToText" name="sendToText" style="width:684px"></input><br></br><input type="submit" value="send" class="btn btn-large btn-primary" style="width:60px;height:35px;padding:1px 1px;margin-left:640px"/>';
+				/* 				document.getElementById('tabView:postForm:hide1').style.display = 'inline';
+				 document.getElementById('clickedText').innerHTML = '<input type="text" placeholder="send to..." id="sendToText" name="sendToText" style="width:684px"></input><br></br><input type="submit" value="send" class="btn btn-large btn-primary" style="width:60px;height:35px;padding:1px 1px;margin-left:640px"/>'; */
 			}
 			function hidePostText() {
 				document.getElementById('clickedText').style.display = 'none';
@@ -31,7 +31,7 @@
 			}
 			function addAlertText() {
 				document.getElementById('clickedAlertText').style.display = 'inline';
-				document.getElementById('clickedAlertText').innerHTML = '<input type="text" placeholder="send to..." id="alertToText" name="alertToText" style="width:684px"></input><br></br><input type="submit" value="send" class="btn btn-large btn-primary" style="width:60px;height:35px;padding:1px 1px;margin-left:640px"/>';
+				document.getElementById('clickedAlertText').innerHTML = '<input type="text" placeholder="send to..." id="alertToText" name="alertToText" style="width:682px"></input><br></br><input type="submit" value="send" class="btn btn-large btn-primary" style="width:70px;height:35px;padding:1px 1px;margin-left:626px;border-radius: 1pc"/>';
 			}
 		</script>
 	</h:head>
@@ -143,14 +143,25 @@
 								<p:inputTextarea rows="1" autoResize="true" id="postText"
 									onclick="addElement()" cols="450" style="width:687px" />
 								<p:watermark for="postText" value="Type your post here..." />
-								<div id="clickedText" />
-								 <p:autoComplete id="hide1" value="#{autocompleteBeanController.selectedShare}" completeMethod="#{autocompleteBeanController.completeShare}"
-                                   var="share" itemLabel="#{share.name}" itemValue="#{share}" forceSelection="true" converter="#{userAutocompleteConverter}" multiple="true">
-                                   <p:column>
-                                       <p:graphicImage value="/resources/img/profile-photo/#{share.name}.jpg" width="80" height="50"/>
-                                   </p:column>
-                                   <p:column>#{share.name}</p:column>
-                                  </p:autoComplete>
+								<div id="clickedText" style="display: none">
+									<p:autoComplete id="autoComp"
+										value="#{autocompleteBeanController.selectedShare}"
+										completeMethod="#{autocompleteBeanController.completeShare}"
+										var="share" itemLabel="#{share.name}" itemValue="#{share}"
+										forceSelection="true" converter="#{userAutocompleteConverter}"
+										multiple="true" >
+										<p:column>
+											<p:graphicImage
+												value="/resources/img/profile-photo/#{share.name}.jpg"
+												width="30" height="20" />
+											&nbsp;&nbsp;&nbsp;	#{share.name}
+										</p:column>
+										
+									</p:autoComplete>
+									<p:watermark for="autoComp" value="send to.."/>
+									<p:commandButton value="Send"
+										style="width:70px;height:35px;padding:1px 1px;margin-left:627px;background:#006dcc;border-radius: 1pc;margin-top: 10px" />
+								</div>		
 							</h:form>
 
 						</p:tab>
@@ -170,19 +181,20 @@
 
 					<p:dataList value="#{newsFeed.persons}" var="person" id="persons"
 						type="none">
-					<p:panel style="background: #ffffff"> 	
-                       <p:panel style="border:0;float:left;background: #ffffff">  
-						<p:graphicImage
-							value="/resources/img/profile-photo/#{person.personPic}.png"
-							width="60" height="60" style="margin-left:0px" />
+						<p:panel style="background: #ffffff">
+							<p:panel style="border:0;float:left;background: #ffffff">
+								<p:graphicImage
+									value="/resources/img/profile-photo/#{person.personPic}.png"
+									width="60" height="60" style="margin-left:0px" />
+							</p:panel>
+							<p:panel style="border:0;background: #ffffff">
+								<h:outputText value="#{person.description}" style="" />
+								<p:panel style="margin-left: 80px">
+									<h:outputText
+										value="Ram Softwere Engineering Labs Pvt. Ltd. National Village Games KHB #2 Arun Kumar Krishnamurthy" />
+								</p:panel>
+							</p:panel>
 						</p:panel>
-						<p:panel style="border:0;background: #ffffff">	
-							<h:outputText value="#{person.description}" style=""/>
-						<p:panel style="margin-left: 80px">
-							<h:outputText value="Ram Softwere Engineering Labs Pvt. Ltd. National Village Games KHB #2 Arun Kumar Krishnamurthy" />
-						</p:panel>
-					    </p:panel>
-					  </p:panel>  	
 					</p:dataList>
 				</p:layoutUnit>
 				<p:layoutUnit position="east" size="290" style="border:0">
@@ -270,24 +282,26 @@
 							<f:selectItem itemLabel="Social Studies" itemValue="ss" />
 							<f:selectItem itemLabel="Health/P.E." itemValue="hl" />
 						</p:selectOneMenu>
-						<p:message for="areaMenu"/>
+						<p:message for="areaMenu" />
 						<hr />
 						<p:commandButton value="Create" update="groupFormBasic" />
 					</h:form>
 				</p:tab>
 				<p:tab id="tab2" title="Advance" titleStyle="">
 					<h:form id="groupFormAdvance">
-						<p:selectManyCheckbox layout="pageDirection" label="Check" required="true" id="checkBox">
+						<p:selectManyCheckbox layout="pageDirection" label="Check"
+							required="true" id="checkBox">
 							<f:selectItem itemLabel="Default all new members to read-only"
 								itemValue="readOnly" />
 							<f:selectItem itemLabel="Moderate all Posts and Replies"
 								itemValue="moderate" />
 						</p:selectManyCheckbox>
-						<p:message for="checkBox"/>
+						<p:message for="checkBox" />
 						<hr />
 						<p:inputText id="groupDescription"
-							style="width:330px;margin-bottom:0px" label="Group Description" required="true"/>
-							<p:message for="groupDescription"/>
+							style="width:330px;margin-bottom:0px" label="Group Description"
+							required="true" />
+						<p:message for="groupDescription" />
 						<p:watermark for="groupDescription" value="GroupDescription" />
 						<hr />
 						<p:commandButton value="Create" />
@@ -295,7 +309,11 @@
 				</p:tab>
 			</p:tabView>
 		</p:dialog>
-
+		<style type="text/css">
+.ui-autocomplete-multiple-container {
+	width: 695px;
+}
+</style>
 	</h:body>
 </f:view>
 </html>

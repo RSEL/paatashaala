@@ -7,6 +7,6 @@ import com.ramselabs.education.entity.User;
 
 public interface UserService {
 	public boolean doLogin(User user);
-	public List<Share> getAutocompleteUserList();
+	public List<Share> getAutocompleteUserList(User user);
 
 }

@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Scope;
 
 import com.ramselabs.education.converter.UserAutocompleteConverter;
@@ -42,9 +43,9 @@ public class AutocompleteBeanController implements Serializable {
 		List<Share> suggestions = new ArrayList<Share>();
 		Map<String, Share> shares = userConverter.getShares();
 		for (String key : shares.keySet()) {
-			if (key.startsWith(input)) {
+			   if (StringUtils.startsWithIgnoreCase(key, input)) {
 				suggestions.add(shares.get(key));
-			}
+			   }
 		}
 		return suggestions;
 	}

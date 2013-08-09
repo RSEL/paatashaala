@@ -52,7 +52,7 @@ public class LoginController implements Serializable {
 	}
 
 	public String verifyLogin() {
-		User userBean=ManagedLoginBean.mappToLoginBean(login);
+		User userBean=ManagedLoginBean.mappToUserEntity(login);
 		System.out.println("Login-verify");
 		if (serInface.doLogin(userBean)){
 			loggedIn=true;

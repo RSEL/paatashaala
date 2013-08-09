@@ -14,6 +14,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Scope;
 
 import com.ramselabs.education.entity.Share;
+import com.ramselabs.education.entity.User;
+import com.ramselabs.education.managedbean.ManagedLoginBean;
 import com.ramselabs.education.service.UserService;
 
 @Named
@@ -23,6 +25,14 @@ public class UserAutocompleteConverter implements Converter {
 	private UserService userService;
 	private List<Share> list;
 	public Map<String, Share> shares;
+
+	@Inject
+	private ManagedLoginBean login;
+	
+	
+	public void setLogin(ManagedLoginBean login) {
+		this.login = login;
+	}
 
 	public void setUserService(UserService userService) {
 		this.userService = userService;
@@ -45,7 +55,8 @@ public class UserAutocompleteConverter implements Converter {
 
 	public List<Share> getList() {
 		if (list == null) {
-			list = userService.getAutocompleteUserList();
+			User user=ManagedLoginBean.mappToUserEntity(login);
+			list = userService.getAutocompleteUserList(user);
 		}
 		return list;
 	}

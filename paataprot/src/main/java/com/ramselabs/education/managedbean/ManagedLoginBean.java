@@ -27,7 +27,7 @@ public class ManagedLoginBean implements Serializable{
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public static User mappToLoginBean(ManagedLoginBean mngBean){
+	public static User mappToUserEntity(ManagedLoginBean mngBean){
 		User userBean=new User();
 		userBean.setUsername(mngBean.getUsername());
 		userBean.setPassword(mngBean.getPassword());
