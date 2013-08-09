@@ -10,7 +10,7 @@ public class Share {
 	@Id @GeneratedValue
 	private int shareId;
 	private String name;
-	private String userId;
+	private int userId;
 	public int getShareId() {
 		return shareId;
 	}
@@ -23,12 +23,10 @@ public class Share {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getUserId() {
+	public int getUserId() {
 		return userId;
 	}
-	public void setUserId(String userId) {
+	public void setUserId(int userId) {
 		this.userId = userId;
 	}
-	
-
 }

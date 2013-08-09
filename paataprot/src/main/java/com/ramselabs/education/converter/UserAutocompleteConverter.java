@@ -7,63 +7,64 @@ import java.util.Map;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
-import javax.faces.convert.FacesConverter;
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.context.annotation.Scope;
 
 import com.ramselabs.education.entity.Share;
 import com.ramselabs.education.service.UserService;
 
-@FacesConverter(value="com.ramselabs.education.converter.UserAutocompleteConverter")
-public class UserAutocompleteConverter implements Converter{
-    @Inject
+@Named
+@Scope("session")
+public class UserAutocompleteConverter implements Converter {
+	@Inject
 	private UserService userService;
-    
+	private List<Share> list;
+	public Map<String, Share> shares;
+
 	public void setUserService(UserService userService) {
 		this.userService = userService;
 	}
 
-	private List<Share> list=userService.getAutocompleteUserList();
-    
-	private Map<String, Share> shares=new HashMap<String, Share>();
-	{
-		for(Share sh:list){
-			shares.put(sh.getName(), sh);
-		}
+	public UserService getUserService() {
+		return userService;
 	}
-	
-    public Map<String, Share> getShares() {
+
+	public Map<String, Share> getShares() {
+		if (shares == null) {
+			shares = new HashMap<String, Share>();
+			for (Share sh : getList()) {
+				shares.put(sh.getName(), sh);
+			}
+		}
+
 		return shares;
 	}
 
-	public void setShares(Map<String, Share> shares) {
-		this.shares = shares;
-	}
-
 	public List<Share> getList() {
+		if (list == null) {
+			list = userService.getAutocompleteUserList();
+		}
 		return list;
-	}
-
-	public void setList(List<Share> list) {
-		this.list = list;
 	}
 
 	@Override
 	public Object getAsObject(FacesContext arg0, UIComponent arg1, String value) {
-		if(StringUtils.isBlank(value))
-		      return null;
+		if (StringUtils.isBlank(value))
+			return null;
 		else
-			  return shares.get(value);
+			return shares.get(value);
 	}
 
 	@Override
 	public String getAsString(FacesContext arg0, UIComponent arg1, Object value) {
-		 if (value == null || value.equals("")) {
-	            return "";
-	        } else {
-	            return String.valueOf(((Share) value).getName());
-	        }
+		if (value == null || value.equals("")) {
+			return "";
+		} else {
+			return String.valueOf(((Share) value).getName());
+		}
 	}
 
 }

@@ -144,7 +144,13 @@
 									onclick="addElement()" cols="450" style="width:687px" />
 								<p:watermark for="postText" value="Type your post here..." />
 								<div id="clickedText" />
-								<p:inputText id="hide1" style="display:none"/>
+								 <p:autoComplete id="hide1" value="#{autocompleteBeanController.selectedShare}" completeMethod="#{autocompleteBeanController.completeShare}"
+                                   var="share" itemLabel="#{share.name}" itemValue="#{share}" forceSelection="true" converter="#{userAutocompleteConverter}" multiple="true">
+                                   <p:column>
+                                       <p:graphicImage value="/resources/img/profile-photo/#{share.name}.jpg" width="80" height="50"/>
+                                   </p:column>
+                                   <p:column>#{share.name}</p:column>
+                                  </p:autoComplete>
 							</h:form>
 
 						</p:tab>

@@ -1,39 +1,40 @@
 <apps-config>
-<config-hibernate>
-  <prop name="hibernate.connection.driver_class">
-       com.mysql.jdbc.Driver
-  </prop>
-  <prop name="hibernate.connection.url">
-       jdbc:mysql://localhost:3306/ramlabs
-  </prop>
-  <prop name="hibernate.connection.username">
-       NyiG//i7loPFfdUoO9BFuA==
-  </prop>
-  <prop name="hibernate.connection.password">
-       NyiG//i7loPFfdUoO9BFuA==
-  </prop>
-    <prop name="hibernate.connection.pool_size">
-       2
-  </prop>
-  <prop name="hibernate.dialect">
-       org.hibernate.dialect.MySQL5Dialect
-  </prop>
-  <prop name="hibernate.current_session_context_class">
-       org.hibernate.context.ManagedSessionContext
-  </prop>
-  <prop name="hibernate.cache.provider_class">
-       org.hibernate.cache.NoCacheProvider
-  </prop>
-   <prop name="hibernate.show_sql">
-       true
-  </prop>
-  <prop name="hibernate.hbm2ddl.auto">
-       update
-  </prop>
-  <prop name="annotatedClass">
-     <list>
-        <value>com.ramselabs.education.entity.User</value>
-     </list> 
-  </prop>
-</config-hibernate>
+	<config-hibernate>
+		<prop name="hibernate.connection.driver_class">
+			com.mysql.jdbc.Driver
+		</prop>
+		<prop name="hibernate.connection.url">
+			jdbc:mysql://localhost:3306/ramlabs
+		</prop>
+		<prop name="hibernate.connection.username">
+			NyiG//i7loPFfdUoO9BFuA==
+		</prop>
+		<prop name="hibernate.connection.password">
+			NyiG//i7loPFfdUoO9BFuA==
+		</prop>
+		<prop name="hibernate.connection.pool_size">
+			2
+		</prop>
+		<prop name="hibernate.dialect">
+			org.hibernate.dialect.MySQL5Dialect
+		</prop>
+		<prop name="hibernate.current_session_context_class">
+			org.hibernate.context.ManagedSessionContext
+		</prop>
+		<prop name="hibernate.cache.provider_class">
+			org.hibernate.cache.NoCacheProvider
+		</prop>
+		<prop name="hibernate.show_sql">
+			true
+		</prop>
+		<prop name="hibernate.hbm2ddl.auto">
+			update
+		</prop>
+		<prop name="annotatedClass">
+			<list>
+				<value>com.ramselabs.education.entity.User</value>
+				<value>com.ramselabs.education.entity.Share</value>
+			</list>
+		</prop>
+	</config-hibernate>
 </apps-config>

@@ -27,6 +27,7 @@ public class HibernateCRUD {
 	public boolean loginAuthenticate(User user){
     	Session s1=hibernateDAO.getSession();
     	userId=getUserId(user);
+    	System.out.println(userId);
     	Query query=s1.createQuery("from User where username='"+user.getUsername()+"' and password='"+user.getPassword()+"'");
 		if(query.list().size()==0)
 		    return false;
@@ -54,7 +55,7 @@ public class HibernateCRUD {
 	public List<Share> getUserAutoCompleteList(){
 		Session s1=hibernateDAO.getSession();
 		Criteria ctr=s1.createCriteria(Share.class);
-		ctr.add(Restrictions.ne("userId",userId ));
+		ctr.add(Restrictions.ne("userId",userId));
 		return (List<Share>)ctr.list();
 	}
 	@SuppressWarnings("unchecked")
@@ -63,7 +64,9 @@ public class HibernateCRUD {
     	Query query=s1.createQuery("select userId from User where username='"+user.getUsername()+"' and password='"+user.getPassword()+"'");
     	
 		List<Integer> i=(List<Integer>)query.list();
-		Integer j=i.get(0);
+		if(i.isEmpty())
+			return 0;
+		  Integer j=i.get(0);
 		return j;
 	}
 }

@@ -3,7 +3,7 @@ package com.ramselabs.education.controller;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -15,35 +15,37 @@ import com.ramselabs.education.entity.Share;
 
 @Named
 @Scope("session")
-public class AutocompleteBeanController implements Serializable{
-	
+public class AutocompleteBeanController implements Serializable {
+
 	private static final long serialVersionUID = 4205128731491922702L;
 	private Share selectedShare;
 	@Inject
-	private UserAutocompleteConverter converter;
-	
-	public void setConverter(UserAutocompleteConverter converter) {
-		this.converter = converter;
+	private UserAutocompleteConverter userConverter;
+
+	public UserAutocompleteConverter getUserConverter() {
+		return userConverter;
 	}
+
+	public void setUserConverter(UserAutocompleteConverter userConverter) {
+		this.userConverter = userConverter;
+	}
+
 	public Share getSelectedShare() {
 		return selectedShare;
 	}
+
 	public void setSelectedShare(Share selectedShare) {
 		this.selectedShare = selectedShare;
 	}
 
-    public List<Share> completeCar(String input) {
-        List<Share> suggestions = new ArrayList<Share>();
-        Set<String> keys = converter.getShares().keySet();
-
-        for (String key : keys) {
-            if (key.startsWith(input)) {
-                suggestions.add(converter.getShares().get(key));
-            }
-        }
-        return suggestions;
-    }
-	
-	
-
+	public List<Share> completeShare(String input) {
+		List<Share> suggestions = new ArrayList<Share>();
+		Map<String, Share> shares = userConverter.getShares();
+		for (String key : shares.keySet()) {
+			if (key.startsWith(input)) {
+				suggestions.add(shares.get(key));
+			}
+		}
+		return suggestions;
+	}
 }
