@@ -10,6 +10,8 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
+import com.ramselabs.education.entity.Post;
+import com.ramselabs.education.entity.Post_Share;
 import com.ramselabs.education.entity.Share;
 import com.ramselabs.education.entity.User;
 
@@ -63,5 +65,22 @@ public class HibernateCRUD {
 			return 0;
 		  Integer j=list.get(0);
 		return j;
+	}
+	public int insertPost(Post post){
+		Session session=hibernateDAO.getSession();
+		session.beginTransaction();
+		session.save(post);
+		return 1;
+	}
+	public int insertPost_Share(Post_Share post_share){
+		Session session=hibernateDAO.getSession();
+		session.beginTransaction();
+		session.save(post_share);
+		return 1;
+	}
+	public Post getPost(int userId){
+		Session session=hibernateDAO.getSession();
+		Post post=(Post)session.get(Post.class, userId);
+		return post;
 	}
 }

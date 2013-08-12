@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
+import javax.faces.convert.FacesConverter;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -20,6 +21,7 @@ import com.ramselabs.education.service.UserService;
 
 @Named
 @Scope("session")
+@FacesConverter(forClass=Share.class)
 public class UserAutocompleteConverter implements Converter {
 	@Inject
 	private UserService userService;
@@ -63,17 +65,23 @@ public class UserAutocompleteConverter implements Converter {
 
 	@Override
 	public Object getAsObject(FacesContext arg0, UIComponent arg1, String value) {
-		if (StringUtils.isBlank(value))
+		if (StringUtils.isBlank(value)){
+			System.out.println("converter String value is blank");
 			return null;
-		else
+		}
+		else{
+			System.out.println("converter String value is not blank");
 			return shares.get(value);
+		}
 	}
 
 	@Override
 	public String getAsString(FacesContext arg0, UIComponent arg1, Object value) {
 		if (value == null || value.equals("")) {
+			System.out.println("converter Object value is blank");
 			return "";
 		} else {
+			System.out.println("converter Object value is not blank");
 			return String.valueOf(((Share) value).getName());
 		}
 	}

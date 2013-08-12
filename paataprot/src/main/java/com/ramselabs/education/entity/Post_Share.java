@@ -10,16 +10,17 @@ import javax.persistence.Id;
 public class Post_Share {
 	
 	@Id @GeneratedValue
-	private int id;
+	private int idPostShare;
 	private int postId;
 	private int shareId;
     private String type;
     private Date date;
-	public int getId() {
-		return id;
+	
+	public int getIdPostShare() {
+		return idPostShare;
 	}
-	public void setId(int id) {
-		this.id = id;
+	public void setIdPostShare(int idPostShare) {
+		this.idPostShare = idPostShare;
 	}
 	public int getPostId() {
 		return postId;

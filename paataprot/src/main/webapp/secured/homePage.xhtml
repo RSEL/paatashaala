@@ -1,9 +1,10 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui">
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
 <f:view contentType="text/html" locale="en">
 	<h:head>
 		<f:facet name="first">
@@ -141,26 +142,27 @@
 						<p:tab id="tab1" title="Post" titleStyle="">
 							<h:form style="margin:0px 0px" id="postForm">
 								<p:inputTextarea rows="1" autoResize="true" id="postText"
-									onclick="addElement()" cols="450" style="width:687px" />
+									onclick="addElement()" cols="450" style="width:687px" value="#{postBean.description}"/>
 								<p:watermark for="postText" value="Type your post here..." />
 								<div id="clickedText" style="display: none">
 									<p:autoComplete id="autoComp"
-										value="#{autocompleteBeanController.selectedShare}"
+										value="#{autocompleteBeanController.selectedShares}"
 										completeMethod="#{autocompleteBeanController.completeShare}"
 										var="share" itemLabel="#{share.name}" itemValue="#{share}"
-										forceSelection="true" converter="#{userAutocompleteConverter}"
-										multiple="true" >
+										 converter="#{userAutocompleteConverter}"
+										forceSelection="true" size="50" multiple="true">
+										<p:ajax event="itemUnselect" listener="#{autocompleteBeanController.handleUnselect}"/>
 										<p:column>
 											<p:graphicImage
 												value="/resources/img/profile-photo/#{share.name}.jpg"
 												width="30" height="20" />
-											&nbsp;&nbsp;&nbsp;	#{share.name}
+											&nbsp;&nbsp;&nbsp;#{share.name}
 										</p:column>
 										
 									</p:autoComplete>
 									<p:watermark for="autoComp" value="send to.."/>
 									<p:commandButton value="Send"
-										style="width:70px;height:35px;padding:1px 1px;margin-left:627px;background:#006dcc;border-radius: 1pc;margin-top: 10px" />
+										style="width:70px;height:35px;padding:1px 1px;margin-left:627px;background:#006dcc;border-radius: 1pc;margin-top: 10px"/>
 								</div>		
 							</h:form>
 
@@ -311,8 +313,9 @@
 		</p:dialog>
 		<style type="text/css">
 .ui-autocomplete-multiple-container {
-	width: 695px;
+	width: 682px;
 }
+.ui-autocomplete-input.ui-inputfield{width:682px !important;}
 </style>
 	</h:body>
 </f:view>
