@@ -1,5 +1,7 @@
 package com.ramselabs.education.util;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -11,9 +13,9 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
 import com.ramselabs.education.entity.Post;
-import com.ramselabs.education.entity.Post_Share;
-import com.ramselabs.education.entity.Share;
-import com.ramselabs.education.entity.User;
+import com.ramselabs.education.entity.PostShare;
+import com.ramselabs.education.entity.UserProfile;
+import com.ramselabs.education.model.PostDescriptionModel;
 
 @Named
 public class HibernateCRUD {
@@ -23,9 +25,9 @@ public class HibernateCRUD {
 		this.hibernateDAO = hibernateDAO;
 	}
 
-	public boolean loginAuthenticate(User user){
+	public boolean loginAuthenticate(UserProfile user){
     	Session session=hibernateDAO.getSession();
-    	Query query=session.createQuery("from User where username='"+user.getUsername()+"' and password='"+user.getPassword()+"'");
+    	Query query=session.createQuery("from UserProfile where username='"+user.getUsername()+"' and password='"+user.getPassword()+"'");
 		if(query.list().size()==0)
 		    return false;
 		else
@@ -49,38 +51,72 @@ public class HibernateCRUD {
 		return s2;
     }*/
 	@SuppressWarnings("unchecked")
-	public List<Share> getUserAutoCompleteList(int userId){
+	public List<UserProfile> getUserAutoCompleteList(int userId){
 		Session session=hibernateDAO.getSession();
-		Criteria ctr=session.createCriteria(Share.class);
+		Criteria ctr=session.createCriteria(UserProfile.class);
 		ctr.add(Restrictions.ne("userId",userId));
-		return (List<Share>)ctr.list();
+		
+		return (List<UserProfile>)ctr.list();
+	}
+
+	public UserProfile getPersistentUser(UserProfile user){
+		Session session=hibernateDAO.getSession();
+		int userId=getUserId(user);
+		System.out.println((UserProfile)session.get(UserProfile.class, userId));
+    	return (UserProfile)session.get(UserProfile.class, userId);
+	}
+	public int insertPosts(Post post,PostShare postShare){
+		Session session=hibernateDAO.getSession();
+		session.beginTransaction();
+		session.save(postShare);
+		session.save(post);
+		session.getTransaction().commit();
+		session.flush();
+		session.close();
+		return 1;
+	}
+	
+	public List<PostDescriptionModel> getPostPersons(int userId){
+		List<PostDescriptionModel> listPerson=new ArrayList<PostDescriptionModel>();
+		Session session=hibernateDAO.getSession();
+		UserProfile userProfile=(UserProfile)session.get(UserProfile.class,userId);
+		Collection<PostShare> posts=userProfile.getUserPostShare();
+		for(PostShare postShare:posts){
+			PostDescriptionModel postDescription=new PostDescriptionModel();
+			postDescription.setPersonName(getPosterName(postShare.getPost().getPosterId()));
+			postDescription.setPostDescription(postShare.getPost().getDescription());
+			postDescription.setUserType(postShare.getUserType());
+			postDescription.setDateOfPosting(postShare.getPostDate());
+			listPerson.add(postDescription);
+		}
+		return listPerson;
 	}
 	@SuppressWarnings("unchecked")
-	public int getUserId(User user){
+	public int getUserId(UserProfile user){
 		Session session=hibernateDAO.getSession();
-    	Query query=session.createQuery("select userId from User where username='"+user.getUsername()+"' and password='"+user.getPassword()+"'");
-    	
+		Query query=session.createQuery("select userId from UserProfile where username = :username and password = :password");
+		query.setInteger("username",user.getUserId());
+		query.setString("password", user.getPassword());
 		List<Integer> list=(List<Integer>)query.list();
 		if(list.isEmpty())
-			return 0;
-		  Integer j=list.get(0);
-		return j;
+			System.out.println("List is empty for userId");
+		int userId=0;
+		  for(int j:list){
+			  System.out.println("List is not empty");
+			  j=list.get(0);
+			  userId=j;
+		  }
+		  return userId;
 	}
-	public int insertPost(Post post){
+	
+	@SuppressWarnings("unchecked")
+	public String getPosterName(int userId){
 		Session session=hibernateDAO.getSession();
-		session.beginTransaction();
-		session.save(post);
-		return 1;
-	}
-	public int insertPost_Share(Post_Share post_share){
-		Session session=hibernateDAO.getSession();
-		session.beginTransaction();
-		session.save(post_share);
-		return 1;
-	}
-	public Post getPost(int userId){
-		Session session=hibernateDAO.getSession();
-		Post post=(Post)session.get(Post.class, userId);
-		return post;
+		Query query=session.createQuery("select displayName from UserProfile where userId = :userId");
+		query.setInteger("userId", userId);
+		List<String> list=(List<String>)query.list();
+		if(list.isEmpty())
+			System.out.println("List is empty for display name");
+		return list.get(0);
 	}
 }

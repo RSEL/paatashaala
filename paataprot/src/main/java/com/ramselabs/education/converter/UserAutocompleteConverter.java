@@ -15,7 +15,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Scope;
 
 import com.ramselabs.education.entity.Share;
-import com.ramselabs.education.entity.User;
+import com.ramselabs.education.entity.UserProfile;
 import com.ramselabs.education.managedbean.ManagedLoginBean;
 import com.ramselabs.education.service.UserService;
 
@@ -25,8 +25,8 @@ import com.ramselabs.education.service.UserService;
 public class UserAutocompleteConverter implements Converter {
 	@Inject
 	private UserService userService;
-	private List<Share> list;
-	public Map<String, Share> shares;
+	private List<UserProfile> list;
+	public Map<String, UserProfile> userProfiles;
 
 	@Inject
 	private ManagedLoginBean login;
@@ -44,20 +44,20 @@ public class UserAutocompleteConverter implements Converter {
 		return userService;
 	}
 
-	public Map<String, Share> getShares() {
-		if (shares == null) {
-			shares = new HashMap<String, Share>();
-			for (Share sh : getList()) {
-				shares.put(sh.getName(), sh);
+	public Map<String, UserProfile> getUserProfiles() {
+		if (userProfiles == null) {
+			userProfiles = new HashMap<String, UserProfile>();
+			for (UserProfile userProfile : getList()) {
+				userProfiles.put(userProfile.getDisplayName(), userProfile);
 			}
 		}
 
-		return shares;
+		return userProfiles;
 	}
 
-	public List<Share> getList() {
+	public List<UserProfile> getList() {
 		if (list == null) {
-			User user=ManagedLoginBean.mappToUserEntity(login);
+			UserProfile user=ManagedLoginBean.mappToUserEntity(login);
 			list = userService.getAutocompleteUserList(user);
 		}
 		return list;
@@ -71,7 +71,7 @@ public class UserAutocompleteConverter implements Converter {
 		}
 		else{
 			System.out.println("converter String value is not blank");
-			return shares.get(value);
+			return userProfiles.get(value);
 		}
 	}
 
@@ -82,7 +82,7 @@ public class UserAutocompleteConverter implements Converter {
 			return "";
 		} else {
 			System.out.println("converter Object value is not blank");
-			return String.valueOf(((Share) value).getName());
+			return String.valueOf(((UserProfile) value).getDisplayName());
 		}
 	}
 

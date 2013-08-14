@@ -7,9 +7,9 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import com.ramselabs.education.entity.Post;
-import com.ramselabs.education.entity.Post_Share;
-import com.ramselabs.education.entity.Share;
-import com.ramselabs.education.entity.User;
+import com.ramselabs.education.entity.PostShare;
+import com.ramselabs.education.entity.UserProfile;
+import com.ramselabs.education.model.PostDescriptionModel;
 import com.ramselabs.education.service.UserService;
 import com.ramselabs.education.util.HibernateCRUD;
 
@@ -26,27 +26,43 @@ public class UserServiceImpl implements UserService,Serializable {
 	}
 
 	@Override
-	public boolean doLogin(User user) {
+	public boolean doLogin(UserProfile user) {
 		
 		return hCrud.loginAuthenticate(user);
 	}
 
 	@Override
-	public List<Share> getAutocompleteUserList(User user) {
-		int userId=hCrud.getUserId(user);
+	public List<UserProfile> getAutocompleteUserList(UserProfile user) {
+		UserProfile userProfile=getPersistentUser(user);
+		int userId=userProfile.getUserId();
+		System.out.println("User Service"+userId);
 		return hCrud.getUserAutoCompleteList(userId);
 	}
 
 	@Override
-	public int inserPost(Post post) {
-		
-		return hCrud.insertPost(post);
+	public List<PostDescriptionModel> getPostPersons(UserProfile user) {
+		int userId=hCrud.getUserId(user);
+		return hCrud.getPostPersons(userId);
 	}
 
 	@Override
-	public int isertPost_Share(Post_Share post_share) {
-		
-		return hCrud.insertPost_Share(post_share);
+	public UserProfile getPersistentUser(UserProfile user) {
+		return hCrud.getPersistentUser(user);
+	}
+
+	@Override
+	public int inserPost(Post post, PostShare postShare) {
+		return hCrud.insertPosts(post,postShare);
+	}
+
+	@Override
+	public int getUserId(UserProfile user) {
+		return hCrud.getUserId(user);
+	}
+
+	@Override
+	public String getDisplayName(int userId) {
+		return hCrud.getPosterName(userId);
 	}
 
 }

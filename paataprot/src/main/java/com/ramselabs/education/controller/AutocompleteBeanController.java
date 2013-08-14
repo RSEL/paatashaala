@@ -15,14 +15,14 @@ import org.primefaces.event.UnselectEvent;
 import org.springframework.context.annotation.Scope;
 
 import com.ramselabs.education.converter.UserAutocompleteConverter;
-import com.ramselabs.education.entity.Share;
+import com.ramselabs.education.entity.UserProfile;
 
 @Named
 @Scope("session")
 public class AutocompleteBeanController implements Serializable {
 
 	private static final long serialVersionUID = 4205128731491922702L;
-	private List<Share> selectedShares;
+	private UserProfile selectedUserProfile;
 	@Inject
 	private UserAutocompleteConverter userConverter;
 
@@ -33,22 +33,23 @@ public class AutocompleteBeanController implements Serializable {
 	public void setUserConverter(UserAutocompleteConverter userConverter) {
 		this.userConverter = userConverter;
 	}
+    
+	
 
-	public List<Share> getSelectedShares() {
-		return selectedShares;
+	public UserProfile getSelectedUserProfile() {
+		return selectedUserProfile;
 	}
 
-	public void setSelectedShares(List<Share> selectedShares) {
-		this.selectedShares = selectedShares;
-		System.out.println("Shares are set :"+selectedShares);
+	public void setSelectedUserProfile(UserProfile selectedUserProfile) {
+		this.selectedUserProfile = selectedUserProfile;
 	}
 
-	public List<Share> completeShare(String input) {
-		List<Share> suggestions = new ArrayList<Share>();
-		Map<String, Share> shares = userConverter.getShares();
-		for (String key : shares.keySet()) {
+	public List<UserProfile> completeUserProfile(String input) {
+		List<UserProfile> suggestions = new ArrayList<UserProfile>();
+		Map<String, UserProfile> userProfile = userConverter.getUserProfiles();
+		for (String key : userProfile.keySet()) {
 			   if (StringUtils.startsWithIgnoreCase(key, input)) {
-				suggestions.add(shares.get(key));
+				suggestions.add(userProfile.get(key));
 			   }
 		}
 

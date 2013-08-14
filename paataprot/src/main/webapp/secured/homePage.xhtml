@@ -141,28 +141,29 @@
 						onTabShow="hidePostText()">
 						<p:tab id="tab1" title="Post" titleStyle="">
 							<h:form style="margin:0px 0px" id="postForm">
+							   <p:growl id="growl"/>
 								<p:inputTextarea rows="1" autoResize="true" id="postText"
 									onclick="addElement()" cols="450" style="width:687px" value="#{postBean.description}"/>
 								<p:watermark for="postText" value="Type your post here..." />
 								<div id="clickedText" style="display: none">
 									<p:autoComplete id="autoComp"
-										value="#{autocompleteBeanController.selectedShares}"
-										completeMethod="#{autocompleteBeanController.completeShare}"
-										var="share" itemLabel="#{share.name}" itemValue="#{share}"
+										value="#{autocompleteBeanController.selectedUserProfile}"
+										completeMethod="#{autocompleteBeanController.completeUserProfile}"
+										var="userProfile" itemLabel="#{userProfile.displayName}" itemValue="#{userProfile}"
 										 converter="#{userAutocompleteConverter}"
-										forceSelection="true" size="50" multiple="true">
+										forceSelection="true">
 										<p:ajax event="itemUnselect" listener="#{autocompleteBeanController.handleUnselect}"/>
 										<p:column>
 											<p:graphicImage
-												value="/resources/img/profile-photo/#{share.name}.jpg"
+												value="/resources/img/profile-photo/#{userProfile.displayName}.jpg"
 												width="30" height="20" />
-											&nbsp;&nbsp;&nbsp;#{share.name}
+											&nbsp;&nbsp;&nbsp;#{userProfile.displayName}
 										</p:column>
 										
 									</p:autoComplete>
 									<p:watermark for="autoComp" value="send to.."/>
 									<p:commandButton value="Send"
-										style="width:70px;height:35px;padding:1px 1px;margin-left:627px;background:#006dcc;border-radius: 1pc;margin-top: 10px"/>
+										style="width:70px;height:35px;padding:1px 1px;margin-left:627px;background:#006dcc;border-radius: 1pc;margin-top: 10px" actionListener="#{postController.insertPosts}" update="growl"/>
 								</div>		
 							</h:form>
 
@@ -181,19 +182,19 @@
 						<h:outputText value="Latest Posts" styleClass="postHeader" />
 					</p:panel>
 
-					<p:dataList value="#{newsFeed.persons}" var="person" id="persons"
+					<p:dataList value="#{newsFeedController.listOfPost}" var="post" id="post"
 						type="none">
 						<p:panel style="background: #ffffff">
 							<p:panel style="border:0;float:left;background: #ffffff">
 								<p:graphicImage
-									value="/resources/img/profile-photo/#{person.personPic}.png"
+									value="/resources/img/profile-photo/#{post.personName}.jpg"
 									width="60" height="60" style="margin-left:0px" />
 							</p:panel>
 							<p:panel style="border:0;background: #ffffff">
-								<h:outputText value="#{person.description}" style="" />
+								<h:outputText value="#{post.personName}" style="" />
 								<p:panel style="margin-left: 80px">
 									<h:outputText
-										value="Ram Softwere Engineering Labs Pvt. Ltd. National Village Games KHB #2 Arun Kumar Krishnamurthy" />
+										value="#{post.postDescription}" />
 								</p:panel>
 							</p:panel>
 						</p:panel>

@@ -1,16 +1,35 @@
 package com.ramselabs.education.entity;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
+@Table(name="Post_Table")
 public class Post{
     
 	@Id @GeneratedValue
 	private int postId;
 	private String description;
-	private int userId;
+	@ManyToOne
+	@JoinColumn(name="user_Id")
+	UserProfile postUser;
+	@OneToMany(mappedBy="post")
+	private Collection<PostShare> post_share=new ArrayList<PostShare>();
+	private int posterId;
+	public Collection<PostShare> getPost_share() {
+		return post_share;
+	}
+	public void setPost_share(Collection<PostShare> post_share) {
+		this.post_share = post_share;
+	}
 	public int getPostId() {
 		return postId;
 	}
@@ -23,11 +42,19 @@ public class Post{
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public int getUserId() {
-		return userId;
+	public UserProfile getPostUser() {
+		return postUser;
 	}
-	public void setUserId(int userId) {
-		this.userId = userId;
+	public void setPostUser(UserProfile postUser) {
+		this.postUser = postUser;
 	}
+	public int getPosterId() {
+		return posterId;
+	}
+	public void setPosterId(int posterId) {
+		this.posterId = posterId;
+	}
+	
+	
 	
 }
