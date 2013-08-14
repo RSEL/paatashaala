@@ -195,6 +195,12 @@
 								<p:panel style="margin-left: 80px">
 									<h:outputText
 										value="#{post.postDescription}" />
+										<p:panel  style="margin-left: 360px;border:0">
+										<h:outputText value="#{post.dateOfPosting}">
+										   <f:convertDateTime pattern="dd MMM, yy"/>
+										</h:outputText>&nbsp;&nbsp;
+										<h:outputText value="#{post.userType}"/>
+										</p:panel>
 								</p:panel>
 							</p:panel>
 						</p:panel>
