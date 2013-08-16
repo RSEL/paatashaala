@@ -32,7 +32,7 @@
 		</prop>
 		<prop name="annotatedClass">
 			<list>
-				<value>com.ramselabs.education.entity.UserProfile</value>
+			    <value>com.ramselabs.education.entity.UserProfile</value>
 				<value>com.ramselabs.education.entity.Post</value>
 				<value>com.ramselabs.education.entity.PostShare</value>
 			</list>

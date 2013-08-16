@@ -1,7 +1,8 @@
 package com.ramselabs.education.util;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -78,17 +79,24 @@ public class HibernateCRUD {
 	
 	public List<PostDescriptionModel> getPostPersons(int userId){
 		List<PostDescriptionModel> listPerson=new ArrayList<PostDescriptionModel>();
-		Session session=hibernateDAO.getSession();
-		UserProfile userProfile=(UserProfile)session.get(UserProfile.class,userId);
-		Collection<PostShare> posts=userProfile.getUserPostShare();
+		Session hSession=hibernateDAO.getSession();
+		UserProfile userProfile=(UserProfile)hSession.get(UserProfile.class,userId);
+		List<PostShare> posts=(List<PostShare>)userProfile.getUserPostShare();
+		Collections.sort(posts, new Comparator<PostShare>() {
+		    public int compare(PostShare s1, PostShare s2) {
+		        return s2.getPostDate().compareTo(s1.getPostDate());
+		    }
+		});
 		for(PostShare postShare:posts){
 			PostDescriptionModel postDescription=new PostDescriptionModel();
 			postDescription.setPersonName(getPosterName(postShare.getPost().getPosterId()));
 			postDescription.setPostDescription(postShare.getPost().getDescription());
 			postDescription.setUserType(postShare.getUserType());
+			System.out.println("Date of posting"+postShare.getPostDate());
 			postDescription.setDateOfPosting(postShare.getPostDate());
 			listPerson.add(postDescription);
 		}
+		   
 		return listPerson;
 	}
 	@SuppressWarnings("unchecked")

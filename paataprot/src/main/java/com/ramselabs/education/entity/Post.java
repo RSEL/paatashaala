@@ -11,12 +11,15 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Type;
+
 @Entity
 @Table(name="Post_Table")
 public class Post{
     
 	@Id @GeneratedValue
 	private int postId;
+	@Type(type="text")
 	private String description;
 	@ManyToOne
 	@JoinColumn(name="user_Id")

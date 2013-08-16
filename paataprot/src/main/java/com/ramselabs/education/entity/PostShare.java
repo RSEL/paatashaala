@@ -22,7 +22,7 @@ public class PostShare {
 	@JoinColumn(name="user_Id")
 	private UserProfile postShareUser;
     private String userType;
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date postDate;
 	
 	public int getIdPostShare() {

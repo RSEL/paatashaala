@@ -34,6 +34,11 @@
 				document.getElementById('clickedAlertText').style.display = 'inline';
 				document.getElementById('clickedAlertText').innerHTML = '<input type="text" placeholder="send to..." id="alertToText" name="alertToText" style="width:682px"></input><br></br><input type="submit" value="send" class="btn btn-large btn-primary" style="width:70px;height:35px;padding:1px 1px;margin-left:626px;border-radius: 1pc"/>';
 			}
+		    function clearText(){
+				document.getElementById('tabView:postForm:postText').value='';
+				document.getElementById('tabView:postForm:autoComp_input').value='';
+			}
+		   
 		</script>
 	</h:head>
 	<h:body style="padding:0px 0px;margin:0px 0px">
@@ -140,10 +145,11 @@
 					<p:tabView id="tabView" style="background:#dfe4e8" effect="drop"
 						onTabShow="hidePostText()">
 						<p:tab id="tab1" title="Post" titleStyle="">
+						
 							<h:form style="margin:0px 0px" id="postForm">
-							   <p:growl id="growl"/>
+							   <p:messages id="messages"/>
 								<p:inputTextarea rows="1" autoResize="true" id="postText"
-									onclick="addElement()" cols="450" style="width:687px" value="#{postBean.description}"/>
+									onclick="addElement()" cols="450" style="width:687px" value="#{postBean.description}" required="true" label="PostText"/>
 								<p:watermark for="postText" value="Type your post here..." />
 								<div id="clickedText" style="display: none">
 									<p:autoComplete id="autoComp"
@@ -151,7 +157,8 @@
 										completeMethod="#{autocompleteBeanController.completeUserProfile}"
 										var="userProfile" itemLabel="#{userProfile.displayName}" itemValue="#{userProfile}"
 										 converter="#{userAutocompleteConverter}"
-										forceSelection="true">
+										forceSelection="true" required="true" label="Send to">
+										
 										<p:ajax event="itemUnselect" listener="#{autocompleteBeanController.handleUnselect}"/>
 										<p:column>
 											<p:graphicImage
@@ -162,9 +169,12 @@
 										
 									</p:autoComplete>
 									<p:watermark for="autoComp" value="send to.."/>
-									<p:commandButton value="Send"
-										style="width:70px;height:35px;padding:1px 1px;margin-left:627px;background:#006dcc;border-radius: 1pc;margin-top: 10px" actionListener="#{postController.insertPosts}" update="growl"/>
-								</div>		
+									<p:commandButton value="Send" id="sendButt"
+										style="width:70px;height:35px;padding:1px 1px;margin-left:627px;background:#006dcc;border-radius: 1pc;margin-top: 10px" actionListener="#{postController.insertPosts}" update="blui,postForm" onsuccess="bui.hide();return false;" oncomplete="clearText()"/>
+								</div>
+	<p:blockUI block="postForm" trigger="sendButt" id="blui" widgetVar="bui">  
+        Sending.....  
+    </p:blockUI>		
 							</h:form>
 
 						</p:tab>
@@ -197,7 +207,7 @@
 										value="#{post.postDescription}" />
 										<p:panel  style="margin-left: 360px;border:0">
 										<h:outputText value="#{post.dateOfPosting}">
-										   <f:convertDateTime pattern="dd MMM, yy"/>
+ 										    <f:convertDateTime dateStyle="short"  timeStyle="short" type="both"/>
 										</h:outputText>&nbsp;&nbsp;
 										<h:outputText value="#{post.userType}"/>
 										</p:panel>

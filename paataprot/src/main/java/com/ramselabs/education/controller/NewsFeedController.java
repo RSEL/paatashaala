@@ -14,7 +14,7 @@ import com.ramselabs.education.model.PostDescriptionModel;
 import com.ramselabs.education.service.UserService;
 
 @Named
-@Scope("session")
+@Scope("request")
 public class NewsFeedController implements Serializable{
 
 	private static final long serialVersionUID = 4322730194350739587L;
@@ -42,6 +42,8 @@ public class NewsFeedController implements Serializable{
 	}
 
 	public List<PostDescriptionModel> getAllPosts(){
+		if(login==null)
+			return null;
 		UserProfile user=ManagedLoginBean.mappToUserEntity(login);
 		return userService.getPostPersons(user);
 	}
