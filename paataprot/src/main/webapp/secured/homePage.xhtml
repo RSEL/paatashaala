@@ -47,7 +47,7 @@
 				<p:toolbarGroup align="left">
 					<p:commandLink type="push" title="Profile picture"
 						style="margin:5px 0px 5px 15px">
-						<p:graphicImage url="#{resource['img:default-profile1.jpg']}" />
+						<p:graphicImage value="#{userProfileController.image}" height="5%" width="4%"/>
 					</p:commandLink>
 					<h:outputText value="School Name"
 						style="font-size:30px;margin:4px 0px 0px 16px" />
@@ -108,8 +108,8 @@
 			<p:layout style="min-width:400px;min-height:900px" id="layout">
 				<p:layoutUnit position="west" size="290" style="border:0">
 					<h:panelGrid columns="2" cellpadding="10">
-						<p:graphicImage url="#{resource['img:profile-icon1.jpg']}" />
-						<h:outputText value="Hi #{managedLoginBean.username}" />
+						<p:graphicImage value="#{userProfileController.image}"/>
+						<h:outputText value="Hi #{userProfileController.displayName}" />
 					</h:panelGrid>
 					<h:form>
 						<p:panel id="pnl" header="Groups" toggleable="true"
@@ -141,13 +141,15 @@
 					</h:form>
 				</p:layoutUnit>
 
-				<p:layoutUnit position="center" style="border:0" id="centerLayout">
-					<p:tabView id="tabView" style="background:#dfe4e8" effect="drop"
+				<p:layoutUnit position="center" style="border:0;background:transparent" id="centerLayout">
+					<p:tabView id="tabView" style="background:transparent" effect="drop"
 						onTabShow="hidePostText()">
-						<p:tab id="tab1" title="Post" titleStyle="">
+						<p:tab id="tab1" title="Post" titleStyle="" >
 						
 							<h:form style="margin:0px 0px" id="postForm">
-							   <p:messages id="messages"/>
+							   <p:message for="postText" id="messages"/>
+							   <p:message for="autoComp" id="messages1"/>
+							   <p:growl for="postSave"/>
 								<p:inputTextarea rows="1" autoResize="true" id="postText"
 									onclick="addElement()" cols="450" style="width:687px" value="#{postBean.description}" required="true" label="PostText"/>
 								<p:watermark for="postText" value="Type your post here..." />
@@ -170,10 +172,13 @@
 									</p:autoComplete>
 									<p:watermark for="autoComp" value="send to.."/>
 									<p:commandButton value="Send" id="sendButt"
-										style="width:70px;height:35px;padding:1px 1px;margin-left:627px;background:#006dcc;border-radius: 1pc;margin-top: 10px" actionListener="#{postController.insertPosts}" update="blui,postForm" onsuccess="bui.hide();return false;" oncomplete="clearText()"/>
+										style="width:70px;height:35px;padding:1px 1px;margin-left:627px;background:#096DC5;border-radius: 1pc;margin-top: 10px;color: #ffffff;
+text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25)" actionListener="#{postController.insertPosts}" update="blui,postForm" onsuccess="bui.hide();return false;" oncomplete="clearText()"/>
 								</div>
-	<p:blockUI block="postForm" trigger="sendButt" id="blui" widgetVar="bui">  
-        Sending.....  
+	<p:blockUI block="postForm" trigger="sendButt" id="blui" widgetVar="bui" >  
+        Sending..... 
+        <br/>
+        <p:graphicImage value="/resources/img/ajax-loader.gif"/> 
     </p:blockUI>		
 							</h:form>
 
@@ -323,7 +328,7 @@
 						<p:message for="groupDescription" />
 						<p:watermark for="groupDescription" value="GroupDescription" />
 						<hr />
-						<p:commandButton value="Create" />
+						<p:commandButton value="Create" update="groupFormAdvance"/>
 					</h:form>
 				</p:tab>
 			</p:tabView>
@@ -333,6 +338,9 @@
 	width: 682px;
 }
 .ui-autocomplete-input.ui-inputfield{width:682px !important;}
+.ui-tabs-nav{
+ background: transparent !important;
+}
 </style>
 	</h:body>
 </f:view>

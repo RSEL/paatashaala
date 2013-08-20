@@ -70,4 +70,9 @@ public class UserServiceImpl implements UserService,Serializable {
 		return hCrud.getPosterName(userId);
 	}
 
+	@Override
+	public UserProfile getUserProfile(String username,String password) {
+		return hCrud.getUserProfile(username,password);
+	}
+
 }

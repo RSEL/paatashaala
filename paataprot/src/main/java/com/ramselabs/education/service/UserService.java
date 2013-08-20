@@ -16,5 +16,6 @@ public interface UserService {
 	public List<PostDescriptionModel> getPostPersons(UserProfile user);
 	public int getUserId(UserProfile user);
 	public String getDisplayName(int userId);
+	public UserProfile getUserProfile(String username,String password);
 
 }

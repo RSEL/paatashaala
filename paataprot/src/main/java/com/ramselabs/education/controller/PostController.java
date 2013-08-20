@@ -84,11 +84,11 @@ public class PostController implements Serializable{
       FacesMessage message = null;
       if(i==1){
     	  message=new FacesMessage(FacesMessage.SEVERITY_INFO, "You post is successfully posted", null);
-    	  FacesContext.getCurrentInstance().addMessage(null, message);
+    	  FacesContext.getCurrentInstance().addMessage("postSave", message);
       }
       else{
       message=new FacesMessage(FacesMessage.SEVERITY_INFO, "You post is not successfully posted", null);
-	  FacesContext.getCurrentInstance().addMessage(null, message);
+	  FacesContext.getCurrentInstance().addMessage("postSave", message);
       }
       
       

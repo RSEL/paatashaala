@@ -25,7 +25,7 @@ public class AutocompleteBeanController implements Serializable {
 	private UserProfile selectedUserProfile;
 	@Inject
 	private UserAutocompleteConverter userConverter;
-
+    
 	public UserAutocompleteConverter getUserConverter() {
 		return userConverter;
 	}
@@ -42,6 +42,7 @@ public class AutocompleteBeanController implements Serializable {
 
 	public void setSelectedUserProfile(UserProfile selectedUserProfile) {
 		this.selectedUserProfile = selectedUserProfile;
+		System.out.println("AutoCompleteUser"+selectedUserProfile);
 	}
 
 	public List<UserProfile> completeUserProfile(String input) {
@@ -60,4 +61,16 @@ public class AutocompleteBeanController implements Serializable {
 	          
 	        FacesContext.getCurrentInstance().addMessage(null, message);  
 	    }
+
+/*	public StreamedContent getAutoImage() {
+		if(autoImage==null){
+			byte[] imageInByteArray =selectedUserProfile.getUserImage();
+			autoImage = new DefaultStreamedContent(new ByteArrayInputStream(imageInByteArray), "image/jpg");
+             System.out.println("AutoComplete"+autoImage);
+			  return autoImage;
+		}
+		System.out.println("AutoComplete1"+autoImage);
+		return null;
+	}*/
+	 
 }

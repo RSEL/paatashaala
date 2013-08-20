@@ -40,17 +40,25 @@ public class HibernateCRUD {
     	Query q1=s1.createQuery(qurey);
     	return q1.list();
     	
-    }
-	@SuppressWarnings("unchecked")
-	public static String getUserRole(LoginBean login){
-		 String s2=null;
-		Session s1=HibernateUtil.getSession();
-		Query q1=s1.createSQLQuery("SELECT ROLE FROM SERVICE_REG_TAB REG INNER JOIN SERVICE_LOGIN LOG ON REG.LOG_ID=(SELECT ID FROM SERVICE_LOGIN WHERE USERNAME='"+login.getUsername()+"' AND PASSWORD='"+login.getPassword()+"')");
-		List<String> list=(List<String>)q1.list();
-		for(String i:list)
-			s2=i;
-		return s2;
     }*/
+	@SuppressWarnings("unchecked")
+	public UserProfile getUserProfile(String username,String password){
+		System.out.println("Hcrud"+username);
+		System.out.println("Hcrud"+password);
+		UserProfile userProfile=null;
+		Session session=hibernateDAO.getSession();
+		Query query=session.createQuery("from UserProfile where username = :username and password = :password");
+		query.setString("username",username);
+		query.setString("password", password);
+		List<UserProfile> list=(List<UserProfile>)query.list();
+		if(list.isEmpty()){
+			System.out.println("UserProfile is empty"+list);
+			return null;
+		}
+		for(UserProfile profile:list)
+			  userProfile=profile;
+		return userProfile;
+    }
 	@SuppressWarnings("unchecked")
 	public List<UserProfile> getUserAutoCompleteList(int userId){
 		Session session=hibernateDAO.getSession();
@@ -103,7 +111,7 @@ public class HibernateCRUD {
 	public int getUserId(UserProfile user){
 		Session session=hibernateDAO.getSession();
 		Query query=session.createQuery("select userId from UserProfile where username = :username and password = :password");
-		query.setInteger("username",user.getUserId());
+		query.setString("username",user.getUsername());
 		query.setString("password", user.getPassword());
 		List<Integer> list=(List<Integer>)query.list();
 		if(list.isEmpty())

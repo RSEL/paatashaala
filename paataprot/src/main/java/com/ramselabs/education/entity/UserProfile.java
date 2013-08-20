@@ -6,6 +6,7 @@ import java.util.Collection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 
 @Entity
@@ -16,10 +17,19 @@ public class UserProfile{
 	private String username;
 	private String password;
 	private String displayName;
+	@Lob
+	private byte [] userImage;
 	@OneToMany(mappedBy="postUser")
 	private Collection<Post> post=new ArrayList<Post>();
 	@OneToMany(mappedBy="postShareUser")
 	private Collection<PostShare> userPostShare=new ArrayList<PostShare>();
+	
+	public byte[] getUserImage() {
+		return userImage;
+	}
+	public void setUserImage(byte[] userImage) {
+		this.userImage = userImage;
+	}
 	public int getUserId() {
 		return userId;
 	}
