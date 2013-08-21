@@ -1,13 +1,10 @@
 package com.ramselabs.education.controller;
 
-import java.io.ByteArrayInputStream;
 import java.io.Serializable;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.primefaces.model.DefaultStreamedContent;
-import org.primefaces.model.StreamedContent;
 import org.springframework.context.annotation.Scope;
 
 import com.ramselabs.education.managedbean.ManagedLoginBean;
@@ -30,7 +27,7 @@ public class UserProfileController implements Serializable{
 		this.userService = userService;
 	}
 	private String displayName;
-	private StreamedContent image ; 
+	private String image ; 
 	public String getDisplayName() {
 		if(displayName==null){
 			if(login.getUsername() != null & login.getPassword()!=null){
@@ -40,11 +37,11 @@ public class UserProfileController implements Serializable{
 		System.out.println("UserProfile"+displayName);
 		return displayName;
 	}
-	public StreamedContent getImage() {
+	public String getImage() {
 		  System.out.println("UserService"+userService);
 		  if(login.getUsername() != null & login.getPassword()!=null){
-		   byte[] imageInByteArray =userService.getUserProfile(login.getUsername(),login.getPassword()).getUserImage();
-		    image = new DefaultStreamedContent(new ByteArrayInputStream(imageInByteArray), "image/jpg");
+			  image=userService.getUserProfile(login.getUsername(),login.getPassword()).getImagePath();
+		    
 		  }
 			  return image;
 	}

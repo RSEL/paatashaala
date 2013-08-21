@@ -6,8 +6,29 @@
                 >
                 <h:head></h:head>
          <h:body>
-            <h:form>
-                <p:calendar showButtonPanel="true" navigator="true" mode="inline" id="enCal"/>
-            </h:form>
+         
+                     <h:form>
+                                    <p:fileUpload fileUploadListener="#{fileUploadController.handleFileUpload}"
+                                                  uploadLabel="Upload" 
+                                                  cancelLabel="Cancel"
+                                                  label="Choose"
+                                                  allowTypes="/(\.|\/)(gif|jpe?g|png)$/" 
+                                                  
+                                                  sizeLimit="10000"
+                                                  process="@form"
+                                                  widgetVar="fileuplaod_wgt"
+                                                  />
+                                                  </h:form>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                fileuplaod_wgt.buttonBar.find("button.cancel").bind("click", function(e){
+                    clearInvalidFileMsg();
+                });
+            });
+
+            function clearInvalidFileMsg(){
+                fileuplaod_wgt.uploadContent.find("tr.ui-state-error").remove();
+            }
+        </script>
          </h:body>
 </html>

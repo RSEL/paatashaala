@@ -7,7 +7,14 @@ public class PostDescriptionModel {
 	private String postDescription;
 	private String userType;
 	private Date dateOfPosting;
+	private String userImage;
 	
+	public String getUserImage() {
+		return userImage;
+	}
+	public void setUserImage(String userImage) {
+		this.userImage = userImage;
+	}
 	public String getUserType() {
 		return userType;
 	}

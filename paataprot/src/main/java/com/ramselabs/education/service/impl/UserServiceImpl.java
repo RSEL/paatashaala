@@ -67,9 +67,8 @@ public class UserServiceImpl implements UserService,Serializable {
 
 	@Override
 	public String getDisplayName(int userId) {
-		return hCrud.getPosterName(userId);
+		return hCrud.getPoster(userId).getDisplayName();
 	}
-
 	@Override
 	public UserProfile getUserProfile(String username,String password) {
 		return hCrud.getUserProfile(username,password);

@@ -38,7 +38,7 @@
 				document.getElementById('tabView:postForm:postText').value='';
 				document.getElementById('tabView:postForm:autoComp_input').value='';
 			}
-		   
+	
 		</script>
 	</h:head>
 	<h:body style="padding:0px 0px;margin:0px 0px">
@@ -47,7 +47,7 @@
 				<p:toolbarGroup align="left">
 					<p:commandLink type="push" title="Profile picture"
 						style="margin:5px 0px 5px 15px">
-						<p:graphicImage value="#{userProfileController.image}" height="5%" width="4%"/>
+						 <p:graphicImage value="#{userProfileController.image}" style="height: 34px;width: 34px"/>
 					</p:commandLink>
 					<h:outputText value="School Name"
 						style="font-size:30px;margin:4px 0px 0px 16px" />
@@ -82,7 +82,7 @@
 					<p:menu overlay="true" trigger="dynaButton" my="left top"
 						at="left bottom">
 						<p:menuitem value="Save" url="#" />
-						<p:menuitem value="Update" url="#" />
+						<p:menuitem value="Change Picture" onclick="dlgPhotoUpload.show(); return false;" title="Change Profile Picture"/>
 						<p:menuitem value="Logout" action="#{loginController.doLogout}" />
 						<p:menuitem value="Themes" onclick="dlg1.show(); return false;"
 							type="button" />
@@ -108,8 +108,9 @@
 			<p:layout style="min-width:400px;min-height:900px" id="layout">
 				<p:layoutUnit position="west" size="290" style="border:0">
 					<h:panelGrid columns="2" cellpadding="10">
-						<p:graphicImage value="#{userProfileController.image}"/>
+						<p:graphicImage value="#{userProfileController.image}" style="height: 94px;width: 97px"/>
 						<h:outputText value="Hi #{userProfileController.displayName}" />
+						
 					</h:panelGrid>
 					<h:form>
 						<p:panel id="pnl" header="Groups" toggleable="true"
@@ -144,7 +145,7 @@
 				<p:layoutUnit position="center" style="border:0;background:transparent" id="centerLayout">
 					<p:tabView id="tabView" style="background:transparent" effect="drop"
 						onTabShow="hidePostText()">
-						<p:tab id="tab1" title="Post" titleStyle="" >
+						<p:tab id="tab1" title="Post" titleStyle="">
 						
 							<h:form style="margin:0px 0px" id="postForm">
 							   <p:message for="postText" id="messages"/>
@@ -164,7 +165,7 @@
 										<p:ajax event="itemUnselect" listener="#{autocompleteBeanController.handleUnselect}"/>
 										<p:column>
 											<p:graphicImage
-												value="/resources/img/profile-photo/#{userProfile.displayName}.jpg"
+												value="#{userProfile.imagePath}"
 												width="30" height="20" />
 											&nbsp;&nbsp;&nbsp;#{userProfile.displayName}
 										</p:column>
@@ -173,13 +174,13 @@
 									<p:watermark for="autoComp" value="send to.."/>
 									<p:commandButton value="Send" id="sendButt"
 										style="width:70px;height:35px;padding:1px 1px;margin-left:627px;background:#096DC5;border-radius: 1pc;margin-top: 10px;color: #ffffff;
-text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25)" actionListener="#{postController.insertPosts}" update="blui,postForm" onsuccess="bui.hide();return false;" oncomplete="clearText()"/>
+text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25)" actionListener="#{postController.insertPosts}" update="postForm"  oncomplete="clearText()"/>
 								</div>
-	<p:blockUI block="postForm" trigger="sendButt" id="blui" widgetVar="bui" >  
+	<!-- <p:blockUI block="postForm" trigger="sendButt" id="blui" widgetVar="bui" >  
         Sending..... 
         <br/>
         <p:graphicImage value="/resources/img/ajax-loader.gif"/> 
-    </p:blockUI>		
+    </p:blockUI> -->		
 							</h:form>
 
 						</p:tab>
@@ -202,7 +203,7 @@ text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);border-color: rgba(0, 0, 0, 0.1) rgba(
 						<p:panel style="background: #ffffff">
 							<p:panel style="border:0;float:left;background: #ffffff">
 								<p:graphicImage
-									value="/resources/img/profile-photo/#{post.personName}.jpg"
+									value="#{post.userImage}"
 									width="60" height="60" style="margin-left:0px" />
 							</p:panel>
 							<p:panel style="border:0;background: #ffffff">
@@ -239,7 +240,22 @@ text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);border-color: rgba(0, 0, 0, 0.1) rgba(
 				</p:layoutUnit>
 			</p:layout>
 		</p:scrollPanel>
-		<p:dialog id="basicDialog" header="Chose your theme" widgetVar="dlg1"
+		<p:dialog widgetVar="dlgPhotoUpload" header="Choose your images" id="fileUploadDlg" modal="true">
+		    <h:form id="fileUpload">
+				<p:fileUpload fileUploadListener="#{fileUploadController.handleFileUpload}"
+                                                  uploadLabel="Upload" 
+                                                  cancelLabel="Cancel"
+                                                  label="Choose"
+                                                  allowTypes="/(\.|\/)(gif|jpe?g|png)$/" 
+                                                  
+                                                  sizeLimit="300000"
+                                                  process="@form"
+                                                  widgetVar="fileuplaod_wgt" oncomplete="dlgPhotoUpload.hide(); return false;"
+                                                  update="msgFileUp"/> 
+                                                <p:growl id="msgFileUp" for="serverMsg"/>   
+			</h:form>
+		</p:dialog>
+		<p:dialog id="basicDialog" header="Choose your theme" widgetVar="dlg1"
 			modal="true">
 			<h:form id="themeForm">
 				<p:themeSwitcher id="statefulSwitcher1"
@@ -250,6 +266,7 @@ text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);border-color: rgba(0, 0, 0, 0.1) rgba(
 					<p:ajax listener="#{userSettingsController.saveTheme}"
 						oncomplete="dlg1.hide(); return false;" />
 				</p:themeSwitcher>
+				
 			</h:form>
 		</p:dialog>
 
@@ -341,7 +358,38 @@ text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);border-color: rgba(0, 0, 0, 0.1) rgba(
 .ui-tabs-nav{
  background: transparent !important;
 }
+ .fileupload-buttonbar .fileinput-button .ui-icon-plusthick{
+         display: none !important;
+         
+ }
+ .fileupload-buttonbar .fileinput-button  .ui-button-text{
+     padding-left: 1em!important;
+     background: transparent !important;
+ }
+ .fileupload-buttonbar {
+    padding: 0.0em 0.0em;
+    background: transparent !important;
+    padding-top: 4px;
+    padding-left: 3px;
+}
+/* .fileupload-content {
+    display: inline;
+} */
+/* .fileinput-button {
+    background: #157FF0;
+} */
 </style>
+ <script type="text/javascript">
+            $(document).ready(function(){
+                fileuplaod_wgt.buttonBar.find("button.cancel").bind("click", function(e){
+                    clearInvalidFileMsg();
+                });
+            });
+
+            function clearInvalidFileMsg(){
+                fileuplaod_wgt.uploadContent.find("tr.ui-state-error").remove();
+            }
+        </script>
 	</h:body>
 </f:view>
 </html>

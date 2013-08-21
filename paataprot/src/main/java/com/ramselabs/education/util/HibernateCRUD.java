@@ -97,9 +97,10 @@ public class HibernateCRUD {
 		});
 		for(PostShare postShare:posts){
 			PostDescriptionModel postDescription=new PostDescriptionModel();
-			postDescription.setPersonName(getPosterName(postShare.getPost().getPosterId()));
+			postDescription.setPersonName(getPoster(postShare.getPost().getPosterId()).getDisplayName());
 			postDescription.setPostDescription(postShare.getPost().getDescription());
 			postDescription.setUserType(postShare.getUserType());
+			postDescription.setUserImage(getPoster(postShare.getPost().getPosterId()).getImagePath());
 			System.out.println("Date of posting"+postShare.getPostDate());
 			postDescription.setDateOfPosting(postShare.getPostDate());
 			listPerson.add(postDescription);
@@ -126,11 +127,11 @@ public class HibernateCRUD {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public String getPosterName(int userId){
+	public UserProfile getPoster(int userId){
 		Session session=hibernateDAO.getSession();
-		Query query=session.createQuery("select displayName from UserProfile where userId = :userId");
+		Query query=session.createQuery("from UserProfile where userId = :userId");
 		query.setInteger("userId", userId);
-		List<String> list=(List<String>)query.list();
+		List<UserProfile> list=(List<UserProfile>)query.list();
 		if(list.isEmpty())
 			System.out.println("List is empty for display name");
 		return list.get(0);
