@@ -74,4 +74,9 @@ public class UserServiceImpl implements UserService,Serializable {
 		return hCrud.getUserProfile(username,password);
 	}
 
+	@Override
+	public int updateUserImage(UserProfile user) {
+		return hCrud.updateUserImage(user);
+	}
+
 }

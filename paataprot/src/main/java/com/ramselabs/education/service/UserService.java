@@ -17,5 +17,6 @@ public interface UserService {
 	public int getUserId(UserProfile user);
 	public String getDisplayName(int userId);
 	public UserProfile getUserProfile(String username,String password);
+	public int updateUserImage(UserProfile user);
 
 }

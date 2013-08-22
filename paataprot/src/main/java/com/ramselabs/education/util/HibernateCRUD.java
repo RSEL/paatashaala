@@ -136,4 +136,16 @@ public class HibernateCRUD {
 			System.out.println("List is empty for display name");
 		return list.get(0);
 	}
+	public int updateUserImage(UserProfile user){
+		int userId=getUserId(user);
+		Session session=hibernateDAO.getSession();
+		UserProfile userPersistent=(UserProfile)session.get(UserProfile.class,userId);
+		userPersistent.setImagePath(user.getImagePath());
+		session.beginTransaction();
+		session.update(userPersistent);
+		session.getTransaction().commit();
+		session.flush();
+		session.close();
+		return 1;
+	}
 }

@@ -42,12 +42,12 @@
 		</script>
 	</h:head>
 	<h:body style="padding:0px 0px;margin:0px 0px">
-		<h:form style="margin:0px 0px">
-			<p:toolbar style="width:auto;background-color:#157FF0 !important">
-				<p:toolbarGroup align="left">
+		<h:form style="margin:0px 0px" id="toolBarFor">
+			<p:toolbar style="width:auto;background-color:#157FF0 !important" id="toolBarImage">
+				<p:toolbarGroup align="left" id="toolGroup">
 					<p:commandLink type="push" title="Profile picture"
-						style="margin:5px 0px 5px 15px">
-						 <p:graphicImage value="#{userProfileController.image}" style="height: 34px;width: 34px"/>
+						style="margin:5px 0px 5px 15px" id="profileIconLink">
+						 <p:graphicImage value="#{userProfileController.image}" style="height: 34px;width: 34px" id="profileIcon"/>
 					</p:commandLink>
 					<h:outputText value="School Name"
 						style="font-size:30px;margin:4px 0px 0px 16px" />
@@ -104,13 +104,14 @@
 
 		</h:form>
 		<p:scrollPanel style="width:1363px;height:610px;border:0"
-			mode="native">
+			mode="native" id="srollPannel">
 			<p:layout style="min-width:400px;min-height:900px" id="layout">
-				<p:layoutUnit position="west" size="290" style="border:0">
+				<p:layoutUnit position="west" size="290" style="border:0" id="layoutUnit">
 					<h:panelGrid columns="2" cellpadding="10">
-						<p:graphicImage value="#{userProfileController.image}" style="height: 94px;width: 97px"/>
+					<h:form id="profileLargePhotoForm">
+						<p:graphicImage value="#{userProfileController.image}" style="height: 94px;width: 97px" id="profilePhoto"/>
 						<h:outputText value="Hi #{userProfileController.displayName}" />
-						
+					</h:form>	
 					</h:panelGrid>
 					<h:form>
 						<p:panel id="pnl" header="Groups" toggleable="true"
@@ -249,9 +250,9 @@ text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);border-color: rgba(0, 0, 0, 0.1) rgba(
                                                   allowTypes="/(\.|\/)(gif|jpe?g|png)$/" 
                                                   
                                                   sizeLimit="300000"
-                                                  process="@form"
+                                                  
                                                   widgetVar="fileuplaod_wgt" oncomplete="dlgPhotoUpload.hide(); return false;"
-                                                  update="msgFileUp"/> 
+                                                  update="msgFileUp,:toolBarFor:profileIcon,:profileLargePhotoForm:profilePhoto"/> 
                                                 <p:growl id="msgFileUp" for="serverMsg"/>   
 			</h:form>
 		</p:dialog>
