@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+ 
+<!-- Hibernate session factory -->
+<bean id="sessionFactory" 
+     class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+ 
+    <property name="dataSource">
+      <ref bean="dataSource"/>
+    </property>
+ 
+    <property name="hibernateProperties">
+       <props>
+         <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+         <prop key="hibernate.show_sql">true</prop>
+       </props>
+    </property>
+ 
+   <property name="annotatedClasses">
+     <list>
+       <value>com.ramselabs.education.entity.Post</value>
+       <value>com.ramselabs.education.entity.PostShare</value>
+       <value>com.ramselabs.education.entity.UserProfile</value>
+     </list>
+   </property>	
+ 
+</bean>
+
+    <bean id="transactionManager"
+        class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+</beans>
