@@ -7,21 +7,18 @@ import java.util.Map;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
-import javax.faces.convert.FacesConverter;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Scope;
 
-import com.ramselabs.education.entity.Share;
 import com.ramselabs.education.entity.UserProfile;
 import com.ramselabs.education.managedbean.ManagedLoginBean;
 import com.ramselabs.education.service.UserService;
 
 @Named
 @Scope("session")
-@FacesConverter(forClass=Share.class)
 public class UserAutocompleteConverter implements Converter {
 	@Inject
 	private UserService userService;

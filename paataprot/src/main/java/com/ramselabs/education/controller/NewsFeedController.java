@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Scope;
 import com.ramselabs.education.entity.UserProfile;
 import com.ramselabs.education.managedbean.ManagedLoginBean;
 import com.ramselabs.education.model.PostDescriptionModel;
-import com.ramselabs.education.service.UserService;
+import com.ramselabs.education.service.PostService;
 
 @Named
 @Scope("request")
@@ -20,13 +20,15 @@ public class NewsFeedController implements Serializable{
 	private static final long serialVersionUID = 4322730194350739587L;
    
 	@Inject
-	private UserService userService;
+	private PostService postService;
 	
 	@Inject
 	private ManagedLoginBean login;
 
-	public void setUserService(UserService userService) {
-		this.userService = userService;
+	
+
+	public void setPostService(PostService postService) {
+		this.postService = postService;
 	}
 
 	public void setLogin(ManagedLoginBean login) {
@@ -45,7 +47,7 @@ public class NewsFeedController implements Serializable{
 		if(login==null)
 			return null;
 		UserProfile user=ManagedLoginBean.mappToUserEntity(login);
-		return userService.getPostPersons(user);
+		return postService.getPostPersons(user);
 	}
 	
 }

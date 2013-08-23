@@ -15,7 +15,7 @@ import com.ramselabs.education.entity.PostShare;
 import com.ramselabs.education.entity.UserProfile;
 import com.ramselabs.education.managedbean.ManagedLoginBean;
 import com.ramselabs.education.managedbean.PostBean;
-import com.ramselabs.education.service.UserService;
+import com.ramselabs.education.service.PostService;
 
 @Named
 @Scope("session")
@@ -40,25 +40,23 @@ public class PostController implements Serializable{
 
 	@Inject
 	private AutocompleteBeanController autoCmplController;
-	
-	public UserService getUserService() {
-		return userService;
-	}
 
 	public void setAutoCmplController(AutocompleteBeanController autoCmplController) {
 		this.autoCmplController = autoCmplController;
 	}
 
 	@Inject
-	UserService userService;
+	private PostService postService;
 	
-	public void setUserService(UserService userService) {
-		this.userService = userService;
+
+	public void setPostService(PostService postService) {
+		this.postService = postService;
 	}
+
 
 	public void insertPosts(){
 	  UserProfile user1=ManagedLoginBean.mappToUserEntity(login);
-	  int posterId=userService.getUserId(user1);
+	  int posterId=postService.getUserId(user1);
 	  
       PostShare postShare=new PostShare();
       postShare.setPostDate(new Date());
@@ -71,7 +69,7 @@ public class PostController implements Serializable{
       user.getPost().add(post);
       user.getUserPostShare().add(postShare);
       
-      post.getPost_share().add(postShare);
+      post.getPostShare().add(postShare);
       
       postShare.setPost(post);
       
@@ -79,7 +77,7 @@ public class PostController implements Serializable{
       
       postShare.setPostShareUser(user);
       
-      int i=userService.inserPost(post, postShare);
+      int i=postService.inserPost(post, postShare);
    
       FacesMessage message = null;
       if(i==1){

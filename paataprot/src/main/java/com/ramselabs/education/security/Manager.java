@@ -6,8 +6,8 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
+import com.ramselabs.education.dao.HibernateDAO;
 import com.ramselabs.education.entity.Post;
-import com.ramselabs.education.util.HibernateDAO;
 
 public class Manager {
 	@SuppressWarnings("unchecked")

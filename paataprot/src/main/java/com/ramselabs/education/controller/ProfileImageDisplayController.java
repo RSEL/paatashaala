@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Scope;
 
 import com.ramselabs.education.entity.UserProfile;
 import com.ramselabs.education.managedbean.ManagedLoginBean;
-import com.ramselabs.education.service.UserService;
+import com.ramselabs.education.service.PostService;
 
 @Named
 @Scope("session")
@@ -23,10 +23,12 @@ public class ProfileImageDisplayController implements Serializable{
 	}
     
 	@Inject
-	UserService userService;
-	public void setUserService(UserService userService) {
-		this.userService = userService;
+	private PostService postService;
+	
+	public void setPostService(PostService postService) {
+		this.postService = postService;
 	}
+
 	private String image;
 	
 	public void setImage(String image) {
@@ -36,8 +38,8 @@ public class ProfileImageDisplayController implements Serializable{
 	public String getImage(){
 		if(image==null){
 		UserProfile user=ManagedLoginBean.mappToUserEntity(login);
-		int userId=userService.getUserId(user);
-		String displayName=userService.getDisplayName(userId);
+		int userId=postService.getUserId(user);
+		String displayName=postService.getDisplayName(userId);
 		if(displayName!=null)
 			image=displayName;
 		    System.out.println("image"+image);

@@ -12,7 +12,7 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import com.ramselabs.education.util.HibernateProperty;
+import com.ramselabs.education.dao.HibernateProperty;
 
 public class ConfigReader extends DefaultHandler {
 	private HashMap<String,HibernateProperty>hibernateProperties=new HashMap<String,HibernateProperty>();

@@ -68,11 +68,11 @@ public class FileUploadController implements Serializable{
 	       e.printStackTrace();
 	    }
 	    if(status==1){
-	      message=new FacesMessage(FacesMessage.SEVERITY_INFO, "File is uploaded in path /resources/img/profile-photo", null);
+	      message=new FacesMessage(FacesMessage.SEVERITY_INFO, "File is uploaded successfully", null);
   	      FacesContext.getCurrentInstance().addMessage("serverMsg", message);
 	    }
 	    else{
-	    	  message=new FacesMessage(FacesMessage.SEVERITY_INFO, "File uploaded is not successfull", null);
+	    	  message=new FacesMessage(FacesMessage.SEVERITY_INFO, "File is not  uploaded successfully", null);
 	  	      FacesContext.getCurrentInstance().addMessage("serverMsg", message);
 	    }
 	}
