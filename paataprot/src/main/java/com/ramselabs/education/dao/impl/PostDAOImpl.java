@@ -47,7 +47,11 @@ public class PostDAOImpl implements PostDAO {
 			postDescription.setPersonName(getPoster(postShare.getPost().getPosterId()).getDisplayName());
 			postDescription.setPostDescription(postShare.getPost().getDescription());
 			postDescription.setUserType(postShare.getUserType());
-			postDescription.setUserImage(getPoster(postShare.getPost().getPosterId()).getImagePath());
+			String image=getPoster(postShare.getPost().getPosterId()).getImagePath();
+			System.out.println(image);
+			if(image==null)
+				image="/resources/img/profile-photo/default-profile.jpg";
+			postDescription.setUserImage(image);
 			System.out.println("Date of posting"+postShare.getPostDate());
 			postDescription.setDateOfPosting(postShare.getPostDate());
 			listPerson.add(postDescription);
@@ -68,16 +72,11 @@ public class PostDAOImpl implements PostDAO {
 		return 1;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public UserProfile getPoster(int userId) {
 		Session session=sessionFactory.openSession();
-		Query query=session.createQuery("from UserProfile where userId = :userId");
-		query.setInteger("userId", userId);
-		List<UserProfile> list=(List<UserProfile>)query.list();
-		if(list.isEmpty())
-			System.out.println("List is empty for display name");
-		return list.get(0);
+    	UserProfile user=(UserProfile)session.get(UserProfile.class, userId);
+    	return user;
 	}
 	@SuppressWarnings("unchecked")
 	@Override
@@ -97,5 +96,44 @@ public class PostDAOImpl implements PostDAO {
 		  }
 		  return userId;
 	}
-
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<PostDescriptionModel> getPostsFromSamePerson(UserProfile user) {
+		List<PostDescriptionModel> list=new ArrayList<PostDescriptionModel>();
+		int posterId=getUserId(user);
+		Session session=sessionFactory.openSession();
+		Query query=session.createQuery("from Post where posterId =:posterId");
+		query.setInteger("posterId",posterId);
+		List<Post> posts=(List<Post>)query.list();
+		if(posts.isEmpty())
+			return null;
+		for(Post post:posts){
+		List<PostShare> postShares=(List<PostShare>)post.getPostShare();
+		
+			for(PostShare pShare:postShares){
+			PostDescriptionModel postDescModel=new PostDescriptionModel();
+			postDescModel.setPersonName(getPoster(posterId).getDisplayName());
+			postDescModel.setUserImage(getPoster(posterId).getImagePath());
+			postDescModel.setPostDescription(pShare.getPost().getDescription());
+			postDescModel.setUserType(pShare.getUserType());
+			postDescModel.setDateOfPosting(pShare.getPostDate());
+			list.add(postDescModel);
+		    }
+		}
+		return list;
+	}
+	@SuppressWarnings("unchecked")
+	public String getPostDescriptionForCurrentUser(int posterId){
+		Session session=sessionFactory.openSession();
+		Query query=session.createQuery("select DISTINCT description from Post where posterId =:posterId");
+		query.setInteger("posterId", posterId);
+		List<String> list=(List<String>)query.list();
+		String desc=null;
+		if(list.isEmpty())
+			return null;
+		for(String str:list){
+			desc=str;
+		}
+		return desc;
+	}
 }

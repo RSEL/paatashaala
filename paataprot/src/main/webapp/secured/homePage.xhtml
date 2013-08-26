@@ -109,7 +109,7 @@
 				<p:layoutUnit position="west" size="290" style="border:0" id="layoutUnit">
 					<h:panelGrid columns="2" cellpadding="10">
 					<h:form id="profileLargePhotoForm">
-						<p:graphicImage value="#{userProfileController.image}" style="height: 84px;width: 87px" id="profilePhoto"/>
+						<p:graphicImage value="#{userProfileController.image}" style="height: 84px;width: 75px" id="profilePhoto"/>
 						<p:spacer width="20"/><h:outputText value="Hi #{userProfileController.displayName}" />
 					</h:form>	
 					</h:panelGrid>
@@ -175,12 +175,13 @@
 									<p:watermark for="autoComp" value="send to.."/>
 									<p:commandButton value="Send" id="sendButt"
 										style="width:70px;height:35px;padding:1px 1px;margin-left:627px;background:#096DC5;border-radius: 1pc;margin-top: 10px;color: #ffffff;
-text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25)" actionListener="#{postController.insertPosts}" update="postForm,blui" onsuccess="bui.hide();return false;" oncomplete="clearText()">
+text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25)" actionListener="#{postController.insertPosts}" update=":postFromSame,postForm,blui" onsuccess="bui.hide();return false;" oncomplete="clearText()" >
 	 <p:blockUI block="postForm" trigger="sendButt" id="blui" widgetVar="bui" >  
         Sending..... 
         <br/>
         <p:graphicImage value="/resources/img/ajax-loader.gif"/> 
      </p:blockUI>
+     <f:actionListener binding="#{newsFeedFromSameUserController}"/>
 </p:commandButton>
 								</div>
    
@@ -203,9 +204,31 @@ text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);border-color: rgba(0, 0, 0, 0.1) rgba(
 					<p:panel style="background:#ffffff">
 						<h:outputText value="Latest Posts" styleClass="postHeader" />
 					</p:panel>
-
-					<p:dataList value="#{newsFeedController.listOfPost}" var="post" id="post"
+                     <p:dataList value="#{newsFeedFromSameUserController.listOfPost}" var="post" id="postFromSame"
 						type="none">
+						<p:panel style="background: #ffffff">
+							<p:panel style="border:0;float:left;background: #ffffff">
+								<p:graphicImage
+									value="#{post.userImage}"
+									width="60" height="60" style="margin-left:0px" />
+							</p:panel>
+							<p:panel style="border:0;background: #ffffff">
+								<h:outputText value="#{post.personName}" style="" />
+								<p:panel style="margin-left: 80px">
+									<h:outputText
+										value="#{post.postDescription}" />
+										<p:panel  style="margin-left: 360px;border:0">
+										<h:outputText value="#{post.dateOfPosting}">
+ 										    <f:convertDateTime dateStyle="short"  timeStyle="short" type="both"/>
+										</h:outputText>&nbsp;&nbsp;
+										<h:outputText value="#{post.userType}"/>
+										</p:panel>
+								</p:panel>
+							</p:panel>
+						</p:panel>
+					</p:dataList>
+					<p:dataList value="#{newsFeedController.listOfPost}" var="post" id="postfor"
+						type="none" >
 						<p:panel style="background: #ffffff">
 							<p:panel style="border:0;float:left;background: #ffffff">
 								<p:graphicImage

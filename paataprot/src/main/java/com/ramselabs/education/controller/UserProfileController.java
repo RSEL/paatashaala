@@ -41,7 +41,8 @@ public class UserProfileController implements Serializable{
 		  System.out.println("UserService"+userService);
 		  if(login.getUsername() != null & login.getPassword()!=null){
 			  image=userService.getUserProfile(login.getUsername(),login.getPassword()).getImagePath();
-		    
+		      if(image==null)
+		    	  image="/resources/img/profile-photo/default-profile.jpg";
 		  }
 			  return image;
 	}

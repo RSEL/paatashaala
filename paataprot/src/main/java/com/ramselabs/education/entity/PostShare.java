@@ -64,5 +64,8 @@ public class PostShare {
 	public void setPostDate(Date postDate) {
 		this.postDate = postDate;
 	}
-	
+ @Override
+ public String toString(){
+	 return post.getDescription();
+ }
 }

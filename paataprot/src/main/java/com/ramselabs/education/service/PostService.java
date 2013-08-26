@@ -12,4 +12,5 @@ public interface PostService {
 	public List<PostDescriptionModel> getPostPersons(UserProfile user);
 	public String getDisplayName(int userId);
 	public int getUserId(UserProfile user);
+	public List<PostDescriptionModel> getPostsFromCurrentUser(UserProfile user);
 }

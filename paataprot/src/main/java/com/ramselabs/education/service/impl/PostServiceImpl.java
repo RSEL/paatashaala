@@ -48,4 +48,9 @@ public class PostServiceImpl implements PostService {
 		return postDao.getUserId(user);
 	}
 
+	@Override
+	public List<PostDescriptionModel> getPostsFromCurrentUser(UserProfile user) {
+		return postDao.getPostsFromSamePerson(user);
+	}
+
 }

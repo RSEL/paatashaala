@@ -12,5 +12,6 @@ public interface PostDAO {
 	public int insertPosts(Post post,PostShare postShare);
 	public UserProfile getPoster(int userId);
 	public int getUserId(UserProfile user);
+	public List<PostDescriptionModel> getPostsFromSamePerson(UserProfile user);
 
 }
