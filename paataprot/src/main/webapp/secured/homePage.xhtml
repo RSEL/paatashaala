@@ -153,15 +153,15 @@
 							   <p:message for="autoComp" id="messages1"/>
 							   <p:growl for="postSave"/>
 								<p:inputTextarea rows="1" autoResize="true" id="postText"
-									onclick="addElement()" cols="450" style="width:687px" value="#{postBean.description}" required="true" label="PostText"/>
+									onclick="addElement()" cols="450" style="width:674px" value="#{postBean.description}" required="true" label="PostText"/>
 								<p:watermark for="postText" value="Type your post here..." />
 								<div id="clickedText" style="display: none">
 									<p:autoComplete id="autoComp"
-										value="#{autocompleteBeanController.selectedUserProfile}"
+										value="#{autocompleteBeanController.selectedUserProfiles}"
 										completeMethod="#{autocompleteBeanController.completeUserProfile}"
 										var="userProfile" itemLabel="#{userProfile.displayName}" itemValue="#{userProfile}"
-										 converter="#{userAutocompleteConverter}"
-										forceSelection="true" required="true" label="Send to">
+										 converter="#{userAutocompleteConverter}" multiple="true"
+										forceSelection="true" requiredMessage="Send to is required" label="Send to" minQueryLength="1" maxResults="5">
 										
 										<p:ajax event="itemUnselect" listener="#{autocompleteBeanController.handleUnselect}"/>
 										<p:column>
@@ -174,7 +174,7 @@
 									</p:autoComplete>
 									<p:watermark for="autoComp" value="send to.."/>
 									<p:commandButton value="Send" id="sendButt"
-										style="width:70px;height:35px;padding:1px 1px;margin-left:627px;background:#096DC5;border-radius: 1pc;margin-top: 10px;color: #ffffff;
+										style="width:70px;height:35px;padding:1px 1px;margin-left:616px;background:#096DC5;border-radius: 1pc;margin-top: 10px;color: #ffffff;
 text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25)" actionListener="#{postController.insertPosts}" update=":postfor,postForm,blui" onsuccess="bui.hide();return false;" oncomplete="clearText()" >
 	 <p:blockUI block="postForm" trigger="sendButt" id="blui" widgetVar="bui" >  
         Sending..... 

@@ -1,8 +1,6 @@
 package com.ramselabs.education.converter;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -23,7 +21,6 @@ public class UserAutocompleteConverter implements Converter {
 	@Inject
 	private UserService userService;
 	private List<UserProfile> list;
-	public Map<String, UserProfile> userProfiles;
 
 	@Inject
 	private ManagedLoginBean login;
@@ -36,20 +33,12 @@ public class UserAutocompleteConverter implements Converter {
 	public void setUserService(UserService userService) {
 		this.userService = userService;
 	}
-
+    
+	public UserAutocompleteConverter(){
+		System.out.println("Converter object is created"+this);
+	}
 	public UserService getUserService() {
 		return userService;
-	}
-
-	public Map<String, UserProfile> getUserProfiles() {
-		if (userProfiles == null) {
-			userProfiles = new HashMap<String, UserProfile>();
-			for (UserProfile userProfile : getList()) {
-				userProfiles.put(userProfile.getDisplayName(), userProfile);
-			}
-		}
-
-		return userProfiles;
 	}
 
 	public List<UserProfile> getList() {
@@ -68,8 +57,13 @@ public class UserAutocompleteConverter implements Converter {
 		}
 		else{
 			System.out.println("converter String value is not blank");
-			return userProfiles.get(value);
+			for(UserProfile user : list){
+				if(user.getDisplayName()==value){
+					return user;
+				}
+			}
 		}
+		return null;
 	}
 
 	@Override

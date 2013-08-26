@@ -3,7 +3,6 @@ package com.ramselabs.education.controller;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -22,10 +21,11 @@ import com.ramselabs.education.entity.UserProfile;
 public class AutocompleteBeanController implements Serializable {
 
 	private static final long serialVersionUID = 4205128731491922702L;
-	private UserProfile selectedUserProfile;
+	private List<UserProfile> selectedUserProfiles;
 	@Inject
 	private UserAutocompleteConverter userConverter;
     
+	
 	public UserAutocompleteConverter getUserConverter() {
 		return userConverter;
 	}
@@ -34,26 +34,31 @@ public class AutocompleteBeanController implements Serializable {
 		this.userConverter = userConverter;
 	}
     
+	public AutocompleteBeanController(){
+		
+		System.out.println("Controller Object is created");
+	}
 	
 
-	public UserProfile getSelectedUserProfile() {
-		return selectedUserProfile;
+	public List<UserProfile> getSelectedUserProfiles() {
+		System.out.println("AutoCompleteUser"+selectedUserProfiles);
+		return selectedUserProfiles;
 	}
 
-	public void setSelectedUserProfile(UserProfile selectedUserProfile) {
-		this.selectedUserProfile = selectedUserProfile;
-		System.out.println("AutoCompleteUser"+selectedUserProfile);
+	public void setSelectedUserProfile(List<UserProfile> selectedUserProfiles) {
+		this.selectedUserProfiles = selectedUserProfiles;
+		
 	}
 
 	public List<UserProfile> completeUserProfile(String input) {
 		List<UserProfile> suggestions = new ArrayList<UserProfile>();
-		Map<String, UserProfile> userProfile = userConverter.getUserProfiles();
-		for (String key : userProfile.keySet()) {
-			   if (StringUtils.startsWithIgnoreCase(key, input)) {
-				suggestions.add(userProfile.get(key));
+		selectedUserProfiles=userConverter.getList();
+		for (UserProfile user: selectedUserProfiles) {
+			   if (StringUtils.startsWithIgnoreCase(user.getDisplayName(), input)) {
+				suggestions.add(user);
 			   }
 		}
-
+        
 		return suggestions;
 	}
 	 public void handleUnselect(UnselectEvent event) {  

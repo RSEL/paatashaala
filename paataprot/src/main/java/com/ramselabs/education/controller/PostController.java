@@ -2,6 +2,7 @@ package com.ramselabs.education.controller;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -25,7 +26,10 @@ public class PostController implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 7731304387140442749L;
-
+    
+	public PostController(){
+		System.out.println("PostController Object is created");
+	}
 	@Inject
 	private PostBean postBean;
 	public void setPostBean(PostBean postBean) {
@@ -62,11 +66,12 @@ public class PostController implements Serializable{
       postShare.setPostDate(new Date());
       postShare.setUserType("User");
       
-      UserProfile user=autoCmplController.getSelectedUserProfile();
+      List<UserProfile> users=autoCmplController.getSelectedUserProfiles();
+      System.out.println("selected user profiles"+users);
       Post post=PostBean.mapToPost(postBean);
       post.setPosterId(posterId);
       
-      user.getPost().add(post);
+    /*  user.getPost().add(post);
       user.getUserPostShare().add(postShare);
       
       post.getPostShare().add(postShare);
@@ -77,8 +82,8 @@ public class PostController implements Serializable{
       
       postShare.setPostShareUser(user);
       
-      int i=postService.inserPost(post, postShare);
-   
+      int i=postService.inserPost(post, postShare)*/;
+      int i=0;
       FacesMessage message = null;
       if(i==1){
     	  message=new FacesMessage(FacesMessage.SEVERITY_INFO, "You post is successfully posted", null);

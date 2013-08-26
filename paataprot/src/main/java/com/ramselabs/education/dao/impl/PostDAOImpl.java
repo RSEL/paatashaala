@@ -29,6 +29,8 @@ public class PostDAOImpl implements PostDAO {
 	}
 	public List<PostDescriptionModel> getPostPersons(UserProfile user) {
 		int userId=getUserId(user);
+		if(userId==0)
+			return null;
 		List<PostDescriptionModel> listPerson=new ArrayList<PostDescriptionModel>();
 		Session session=sessionFactory.openSession();
 		UserProfile userProfile=(UserProfile)session.get(UserProfile.class,userId);
@@ -120,6 +122,8 @@ public class PostDAOImpl implements PostDAO {
 	public List<PostDescriptionModel> getAllPosts(UserProfile user) {
 		List<PostDescriptionModel> list1=getPostPersons(user);
 		List<PostDescriptionModel> list2=getPostsFromSamePerson(user);
+		if(list1==null || list2==null)
+			return null;
 		list1.addAll(list2);
 		Collections.sort(list1, new PostDescriptionModel());
 		return list1;
