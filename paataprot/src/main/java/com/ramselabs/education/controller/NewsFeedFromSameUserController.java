@@ -52,7 +52,7 @@ public class NewsFeedFromSameUserController implements ActionListener ,Serializa
 	public List<PostDescriptionModel> getAllPosts(){
 		
 		UserProfile user=ManagedLoginBean.mappToUserEntity(login);
-		List<PostDescriptionModel> postDescs=postService.getPostsFromCurrentUser(user);
+		List<PostDescriptionModel> postDescs=postService.getAllPostsForUser(user);
 		if(login==null || postDescs==null)
 			return null;
 		Collections.sort(postDescs, new Comparator<PostDescriptionModel>() {

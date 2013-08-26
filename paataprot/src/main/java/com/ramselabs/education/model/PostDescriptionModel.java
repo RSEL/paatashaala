@@ -1,8 +1,9 @@
 package com.ramselabs.education.model;
 
+import java.util.Comparator;
 import java.util.Date;
 
-public class PostDescriptionModel {
+public class PostDescriptionModel implements Comparator<PostDescriptionModel>{
 	private String personName;
 	private String postDescription;
 	private String userType;
@@ -39,5 +40,10 @@ public class PostDescriptionModel {
 	public void setPostDescription(String postDescription) {
 		this.postDescription = postDescription;
 	}
+	@Override
+	public int compare(PostDescriptionModel o1, PostDescriptionModel o2) {
+		return o2.getDateOfPosting().compareTo(o1.getDateOfPosting());
+	}
+	
     
 }

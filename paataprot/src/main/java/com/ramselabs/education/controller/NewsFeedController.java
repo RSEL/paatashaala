@@ -3,6 +3,9 @@ package com.ramselabs.education.controller;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.faces.event.AbortProcessingException;
+import javax.faces.event.ActionEvent;
+import javax.faces.event.ActionListener;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -15,7 +18,7 @@ import com.ramselabs.education.service.PostService;
 
 @Named
 @Scope("request")
-public class NewsFeedController implements Serializable{
+public class NewsFeedController implements ActionListener, Serializable{
 
 	private static final long serialVersionUID = 4322730194350739587L;
    
@@ -47,7 +50,13 @@ public class NewsFeedController implements Serializable{
 		if(login==null)
 			return null;
 		UserProfile user=ManagedLoginBean.mappToUserEntity(login);
-		return postService.getPostPersons(user);
+		return postService.getAllPostsForUser(user);
+	}
+	
+	@Override
+	public void processAction(ActionEvent arg0) throws AbortProcessingException {
+		listOfPost=getAllPosts();
+		
 	}
 	
 }

@@ -31,11 +31,8 @@ public class PostServiceImpl implements PostService {
 	}
 
 	@Override
-	public List<PostDescriptionModel> getPostPersons(UserProfile user) {
-		int userId=postDao.getUserId(user);
-     if(userId==0)
-	   return null;
-	return postDao.getPostPersons(userId);
+	public List<PostDescriptionModel> getAllPostsForUser(UserProfile user) {
+	return postDao.getAllPosts(user);
 	}
 
 	@Override
@@ -46,11 +43,6 @@ public class PostServiceImpl implements PostService {
 	@Override
 	public int getUserId(UserProfile user) {
 		return postDao.getUserId(user);
-	}
-
-	@Override
-	public List<PostDescriptionModel> getPostsFromCurrentUser(UserProfile user) {
-		return postDao.getPostsFromSamePerson(user);
 	}
 
 }

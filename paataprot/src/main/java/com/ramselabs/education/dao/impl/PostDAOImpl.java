@@ -2,7 +2,6 @@ package com.ramselabs.education.dao.impl;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -28,8 +27,8 @@ public class PostDAOImpl implements PostDAO {
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 	}
-	@Override
-	public List<PostDescriptionModel> getPostPersons(int userId) {
+	public List<PostDescriptionModel> getPostPersons(UserProfile user) {
+		int userId=getUserId(user);
 		List<PostDescriptionModel> listPerson=new ArrayList<PostDescriptionModel>();
 		Session session=sessionFactory.openSession();
 		UserProfile userProfile=(UserProfile)session.get(UserProfile.class,userId);
@@ -37,11 +36,6 @@ public class PostDAOImpl implements PostDAO {
 //		System.out.println(posts);
 		if(posts.isEmpty())
 			return null;
-		Collections.sort(posts, new Comparator<PostShare>() {
-		    public int compare(PostShare s1, PostShare s2) {
-		        return s2.getPostDate().compareTo(s1.getPostDate());
-		    }
-		});
 		for(PostShare postShare:posts){
 			PostDescriptionModel postDescription=new PostDescriptionModel();
 			postDescription.setPersonName(getPoster(postShare.getPost().getPosterId()).getDisplayName());
@@ -97,7 +91,6 @@ public class PostDAOImpl implements PostDAO {
 		  return userId;
 	}
 	@SuppressWarnings("unchecked")
-	@Override
 	public List<PostDescriptionModel> getPostsFromSamePerson(UserProfile user) {
 		List<PostDescriptionModel> list=new ArrayList<PostDescriptionModel>();
 		int posterId=getUserId(user);
@@ -122,18 +115,13 @@ public class PostDAOImpl implements PostDAO {
 		}
 		return list;
 	}
-	@SuppressWarnings("unchecked")
-	public String getPostDescriptionForCurrentUser(int posterId){
-		Session session=sessionFactory.openSession();
-		Query query=session.createQuery("select DISTINCT description from Post where posterId =:posterId");
-		query.setInteger("posterId", posterId);
-		List<String> list=(List<String>)query.list();
-		String desc=null;
-		if(list.isEmpty())
-			return null;
-		for(String str:list){
-			desc=str;
-		}
-		return desc;
+	
+	@Override
+	public List<PostDescriptionModel> getAllPosts(UserProfile user) {
+		List<PostDescriptionModel> list1=getPostPersons(user);
+		List<PostDescriptionModel> list2=getPostsFromSamePerson(user);
+		list1.addAll(list2);
+		Collections.sort(list1, new PostDescriptionModel());
+		return list1;
 	}
 }
