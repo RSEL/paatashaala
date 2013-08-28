@@ -15,20 +15,13 @@ import com.ramselabs.education.entity.PostShare;
 import com.ramselabs.education.entity.UserProfile;
 import com.ramselabs.education.managedbean.ManagedLoginBean;
 import com.ramselabs.education.managedbean.PostBean;
-import com.ramselabs.education.service.PostService;
+import com.ramselabs.education.service.AlertService;
 
 @Named
 @Scope("session")
-public class PostController implements Serializable{
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 7731304387140442749L;
-    
-	public PostController(){
-		System.out.println("PostController Object is created");
-	}
+public class AlertController implements Serializable{
+	
+	private static final long serialVersionUID = 3588878517076626163L;
 	@Inject
 	private PostBean postBean;
 	public void setPostBean(PostBean postBean) {
@@ -49,17 +42,16 @@ public class PostController implements Serializable{
 	}
 
 	@Inject
-	private PostService postService;
+	private AlertService alertService;
 	
 
-	public void setPostService(PostService postService) {
-		this.postService = postService;
+	public void setAlertService(AlertService alertService) {
+		this.alertService = alertService;
 	}
-
-
-	public void insertPosts(){
+	
+	public void insertAlerts(){
 	  UserProfile user1=ManagedLoginBean.mappToUserEntity(login);
-	  int posterId=postService.getUserId(user1);
+	  int posterId=alertService.getUserId(user1);
 	  
       PostShare postShare=new PostShare();
       postShare.setPostDate(new Date());
@@ -69,7 +61,7 @@ public class PostController implements Serializable{
       System.out.println("selected user profiles"+user);
       Post post=PostBean.mapToPost(postBean);
       post.setPosterId(posterId);
-      post.setMessageType("post");
+      post.setMessageType("alert");
       user.getPost().add(post);
       user.getUserPostShare().add(postShare);
       
@@ -81,18 +73,21 @@ public class PostController implements Serializable{
       
       postShare.setPostShareUser(user);
       
-      int i=postService.inserPost(post, postShare);
+      int i=alertService.insertAlert(post, postShare);
       FacesMessage message = null;
       if(i==1){
-    	  message=new FacesMessage(FacesMessage.SEVERITY_INFO, "Your post is successfully posted", null);
-    	  FacesContext.getCurrentInstance().addMessage("postSave", message);
+    	  message=new FacesMessage(FacesMessage.SEVERITY_INFO, "Your Alert is successfully posted", null);
+    	  FacesContext.getCurrentInstance().addMessage("alertSave", message);
       }
       else{
-      message=new FacesMessage(FacesMessage.SEVERITY_INFO, "Your post is not successfully posted", null);
-	  FacesContext.getCurrentInstance().addMessage("postSave", message);
+      message=new FacesMessage(FacesMessage.SEVERITY_INFO, "Your Alert is not successfully posted", null);
+	  FacesContext.getCurrentInstance().addMessage("alertSave", message);
       }
       
       
       
 	}
+
+
+	
 }

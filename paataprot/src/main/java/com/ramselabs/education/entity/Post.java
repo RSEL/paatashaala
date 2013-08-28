@@ -21,16 +21,30 @@ public class Post{
 	@Id @GeneratedValue
 	@Column(name="id")
 	private int postId;
+	
 	@Type(type="text")
 	@Column(name="description")
 	private String description;
+	
 	@ManyToOne
 	@JoinColumn(name="user_id")
 	UserProfile postUser;
+	
 	@OneToMany(mappedBy="post")
 	private Collection<PostShare> postShare=new ArrayList<PostShare>();
+	
 	@Column(name="poster_id")
 	private int posterId;
+	
+	@Column(name="message_type")
+	private String messageType;
+	
+	public String getMessageType() {
+		return messageType;
+	}
+	public void setMessageType(String messageType) {
+		this.messageType = messageType;
+	}
 	public Collection<PostShare> getPostShare() {
 		return postShare;
 	}

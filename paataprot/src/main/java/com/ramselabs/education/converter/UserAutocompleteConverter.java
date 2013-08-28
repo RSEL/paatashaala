@@ -58,7 +58,7 @@ public class UserAutocompleteConverter implements Converter {
 		else{
 			System.out.println("converter String value is not blank");
 			for(UserProfile user : list){
-				if(user.getDisplayName()==value){
+				if(user.getDisplayName().equals(value)){
 					return user;
 				}
 			}

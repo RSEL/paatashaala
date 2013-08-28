@@ -21,7 +21,7 @@ import com.ramselabs.education.entity.UserProfile;
 public class AutocompleteBeanController implements Serializable {
 
 	private static final long serialVersionUID = 4205128731491922702L;
-	private List<UserProfile> selectedUserProfiles;
+	private UserProfile selectedUserProfiles;
 	@Inject
 	private UserAutocompleteConverter userConverter;
     
@@ -40,20 +40,20 @@ public class AutocompleteBeanController implements Serializable {
 	}
 	
 
-	public List<UserProfile> getSelectedUserProfiles() {
-		System.out.println("AutoCompleteUser"+selectedUserProfiles);
+	
+
+	public UserProfile getSelectedUserProfiles() {
 		return selectedUserProfiles;
 	}
 
-	public void setSelectedUserProfile(List<UserProfile> selectedUserProfiles) {
+	public void setSelectedUserProfiles(UserProfile selectedUserProfiles) {
 		this.selectedUserProfiles = selectedUserProfiles;
-		
 	}
 
 	public List<UserProfile> completeUserProfile(String input) {
 		List<UserProfile> suggestions = new ArrayList<UserProfile>();
-		selectedUserProfiles=userConverter.getList();
-		for (UserProfile user: selectedUserProfiles) {
+		List<UserProfile> list=userConverter.getList();
+		for (UserProfile user:list) {
 			   if (StringUtils.startsWithIgnoreCase(user.getDisplayName(), input)) {
 				suggestions.add(user);
 			   }

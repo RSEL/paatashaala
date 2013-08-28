@@ -44,6 +44,9 @@ public class PostDescriptionModel implements Comparator<PostDescriptionModel>{
 	public int compare(PostDescriptionModel o1, PostDescriptionModel o2) {
 		return o2.getDateOfPosting().compareTo(o1.getDateOfPosting());
 	}
-	
+	@Override
+	public String toString(){
+		return postDescription;
+	}
     
 }
