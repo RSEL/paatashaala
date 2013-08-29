@@ -8,6 +8,7 @@
 <f:view contentType="text/html" locale="en">
 	<h:head>
 		<f:facet name="first">
+		<h:outputScript library="js" name="jQuery.js"/>
 			<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 			<meta http-equiv="pragma" content="no-cache" />
 			<meta http-equiv="cache-control" content="no-cache" />
@@ -15,6 +16,8 @@
 
 		</f:facet>
 		<f:facet name="last">
+		    
+            <h:outputScript library="js" name="sroll.js"/> 
 			<h:outputStylesheet library="css" name="bootstrap-responsive.css" />
 			<h:outputStylesheet library="css" name="bootstrap.css" />
 			<h:outputStylesheet library="css" name="bootstrap-support.css" />
@@ -107,7 +110,7 @@
 
 		</h:form>
 		<p:scrollPanel style="width:1363px;height:610px;border:0"
-			mode="native" id="srollPannel">
+			mode="native" id="srollPannel" styleClass="mousescroll srollForThis">
 			<p:layout style="min-width:400px;min-height:900px" id="layout">
 				<p:layoutUnit position="west" size="290" style="border:0" id="layoutUnit">
 					<h:panelGrid columns="2" cellpadding="10">
@@ -246,19 +249,20 @@ text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);border-color: rgba(0, 0, 0, 0.1) rgba(
 							<p:panel style="border:0;float:left;background: #ffffff">
 								<p:graphicImage
 									value="#{post.userImage}"
-									width="60" height="60" style="margin-left:0px" />
+									 style="margin-left:0px;width:60px;height:63px" />
 							</p:panel>
 							<p:panel style="border:0;background: #ffffff">
 								<h:outputText value="#{post.personName}" style="" />
-								<p:panel style="margin-left: 80px">
-									<h:outputText
-										value="#{post.postDescription}" />
-										<p:panel  style="margin-left: 360px;border:0">
+								         &nbsp;&nbsp;
 										<h:outputText value="#{post.dateOfPosting}">
  										    <f:convertDateTime dateStyle="short"  timeStyle="short" type="both"/>
 										</h:outputText>&nbsp;&nbsp;
 										<h:outputText value="#{post.userType}"/>
-										</p:panel>
+										
+								<p:panel style="margin-left: 80px">
+									<h:outputText
+										value="#{post.postDescription}" />
+										
 								</p:panel>
 							</p:panel>
 						</p:panel>
@@ -270,9 +274,9 @@ text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);border-color: rgba(0, 0, 0, 0.1) rgba(
                      <h:graphicImage url="#{resource['img:default-profile1.jpg']}" />    
                      <h:outputText value="Ram Software Engineering Lab Pvt. Ltd." />               
                 </p:panelGrid> -->
-                   <p:scrollPanel style="width:282px;height:200px">
+                   <p:scrollPanel style="width:272px;height:176px" mode="native" id="notiScroll" styleClass="mousescroll srollForThis">
 						<p:dataList var="post" value="#{alertFeedController.listofAlert}"
-							style="width:100%;margin:0px 0px" type="none" id="notifyList">
+							style="margin:0px 0px;border:0" type="none" id="notifyList" >
 							
                       <!-- <p:panel style="background: #ffffff">
 							<p:panel style="border:0;float:left;background: #ffffff">
@@ -294,12 +298,12 @@ text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);border-color: rgba(0, 0, 0, 0.1) rgba(
 								</p:panel>
 							</p:panel> 
 						</p:panel> -->
-						<p:panelGrid styleClass="companyHeaderGrid"  columns="2">
+						<p:panelGrid  columns="2" style="border:0px" >
 						 
-						   <p:panel style="padding: 0px 0px;border:0;width:60px"> 
+						   <p:panel style="padding: 0px 0px;border:0;width:60px" > 
 						       <p:graphicImage
 									value="#{post.userImage}"
-									style="margin-left:0px;width:89px;height:30px" />
+									style="margin-left:0px;width:89px;height:30px"/>
 							  </p:panel>
 							  
 							 
@@ -452,15 +456,16 @@ text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);border-color: rgba(0, 0, 0, 0.1) rgba(
     padding-top: 4px;
     padding-left: 3px;
 }
- 
-.companyHeaderGrid table tr td {
-     border-style: hidden !important;
-}
+/*  
+#customSrollBar .ui-scrollpanel-native {                    
+                overflow:hidden !important;
+            } */
+
 .ui-panelgrid td{
 border-width: 0px;
 border-style: none;
-border-color: inherit;
-padding: 4px 10px;
+border-color: black;
+padding: 0px 10px;
 }
 /* .fileupload-content {
     display: inline;
@@ -468,6 +473,31 @@ padding: 4px 10px;
 /* .fileinput-button {
     background: #157FF0;
 } */
+
+.mousescroll {
+    overflow: hidden !important;
+}
+.mousescroll:hover {
+    overflow-y: scroll !important;
+}
+
+.srollForThis::-webkit-scrollbar {
+    width: 12px;
+}
+ 
+
+.srollForThis::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+}
+ 
+.srollForThis::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    background: rgb(165, 152, 152); 
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+}
 </style>
  <script type="text/javascript">
             $(document).ready(function(){
