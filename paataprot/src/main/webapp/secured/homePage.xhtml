@@ -8,7 +8,7 @@
 <f:view contentType="text/html" locale="en">
 	<h:head>
 		<f:facet name="first">
-		<h:outputScript library="js" name="jQuery.js"/>
+		
 			<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 			<meta http-equiv="pragma" content="no-cache" />
 			<meta http-equiv="cache-control" content="no-cache" />
@@ -16,14 +16,27 @@
 
 		</f:facet>
 		<f:facet name="last">
-		    
-            <h:outputScript library="js" name="sroll.js"/> 
+            <h:outputScript library="js" name="jquery.mousewheel.js"/>
+            <h:outputScript library="js" name="perfect-scrollbar.js"/>
+            <h:outputStylesheet library="css" name="perfect-scrollbar.css"/>
 			<h:outputStylesheet library="css" name="bootstrap-responsive.css" />
 			<h:outputStylesheet library="css" name="bootstrap.css" />
 			<h:outputStylesheet library="css" name="bootstrap-support.css" />
 			<h:outputStylesheet library="css" name="themeSwitcher.css" />
 		</f:facet>
 		<script type="text/javascript">
+		 $(document).ready(function ($) {
+		        $('#srollPannel').perfectScrollbar({
+		          wheelSpeed: 20,
+		          wheelPropagation: false
+		        });
+		        var ids=document.getElementById('notifyForm:notiScroll');
+		        $(ids).perfectScrollbar({
+			          wheelSpeed: 20,
+			          wheelPropagation: false
+			        });
+		      });
+		 
 			function addElement() {
 				document.getElementById('clickedText').style.display = 'inline';
 				/* 				document.getElementById('tabView:postForm:hide1').style.display = 'inline';
@@ -110,7 +123,7 @@
 
 		</h:form>
 		<p:scrollPanel style="width:1363px;height:610px;border:0"
-			mode="native" id="srollPannel" styleClass="mousescroll srollForThis">
+			mode="native" id="srollPannel" styleClass="srollPannelStyle">
 			<p:layout style="min-width:400px;min-height:900px" id="layout">
 				<p:layoutUnit position="west" size="290" style="border:0" id="layoutUnit">
 					<h:panelGrid columns="2" cellpadding="10">
@@ -257,7 +270,7 @@ text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);border-color: rgba(0, 0, 0, 0.1) rgba(
 										<h:outputText value="#{post.dateOfPosting}">
  										    <f:convertDateTime dateStyle="short"  timeStyle="short" type="both"/>
 										</h:outputText>&nbsp;&nbsp;
-										<h:outputText value="#{post.userType}"/>
+										<h:outputText value="#{post.userType}"/>&nbsp;&nbsp;<h:outputText value="#{post.messageType}"/>
 										
 								<p:panel style="margin-left: 80px">
 									<h:outputText
@@ -274,7 +287,7 @@ text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);border-color: rgba(0, 0, 0, 0.1) rgba(
                      <h:graphicImage url="#{resource['img:default-profile1.jpg']}" />    
                      <h:outputText value="Ram Software Engineering Lab Pvt. Ltd." />               
                 </p:panelGrid> -->
-                   <p:scrollPanel style="width:272px;height:176px" mode="native" id="notiScroll" styleClass="mousescroll srollForThis">
+                   <p:scrollPanel style="width:275px;height:176px" mode="native" id="notiScroll" styleClass="srollPannelStyle">
 						<p:dataList var="post" value="#{alertFeedController.listofAlert}"
 							style="margin:0px 0px;border:0" type="none" id="notifyList" >
 							
@@ -319,7 +332,7 @@ text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);border-color: rgba(0, 0, 0, 0.1) rgba(
                 </p:scrollPanel>
 						<br></br>
 						<p:calendar showButtonPanel="true" navigator="true" mode="inline"
-							id="enCal" style="width:100%;margin:0px 0px" />
+							id="enCal" style="width:100%;margin:0px 0px;margin-top: 175px;position: absolute" />
 					</h:form>
 				</p:layoutUnit>
 			</p:layout>
@@ -474,7 +487,7 @@ padding: 0px 10px;
     background: #157FF0;
 } */
 
-.mousescroll {
+/* .mousescroll {
     overflow: hidden !important;
 }
 .mousescroll:hover {
@@ -482,22 +495,29 @@ padding: 0px 10px;
 }
 
 .srollForThis::-webkit-scrollbar {
+   -moz-appearance: none !important;
     width: 12px;
 }
  
 
 .srollForThis::-webkit-scrollbar-track {
+     -moz-appearance: none !important;
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
     -webkit-border-radius: 10px;
     border-radius: 10px;
 }
  
 .srollForThis::-webkit-scrollbar-thumb {
+    -moz-appearance: none !important;
     -webkit-border-radius: 10px;
     border-radius: 10px;
     background: rgb(165, 152, 152); 
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
-}
+} */
+.srollPannelStyle{
+        overflow: hidden !important;
+        position: absolute;
+      }
 </style>
  <script type="text/javascript">
             $(document).ready(function(){

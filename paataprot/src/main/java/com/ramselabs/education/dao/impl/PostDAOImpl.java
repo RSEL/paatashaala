@@ -43,6 +43,7 @@ public class PostDAOImpl implements PostDAO {
 			postDescription.setPersonName(getPoster(postShare.getPost().getPosterId()).getDisplayName());
 			postDescription.setPostDescription(postShare.getPost().getDescription());
 			postDescription.setUserType(postShare.getUserType());
+			postDescription.setMessageType(postShare.getPost().getMessageType());
 			String image=getPoster(postShare.getPost().getPosterId()).getImagePath();
 			System.out.println(image);
 			if(image==null)
@@ -112,6 +113,7 @@ public class PostDAOImpl implements PostDAO {
 			postDescModel.setPostDescription(pShare.getPost().getDescription());
 			postDescModel.setUserType(pShare.getUserType());
 			postDescModel.setDateOfPosting(pShare.getPostDate());
+			postDescModel.setMessageType(pShare.getPost().getMessageType());
 			list.add(postDescModel);
 		    }
 		}

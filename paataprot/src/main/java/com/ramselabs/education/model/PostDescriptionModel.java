@@ -9,7 +9,14 @@ public class PostDescriptionModel implements Comparator<PostDescriptionModel>{
 	private String userType;
 	private Date dateOfPosting;
 	private String userImage;
+	private String messageType;
 	
+	public String getMessageType() {
+		return messageType;
+	}
+	public void setMessageType(String messageType) {
+		this.messageType = messageType;
+	}
 	public String getUserImage() {
 		return userImage;
 	}
