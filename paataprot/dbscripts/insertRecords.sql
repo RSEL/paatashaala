@@ -1,5 +1,4 @@
-insert into user(userId,password,username) values(2,'1234','ravikant');
-insert into user(userId,password,username) values(3,'12345','shashi');
-insert into share(shareId, name, userId) values(1,'Ravikant',2);
-insert into share(shareId, name, userId) values(2,'ArunKrish',1);
-insert into share(shareId, name, userId) values(3,'Shashikant',3);
+insert into userprofiles(id,display_name,password,user_name) values(1,'ArunKrish','123','ramlabs');
+insert into userprofiles(id,display_name,password,user_name) values(2,'Ravikant','1234','ravikant');
+insert into userprofiles(id,display_name,password,user_name) values(3,'Shashikant','12345','shashi');
+insert into userprofiles(id,display_name,password,user_name) values(4,'Vinay','123456','vinay');
