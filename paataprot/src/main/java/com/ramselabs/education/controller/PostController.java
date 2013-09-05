@@ -10,6 +10,7 @@ import javax.inject.Named;
 
 import org.springframework.context.annotation.Scope;
 
+import com.ramselabs.education.entity.MessageApproval;
 import com.ramselabs.education.entity.Post;
 import com.ramselabs.education.entity.PostShare;
 import com.ramselabs.education.entity.UserProfile;
@@ -65,23 +66,32 @@ public class PostController implements Serializable{
       postShare.setPostDate(new Date());
       postShare.setUserType("User");
       
+      MessageApproval approval=new MessageApproval();
+      approval.setStatus("pending");
+      
       UserProfile user=autoCmplController.getSelectedUserProfiles();
       System.out.println("selected user profiles"+user);
       Post post=PostBean.mapToPost(postBean);
       post.setPosterId(posterId);
       post.setMessageType("post");
+      
       user.getPost().add(post);
       user.getUserPostShare().add(postShare);
+      user.getApprovals().add(approval);
       
       post.getPostShare().add(postShare);
       
       postShare.setPost(post);
       
       post.setPostUser(user);
+      post.setPostApproval(approval);
       
       postShare.setPostShareUser(user);
       
-      int i=postService.inserPost(post, postShare);
+      approval.setUserApproval(user);
+      approval.setApprovalPost(post);
+      
+      int i=postService.inserPost(post, postShare,approval);
       FacesMessage message = null;
       if(i==1){
     	  message=new FacesMessage(FacesMessage.SEVERITY_INFO, "Your post is successfully posted", null);

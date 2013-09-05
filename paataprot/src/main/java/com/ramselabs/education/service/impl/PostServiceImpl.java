@@ -8,6 +8,7 @@ import javax.inject.Named;
 import org.springframework.context.annotation.Scope;
 
 import com.ramselabs.education.dao.service.PostDAO;
+import com.ramselabs.education.entity.MessageApproval;
 import com.ramselabs.education.entity.Post;
 import com.ramselabs.education.entity.PostShare;
 import com.ramselabs.education.entity.UserProfile;
@@ -26,8 +27,8 @@ public class PostServiceImpl implements PostService {
 	}
 
 	@Override
-	public int inserPost(Post post, PostShare postShare) {
-		return postDao.insertPosts(post, postShare);
+	public int inserPost(Post post, PostShare postShare,MessageApproval approval) {
+		return postDao.insertPosts(post, postShare,approval);
 	}
 
 	@Override
@@ -43,6 +44,22 @@ public class PostServiceImpl implements PostService {
 	@Override
 	public int getUserId(UserProfile user) {
 		return postDao.getUserId(user);
+	}
+
+	@Override
+	public List<PostDescriptionModel> getAllPendingPostsForUser(UserProfile user) {
+		return postDao.getAllPendingPosts(user);
+	}
+
+	@Override
+	public int updateMessageStatus(int approvalId) {
+		
+		return postDao.updateCheckedMessageStatus(approvalId);
+	}
+
+	@Override
+	public int updateMessageStatusReason(int approvalId, String rejectReason) {
+		return postDao.setRejectReason(approvalId, rejectReason);
 	}
 
 }

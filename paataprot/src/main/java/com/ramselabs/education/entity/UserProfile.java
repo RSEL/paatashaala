@@ -26,8 +26,12 @@ public class UserProfile{
 	private String imagePath;
 	@OneToMany(mappedBy="postUser")
 	private Collection<Post> post=new ArrayList<Post>();
+	
 	@OneToMany(mappedBy="postShareUser")
 	private Collection<PostShare> userPostShare=new ArrayList<PostShare>();
+	
+	@OneToMany(mappedBy="userApproval")
+	private Collection<MessageApproval> approvals=new ArrayList<MessageApproval>();
 	
 	public String getImagePath() {
 		return imagePath;
@@ -71,8 +75,16 @@ public class UserProfile{
 	public void setUserPostShare(Collection<PostShare> userPostShare) {
 		this.userPostShare = userPostShare;
 	}
+
+	public Collection<MessageApproval> getApprovals() {
+		return approvals;
+	}
+	public void setApprovals(Collection<MessageApproval> approvals) {
+		this.approvals = approvals;
+	}
 	@Override
 	public String toString(){
 		return displayName;
 	}
+	
 }

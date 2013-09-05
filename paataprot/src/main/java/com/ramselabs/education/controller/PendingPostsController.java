@@ -20,7 +20,7 @@ import com.ramselabs.education.service.PostService;
 
 @Named
 @Scope("session")
-public class NewsFeedFromSameUserController implements ActionListener ,Serializable{
+public class PendingPostsController implements ActionListener ,Serializable{
 
 	private static final long serialVersionUID = 1218523565246357221L;
 
@@ -40,19 +40,19 @@ public class NewsFeedFromSameUserController implements ActionListener ,Serializa
 	public void setLogin(ManagedLoginBean login) {
 		this.login = login;
 	}
-	private List<PostDescriptionModel> listOfPost;
+	private List<PostDescriptionModel> listOfPendingPost;
 	
-	public List<PostDescriptionModel> getListOfPost() {
-		if(listOfPost==null){
-			listOfPost=getAllPosts();
+	public List<PostDescriptionModel> getListOfPendingPost() {
+		if(listOfPendingPost==null){
+			listOfPendingPost=getAllPendingPosts();
 		}
-		return listOfPost;
+		return listOfPendingPost;
 	}
 
-	public List<PostDescriptionModel> getAllPosts(){
+	public List<PostDescriptionModel> getAllPendingPosts(){
 		
 		UserProfile user=ManagedLoginBean.mappToUserEntity(login);
-		List<PostDescriptionModel> postDescs=postService.getAllPostsForUser(user);
+		List<PostDescriptionModel> postDescs=postService.getAllPendingPostsForUser(user);
 		if(login==null || postDescs==null)
 			return null;
 		Collections.sort(postDescs, new Comparator<PostDescriptionModel>() {
@@ -65,8 +65,9 @@ public class NewsFeedFromSameUserController implements ActionListener ,Serializa
 
 	@Override
 	public void processAction(ActionEvent arg0) throws AbortProcessingException {
-		listOfPost=getAllPosts();
+		listOfPendingPost=getAllPendingPosts();
 		
 	}
+
 	
 }

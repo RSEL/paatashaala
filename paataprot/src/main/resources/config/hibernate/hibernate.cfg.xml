@@ -30,6 +30,7 @@
       <mapping class="com.ramselabs.education.entity.Post"/>
       <mapping class="com.ramselabs.education.entity.PostShare"/>
       <mapping class="com.ramselabs.education.entity.UserProfile"/>
+      <mapping class="com.ramselabs.education.entity.MessageApproval"/>
     </session-factory>
 
 </hibernate-configuration>

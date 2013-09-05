@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Type;
@@ -32,6 +33,9 @@ public class Post{
 	
 	@OneToMany(mappedBy="post")
 	private Collection<PostShare> postShare=new ArrayList<PostShare>();
+	
+	@OneToOne(mappedBy="approvalPost")
+	private MessageApproval postApproval;
 	
 	@Column(name="poster_id")
 	private int posterId;
@@ -75,7 +79,11 @@ public class Post{
 	public void setPosterId(int posterId) {
 		this.posterId = posterId;
 	}
-	
-	
+	public MessageApproval getPostApproval() {
+		return postApproval;
+	}
+	public void setPostApproval(MessageApproval postApproval) {
+		this.postApproval = postApproval;
+	}
 	
 }

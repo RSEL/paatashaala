@@ -8,6 +8,7 @@ import javax.inject.Named;
 import org.springframework.context.annotation.Scope;
 
 import com.ramselabs.education.dao.service.AlertDAO;
+import com.ramselabs.education.entity.MessageApproval;
 import com.ramselabs.education.entity.Post;
 import com.ramselabs.education.entity.PostShare;
 import com.ramselabs.education.entity.UserProfile;
@@ -32,8 +33,8 @@ public class AlertServiceImpl implements AlertService {
 	}
 
 	@Override
-	public int insertAlert(Post post, PostShare pShare) {
-		return alertDAO.insertAlerts(post, pShare);
+	public int insertAlert(Post post, PostShare pShare ,MessageApproval approval) {
+		return alertDAO.insertAlerts(post, pShare,approval);
 	}
 
 	@Override

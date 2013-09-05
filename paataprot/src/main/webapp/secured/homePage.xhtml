@@ -1,14 +1,14 @@
-<?xml version='1.0' encoding='UTF-8' ?> 
+<?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
 <f:view contentType="text/html" locale="en">
 	<h:head>
 		<f:facet name="first">
-		
+
 			<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 			<meta http-equiv="pragma" content="no-cache" />
 			<meta http-equiv="cache-control" content="no-cache" />
@@ -16,27 +16,27 @@
 
 		</f:facet>
 		<f:facet name="last">
-            <h:outputScript library="js" name="jquery.mousewheel.js"/>
-            <h:outputScript library="js" name="perfect-scrollbar.js"/>
-            <h:outputStylesheet library="css" name="perfect-scrollbar.css"/>
+			<h:outputScript library="js" name="jquery.mousewheel.js" />
+			<h:outputScript library="js" name="perfect-scrollbar.js" />
+			<h:outputStylesheet library="css" name="perfect-scrollbar.css" />
 			<h:outputStylesheet library="css" name="bootstrap-responsive.css" />
 			<h:outputStylesheet library="css" name="bootstrap.css" />
 			<h:outputStylesheet library="css" name="bootstrap-support.css" />
 			<h:outputStylesheet library="css" name="themeSwitcher.css" />
 		</f:facet>
 		<script type="text/javascript">
-		 $(document).ready(function ($) {
-		        $('#srollPannel').perfectScrollbar({
-		          wheelSpeed: 20,
-		          wheelPropagation: false
-		        });
-		        var ids=document.getElementById('notifyForm:notiScroll');
-		        $(ids).perfectScrollbar({
-			          wheelSpeed: 20,
-			          wheelPropagation: false
-			        });
-		      });
-		 
+			$(document).ready(function($) {
+				$('#srollPannel').perfectScrollbar({
+					wheelSpeed : 40,
+					wheelPropagation : false
+				});
+				var ids = document.getElementById('notifyForm:notiScroll');
+				$(ids).perfectScrollbar({
+					wheelSpeed : 20,
+					wheelPropagation : false
+				});
+			});
+
 			function addElement() {
 				document.getElementById('clickedText').style.display = 'inline';
 				/* 				document.getElementById('tabView:postForm:hide1').style.display = 'inline';
@@ -48,25 +48,28 @@
 			}
 			function addAlertText() {
 				document.getElementById('clickedAlertText').style.display = 'inline';
-			/* 	document.getElementById('clickedAlertText').innerHTML = '<input type="text" placeholder="send to..." id="alertToText" name="alertToText" style="width:682px"></input><br></br><input type="submit" value="send" class="btn btn-large btn-primary" style="width:70px;height:35px;padding:1px 1px;margin-left:626px;border-radius: 1pc"/>'; */
+				/* 	document.getElementById('clickedAlertText').innerHTML = '<input type="text" placeholder="send to..." id="alertToText" name="alertToText" style="width:682px"></input><br></br><input type="submit" value="send" class="btn btn-large btn-primary" style="width:70px;height:35px;padding:1px 1px;margin-left:626px;border-radius: 1pc"/>'; */
 			}
-		    function clearText(){
-				document.getElementById('tabView:postForm:postText').value='';
-				document.getElementById('tabView:postForm:autoComp_input').value='';
+			function clearText() {
+				document.getElementById('tabView:postForm:postText').value = '';
+				document.getElementById('tabView:postForm:autoComp_input').value = '';
 			}
-		    function clearTextAlert(){
-				document.getElementById('tabView:alertForm:alertText').value='';
-				document.getElementById('tabView:alertForm:autoCompAlert_input').value='';
+			function clearTextAlert() {
+				document.getElementById('tabView:alertForm:alertText').value = '';
+				document
+						.getElementById('tabView:alertForm:autoCompAlert_input').value = '';
 			}
 		</script>
 	</h:head>
 	<h:body style="padding:0px 0px;margin:0px 0px">
 		<h:form style="margin:0px 0px" id="toolBarFor">
-			<p:toolbar style="width:auto;background-color:#157FF0 !important" id="toolBarImage">
+			<p:toolbar style="width:auto;background-color:#157FF0 !important"
+				id="toolBarImage">
 				<p:toolbarGroup align="left" id="toolGroup">
 					<p:commandLink type="push" title="Profile picture"
 						style="margin:5px 0px 5px 15px" id="profileIconLink">
-						 <p:graphicImage value="#{userProfileController.image}" style="height: 34px;width: 34px" id="profileIcon"/>
+						<p:graphicImage value="#{userProfileController.image}"
+							style="height: 34px;width: 34px" id="profileIcon" />
 					</p:commandLink>
 					<h:outputText value="School Name"
 						style="font-size:30px;margin:4px 0px 0px 16px" />
@@ -101,7 +104,9 @@
 					<p:menu overlay="true" trigger="dynaButton" my="left top"
 						at="left bottom">
 						<p:menuitem value="Save" url="#" />
-						<p:menuitem value="Change Picture" onclick="dlgPhotoUpload.show(); return false;" title="Change Profile Picture"/>
+						<p:menuitem value="Change Picture"
+							onclick="dlgPhotoUpload.show(); return false;"
+							title="Change Profile Picture" />
 						<p:menuitem value="Logout" action="#{loginController.doLogout}" />
 						<p:menuitem value="Themes" onclick="dlg1.show(); return false;"
 							type="button" />
@@ -125,12 +130,15 @@
 		<p:scrollPanel style="width:1363px;height:610px;border:0"
 			mode="native" id="srollPannel" styleClass="srollPannelStyle">
 			<p:layout style="min-width:400px;min-height:900px" id="layout">
-				<p:layoutUnit position="west" size="290" style="border:0" id="layoutUnit">
+				<p:layoutUnit position="west" size="290" style="border:0"
+					id="layoutUnit">
 					<h:panelGrid columns="2" cellpadding="10">
-					<h:form id="profileLargePhotoForm">
-						<p:graphicImage value="#{userProfileController.image}" style="height: 84px;width: 75px" id="profilePhoto"/>
-						<p:spacer width="20"/><h:outputText value="Hi #{userProfileController.displayName}" />
-					</h:form>	
+						<h:form id="profileLargePhotoForm">
+							<p:graphicImage value="#{userProfileController.image}"
+								style="height: 84px;width: 75px" id="profilePhoto" />
+							<p:spacer width="20" />
+							<h:outputText value="Hi #{userProfileController.displayName}" />
+						</h:form>
 					</h:panelGrid>
 					<h:form>
 						<p:panel id="pnl" header="Groups" toggleable="true"
@@ -162,171 +170,307 @@
 					</h:form>
 				</p:layoutUnit>
 
-				<p:layoutUnit position="center" style="border:0;background:transparent" id="centerLayout">
-					<p:tabView id="tabView" style="background:transparent" effect="drop"
-						onTabShow="hidePostText()">
+				<p:layoutUnit position="center"
+					style="border:0;background:transparent" id="centerLayout">
+					<p:tabView id="tabView" style="background:transparent"
+						effect="drop" onTabShow="hidePostText()">
 						<p:tab id="tab1" title="Post" titleStyle="">
-						
+
 							<h:form style="margin:0px 0px" id="postForm">
-							   <p:message for="postText" id="messages"/>
-							   <p:message for="autoComp" id="messages1"/>
-							   <p:growl for="postSave"/>
+								<p:message for="postText" id="messages" />
+								<p:message for="autoComp" id="messages1" />
+								<p:growl for="postSave" />
 								<p:inputTextarea rows="1" autoResize="true" id="postText"
-									onclick="addElement()" cols="450" style="width:686px" value="#{postBean.description}" required="true" label="PostText"/>
+									onclick="addElement()" cols="450" style="width:686px"
+									value="#{postBean.description}" required="true"
+									label="PostText" />
 								<p:watermark for="postText" value="Type your post here..." />
 								<div id="clickedText" style="display: none">
 									<p:autoComplete id="autoComp"
 										value="#{autocompleteBeanController.selectedUserProfiles}"
 										completeMethod="#{autocompleteBeanController.completeUserProfile}"
-										var="userProfile" itemLabel="#{userProfile.displayName}" itemValue="#{userProfile}"
-										 converter="#{userAutocompleteConverter}"
-										forceSelection="true" required="true" rerequiredMessage="Send to is required" label="Send to" minQueryLength="1" maxResults="5">
-										
-										<p:ajax event="itemUnselect" listener="#{autocompleteBeanController.handleUnselect}"/>
+										var="userProfile" itemLabel="#{userProfile.displayName}"
+										itemValue="#{userProfile}"
+										converter="#{userAutocompleteConverter}" forceSelection="true"
+										required="true" rerequiredMessage="Send to is required"
+										label="Send to" minQueryLength="1" maxResults="5">
+
+										<p:ajax event="itemUnselect"
+											listener="#{autocompleteBeanController.handleUnselect}" />
 										<p:column>
-											<p:graphicImage
-												value="#{userProfile.imagePath}"
-												width="30" height="20" />
+											<p:graphicImage value="#{userProfile.imagePath}" width="30"
+												height="20" />
 											&nbsp;&nbsp;&nbsp;#{userProfile.displayName}
 										</p:column>
-										
+
 									</p:autoComplete>
-									<p:watermark for="autoComp" value="send to.."/>
+									<p:watermark for="autoComp" value="send to.." />
 									<p:commandButton value="Send" id="sendButt"
 										style="width:70px;height:35px;padding:1px 1px;margin-left:616px;background:#096DC5;border-radius: 1pc;margin-top: 10px;color: #ffffff;
-text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25)" actionListener="#{postController.insertPosts}" update=":postfor,postForm,blui" onsuccess="bui.hide();return false;" oncomplete="clearText()" >
-	 <p:blockUI block="postForm" trigger="sendButt" id="blui" widgetVar="bui" >  
+text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25)"
+										actionListener="#{postController.insertPosts}"
+										update=":tabViewNewsFeed:postfor,postForm,blui"
+										onsuccess="bui.hide();return false;" oncomplete="clearText()">
+										<p:blockUI block="postForm" trigger="sendButt" id="blui"
+											widgetVar="bui">  
         Sending..... 
-        <br/>
-        <p:graphicImage value="/resources/img/ajax-loader.gif"/> 
-     </p:blockUI>
-     <f:actionListener binding="#{newsFeedController}"/>
-</p:commandButton>
+        <br />
+											<p:graphicImage value="/resources/img/ajax-loader.gif" />
+										</p:blockUI>
+										<f:actionListener binding="#{newsFeedController}" />
+									</p:commandButton>
 								</div>
-   
+
 							</h:form>
 
 						</p:tab>
-							
-   
+
+
 
 						<p:tab id="tab2" title="Alert">
 							<h:form style="margin:0px 0px" id="alertForm">
-							<p:message for="alertText" id="messages"/>
-							   <p:message for="autoCompAlert" id="messages1"/>
-							   <p:growl for="alertSave"/>
-								<p:inputText  id="alertText"
-									onclick="addAlertText()"  style="width:681px" value="#{postBean.description}" required="true"/>
+								<p:message for="alertText" id="messages" />
+								<p:message for="autoCompAlert" id="messages1" />
+								<p:growl for="alertSave" />
+								<p:inputText id="alertText" onclick="addAlertText()"
+									style="width:681px" value="#{postBean.description}"
+									required="true" label="alert text" />
 								<p:watermark for="alertText" value="Type your alert here..." />
 								<div id="clickedAlertText" style="display: none">
-								<p:autoComplete id="autoCompAlert"
+									<p:autoComplete id="autoCompAlert"
 										value="#{autocompleteBeanController.selectedUserProfiles}"
 										completeMethod="#{autocompleteBeanController.completeUserProfile}"
-										var="userProfile" itemLabel="#{userProfile.displayName}" itemValue="#{userProfile}"
-										 converter="#{userAutocompleteConverter}"
-										forceSelection="true"  label="Send to" required="true">
-										
-										<p:ajax event="itemUnselect" listener="#{autocompleteBeanController.handleUnselect}"/>
+										var="userProfile" itemLabel="#{userProfile.displayName}"
+										itemValue="#{userProfile}"
+										converter="#{userAutocompleteConverter}" forceSelection="true"
+										label="Send to" required="true">
+
+										<p:ajax event="itemUnselect"
+											listener="#{autocompleteBeanController.handleUnselect}" />
 										<p:column>
-											<p:graphicImage
-												value="#{userProfile.imagePath}"
-												width="30" height="20" />
+											<p:graphicImage value="#{userProfile.imagePath}" width="30"
+												height="20" />
 											&nbsp;&nbsp;&nbsp;#{userProfile.displayName}
 										</p:column>
-										
+
 									</p:autoComplete>
-										<p:watermark for="autoCompAlert" value="send to.."/>
+									<p:watermark for="autoCompAlert" value="send to.." />
 									<p:commandButton value="Send" id="sendButtAlert"
 										style="width:70px;height:35px;padding:1px 1px;margin-left:616px;background:#096DC5;border-radius: 1pc;margin-top: 10px;color: #ffffff;
-text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25)" actionListener="#{alertController.insertAlerts}" update=":notifyForm:notifyList,:postfor,alertForm,blui" onsuccess="bui.hide();return false;" oncomplete="clearTextAlert()" >
-<p:blockUI block="alertForm" trigger="sendButtAlert" id="blui" widgetVar="bui" >  
+text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25)"
+										actionListener="#{alertController.insertAlerts}"
+										update=":notifyForm:notifyList,:tabViewNewsFeed:postfor,alertForm,blui"
+										onsuccess="bui.hide();return false;"
+										oncomplete="clearTextAlert()">
+										<p:blockUI block="alertForm" trigger="sendButtAlert" id="blui"
+											widgetVar="bui">  
         Sending..... 
-        <br/>
-        <p:graphicImage value="/resources/img/ajax-loader.gif"/> 
-     </p:blockUI>
-     <f:actionListener binding="#{newsFeedController}"/>
-     <f:actionListener binding="#{alertFeedController}"/>
-</p:commandButton>
+        <br />
+											<p:graphicImage value="/resources/img/ajax-loader.gif" />
+										</p:blockUI>
+										<f:actionListener binding="#{newsFeedController}" />
+										<f:actionListener binding="#{alertFeedController}" />
+									</p:commandButton>
 								</div>
 							</h:form>
 						</p:tab>
 					</p:tabView>
 
-					<p:panel style="background:#ffffff">
+					<!-- <p:panel style="background:#ffffff">
 						<h:outputText value="Latest Posts" styleClass="postHeader" />
-					</p:panel>
-                     
-					<p:dataList value="#{newsFeedController.listOfPost}" var="post" id="postfor" 
-						type="none" >
-						<p:panel style="background: #ffffff">
-							<p:panel style="border:0;float:left;background: #ffffff">
-								<p:graphicImage
-									value="#{post.userImage}"
-									 style="margin-left:0px;width:60px;height:63px" />
-							</p:panel>
-							<p:panel style="border:0;background: #ffffff">
-								<h:outputText value="#{post.personName}" style="" />
+					</p:panel> -->
+					<p:tabView id="tabViewNewsFeed"
+						style="background:transparent;padding-left: 0px;padding-right: 0px;padding-bottom: 0px"
+						styleClass="tabMargin">
+						<p:tab id="tabLatestPost" title="Latest Posts">
+
+							<p:dataList value="#{newsFeedController.listOfPost}" var="post"
+								id="postfor" type="none">
+								<p:panel style="background: #ffffff">
+
+									<p:panel style="border:0;float:left;background: #ffffff">
+										<p:graphicImage value="#{post.userImage}"
+											style="margin-left:0px;width:60px;height:63px" />
+									</p:panel>
+									<p:panel style="border:0;background: #ffffff">
+										<h:outputText value="#{post.personName}" style="" />
 								         &nbsp;&nbsp;
 										<h:outputText value="#{post.dateOfPosting}">
- 										    <f:convertDateTime dateStyle="short"  timeStyle="short" type="both"/>
+											<f:convertDateTime dateStyle="short" timeStyle="short"
+												type="both" />
 										</h:outputText>&nbsp;&nbsp;
-										<h:outputText value="#{post.userType}"/>&nbsp;&nbsp;<h:outputText value="#{post.messageType}"/>
-										
-								<p:panel style="margin-left: 80px">
-									<h:outputText
-										value="#{post.postDescription}" />
-										
+										<h:outputText value="#{post.userType}" />&nbsp;&nbsp;<h:outputText
+											value="#{post.messageType}" />
+
+										<p:panel style="margin-left: 80px">
+											<p:graphicImage value="/resources/img/show-dedail.png"
+												style="width:27px;height:28px;float:right"
+												title="Show details" id="toolTipImage" />
+											<p:tooltip for="toolTipImage" style="background: #ffffff">
+												<p:panel
+													style="background: #ffffff;width:300px;padding:0px 0px;border:0px"
+													styleClass="imagePadLeft">
+													<p:panel
+														style="border:0;float:left;background: #ffffff;padding:0px 0px"
+														 styleClass="imagePadLeft">
+														<p:graphicImage value="#{post.shareToImage}"
+															style="margin-left:0px;width:60px;height:63px" />
+													</p:panel>
+
+													<h:outputText value="Shared to : #{post.shareToName}" style="text-align: justify" /><br/>
+														<h:outputText value="Status : #{post.rejectStatus}"/><br/>
+														<h:outputText value="#{post.rejectReason}" />
+
+												</p:panel>
+											</p:tooltip>
+											<h:outputFormat value="#{post.postDescription}"
+												escape="false" />
+
+										</p:panel>
+
+									</p:panel>
+									<h:outputText value="Shared to : #{post.shareToName}"
+										style="margin-left:17px" />
+									<br />
+
 								</p:panel>
-							</p:panel>
-						</p:panel>
-					</p:dataList>
+							</p:dataList>
+						</p:tab>
+
+						<p:tab id="tabPendingPost" title="Pending Posts" titleStyle="">
+
+							<h:form id="pendingMessageForm">
+								<p:growl for="approvalStatus" id="approvalGrowl" />
+								<p:dataList value="#{pendingPostsController.listOfPendingPost}"
+									var="post" id="postPendingFor" type="none">
+									<p:panel style="background: #ffffff">
+										<p:panel style="border:0;float:left;background: #ffffff">
+											<p:graphicImage value="#{post.userImage}"
+												style="margin-left:0px;width:60px;height:63px" />
+										</p:panel>
+										<p:panel style="border:0;background: #ffffff">
+											<h:outputText value="#{post.personName}" style="" />
+								         &nbsp;&nbsp;
+										<h:outputText value="#{post.dateOfPosting}">
+												<f:convertDateTime dateStyle="short" timeStyle="short"
+													type="both" />
+											</h:outputText>&nbsp;&nbsp;
+										<h:outputText value="#{post.userType}" />&nbsp;&nbsp;<h:outputText
+												value="#{post.messageType}" />
+
+											<p:panel style="margin-left: 80px">
+												<h:outputText value="#{post.postDescription}" />
+
+											</p:panel>
+
+										</p:panel>
+										<h:outputText value="Shared to : #{post.shareToName}"
+											style="margin-left:17px" />
+
+										<p:commandLink type="push" title="Accept" id="CheckIconLink"
+											actionListener="#{pendingPostCheckedListener.checkPost}"
+											update=":tabViewNewsFeed:pendingMessageForm:postPendingFor,:tabViewNewsFeed:pendingMessageForm,:tabViewNewsFeed:postfor,:notifyForm:notifyList">
+											<p:graphicImage value="/resources/img/checked-icon.png"
+												style="height: 30px;width: 30px;margin-left: 463px"
+												id="checkedIcon" />
+											<f:attribute name="approvalId" value="#{post.approvalId}" />
+											<f:actionListener binding="#{pendingPostsController}" />
+											<f:actionListener binding="#{newsFeedController}" />
+											<f:actionListener binding="#{alertFeedController}" />
+										</p:commandLink>
+										<p:commandLink type="push" title="Reject" id="CrossIconLink"
+											oncomplete="dlgForRejectMessage.show(); return false;"
+											actionListener="#{setApprovalIdListener.setApprovalIdForMessage}">
+											<p:graphicImage value="/resources/img/cross-icon.png"
+												style="height: 30px;width: 30px;margin-left:7px"
+												id="crossedIcon" />
+											<f:attribute name="approvalId" value="#{post.approvalId}" />
+										</p:commandLink>
+									</p:panel>
+								</p:dataList>
+							</h:form>
+						</p:tab>
+
+					</p:tabView>
 				</p:layoutUnit>
 				<p:layoutUnit position="east" size="290" style="border:0">
 					<h:form id="notifyForm">
-                   <p:scrollPanel style="width:275px;height:179px;border:0" mode="native" id="notiScroll" styleClass="srollPannelStyle">
-						<p:dataList var="post" value="#{alertFeedController.listofAlert}"
-							style="margin:0px 0px;border:0" type="none" id="notifyList" >
-							
-                  
-						<p:panelGrid  columns="2" style="border:0px" >
-						 
-						   <p:panel style="padding: 0px 0px;border:0;width:60px" > 
-						       <p:graphicImage
-									value="#{post.userImage}"
-									style="margin-left:0px;width:89px;height:30px"/>
-							  </p:panel>
-							  
-							 
-							 <p:panel style="padding: 0px 0px;border:0">
-									<h:outputText value="#{post.personName}:-#{post.postDescription}" style="font-size:12px" />&nbsp;&nbsp;&nbsp;
-									<h:outputText value="#{post.dateOfPosting}" style="font-size:10px">
- 										    <f:convertDateTime dateStyle="short" pattern="dd/MMM" timeStyle="short" type="both"/>
-										</h:outputText>
+						<p:scrollPanel style="width:275px;height:314px;border:0"
+							mode="native" id="notiScroll" styleClass="srollPannelStyle">
+							<p:dataList var="post" value="#{alertFeedController.listofAlert}"
+								style="margin:0px 0px;border:0" type="none" id="notifyList">
+
+
+
+								<p:panel
+									style="background: #ffffff;width: 272px;padding:0px 0px"
+									styleClass="imagePadLeft" id="panelNotify">
+									<p:panel
+										style="border:0;float:left;background: #ffffff;padding:0px 0px"
+										id="panelImage" styleClass="imagePadLeft">
+										<p:graphicImage value="#{post.userImage}"
+											style="margin-left:0px;width:25px;height:25px" />
+									</p:panel>
+
+									<h:outputFormat value="#{post.postDescription} #{post}"
+										style="font-size:10px;text-align: justify" escape="false"/>
+
 								</p:panel>
-									
-						</p:panelGrid>
-                </p:dataList>
-                </p:scrollPanel>
+								<p:tooltip for="panelNotify" style="background: #ffffff" >
+												<p:panel
+													style="background: #ffffff;width:400px;height:130px;padding:0px 0px;border:0px"
+													styleClass="imagePadLeft">
+													<p:panel
+														style="border:0;float:left;background: #ffffff;padding:0px 0px"
+														 styleClass="imagePadLeft">
+														<p:graphicImage value="#{post.shareToImage}"
+															style="margin-left:0px;width:60px;height:63px" />
+													</p:panel>
+                                                               <h:outputFormat value="#{post.postDescription} #{post}"
+										                          style="text-align: justify" escape="false"/>
+
+												</p:panel>
+											</p:tooltip>
+							</p:dataList>
+						</p:scrollPanel>
 						<br></br>
 						<p:calendar showButtonPanel="true" navigator="true" mode="inline"
-							id="enCal" style="width:100%;margin:0px 0px;margin-top: 175px;position: absolute" />
+							id="enCal"
+							style="width:100%;margin:0px 0px;margin-top: 300px;position: absolute" />
 					</h:form>
 				</p:layoutUnit>
 			</p:layout>
 		</p:scrollPanel>
-		<p:dialog widgetVar="dlgPhotoUpload" header="Choose your images" id="fileUploadDlg" modal="true">
-		    <h:form id="fileUpload">
-				<p:fileUpload fileUploadListener="#{fileUploadController.handleFileUpload}"
-                                                  uploadLabel="Upload" 
-                                                  cancelLabel="Cancel"
-                                                  label="Choose"
-                                                  allowTypes="/(\.|\/)(gif|jpe?g|png)$/" 
-                                                  
-                                                  sizeLimit="300000"
-                                                  
-                                                  widgetVar="fileuplaod_wgt" oncomplete="dlgPhotoUpload.hide(); return false;"
-                                                  update="msgFileUp,:toolBarFor:profileIcon,:profileLargePhotoForm:profilePhoto"/> 
-                                                <p:growl id="msgFileUp" for="serverMsg"/>   
+		<p:dialog widgetVar="dlgPhotoUpload" header="Choose your images"
+			id="fileUploadDlg" modal="true">
+			<h:form id="fileUpload">
+				<p:fileUpload
+					fileUploadListener="#{fileUploadController.handleFileUpload}"
+					uploadLabel="Upload" cancelLabel="Cancel" label="Choose"
+					allowTypes="/(\.|\/)(gif|jpe?g|png)$/" sizeLimit="300000"
+					widgetVar="fileuplaod_wgt"
+					oncomplete="dlgPhotoUpload.hide(); return false;"
+					update="msgFileUp,:toolBarFor:profileIcon,:profileLargePhotoForm:profilePhoto" />
+				<p:growl id="msgFileUp" for="serverMsg" />
+			</h:form>
+		</p:dialog>
+		<p:dialog widgetVar="dlgForRejectMessage" header="Reason for reject"
+			modal="true">
+			<h:form id="dlgRejectForm">
+				<p:inputText id="reasonText" style="margin-top: 22px"
+					value="#{rejectDialogBean.rejectReason}" />
+				<p:watermark value="Type your reason" for="reasonText" />
+				<p:commandButton value="Submit"
+					style="width:83px;height:35px;padding:1px 1px;background:#096DC5;border-radius: 1pc;margin-top: 10px;margin-left: 11px;color: #ffffff;
+text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25)"
+					oncomplete="dlgForRejectMessage.hide(); return false;"
+					actionListener="#{pendingPostRejectController.reject}"
+					update="rejectGrowl,:tabViewNewsFeed:pendingMessageForm:postPendingFor">
+					<f:attribute name="approvalId"
+						value="#{setApprovalIdListener.approvalId}" />
+					<f:actionListener binding="#{pendingPostsController}" />
+				</p:commandButton>
+				<p:growl for="rejectStatus" id="rejectGrowl" />
 			</h:form>
 		</p:dialog>
 		<p:dialog id="basicDialog" header="Choose your theme" widgetVar="dlg1"
@@ -340,7 +484,7 @@ text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);border-color: rgba(0, 0, 0, 0.1) rgba(
 					<p:ajax listener="#{userSettingsController.saveTheme}"
 						oncomplete="dlg1.hide(); return false;" />
 				</p:themeSwitcher>
-				
+
 			</h:form>
 		</p:dialog>
 
@@ -419,7 +563,7 @@ text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);border-color: rgba(0, 0, 0, 0.1) rgba(
 						<p:message for="groupDescription" />
 						<p:watermark for="groupDescription" value="GroupDescription" />
 						<hr />
-						<p:commandButton value="Create" update="groupFormAdvance"/>
+						<p:commandButton value="Create" update="groupFormAdvance" />
 					</h:form>
 				</p:tab>
 			</p:tabView>
@@ -428,34 +572,39 @@ text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);border-color: rgba(0, 0, 0, 0.1) rgba(
 .ui-autocomplete-multiple-container {
 	width: 682px;
 }
-.ui-autocomplete-input.ui-inputfield{width:682px !important;}
-.ui-tabs-nav{
- background: transparent !important;
+
+.ui-autocomplete-input.ui-inputfield {
+	width: 682px !important;
 }
- .fileupload-buttonbar .fileinput-button .ui-icon-plusthick{
-         display: none !important;
-         
- }
- .fileupload-buttonbar .fileinput-button  .ui-button-text{
-     padding-left: 1em!important;
-     background: transparent !important;
- }
- .fileupload-buttonbar {
-    padding: 0.0em 0.0em;
-    background: transparent !important;
-    padding-top: 4px;
-    padding-left: 3px;
+
+.ui-tabs-nav {
+	background: transparent !important;
+}
+
+.fileupload-buttonbar .fileinput-button .ui-icon-plusthick {
+	display: none !important;
+}
+
+.fileupload-buttonbar .fileinput-button  .ui-button-text {
+	padding-left: 1em !important;
+	background: transparent !important;
+}
+
+.fileupload-buttonbar {
+	padding: 0.0em 0.0em;
+	background: transparent !important;
+	padding-top: 4px;
+	padding-left: 3px;
 }
 /*  
 #customSrollBar .ui-scrollpanel-native {                    
                 overflow:hidden !important;
             } */
-
-.ui-panelgrid td{
-border-width: 0px;
-border-style: none;
-border-color: black;
-padding: 0px 13px;
+.ui-panelgrid td {
+	border-width: 0px;
+	border-style: none;
+	border-color: black;
+	padding: 0px 13px;
 }
 /* .fileupload-content {
     display: inline;
@@ -491,22 +640,34 @@ padding: 0px 13px;
     background: rgb(165, 152, 152); 
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
 } */
-.srollPannelStyle{
-        overflow: hidden !important;
-        position: absolute;
-      }
-</style>
- <script type="text/javascript">
-            $(document).ready(function(){
-                fileuplaod_wgt.buttonBar.find("button.cancel").bind("click", function(e){
-                    clearInvalidFileMsg();
-                });
-            });
+.srollPannelStyle {
+	overflow: hidden !important;
+	position: absolute;
+}
 
-            function clearInvalidFileMsg(){
-                fileuplaod_wgt.uploadContent.find("tr.ui-state-error").remove();
-            }
-        </script>
+.tabMargin.ui-tabs .ui-tabs-panel {
+	padding-left: 0px;
+	padding-right: 0px;
+	padding-bottom: 0px;
+}
+
+.imagePadLeft .ui-panel-content .ui-widget-content {
+	padding-left: 0px;
+}
+</style>
+		<script type="text/javascript">
+			$(document).ready(
+					function() {
+						fileuplaod_wgt.buttonBar.find("button.cancel").bind(
+								"click", function(e) {
+									clearInvalidFileMsg();
+								});
+					});
+
+			function clearInvalidFileMsg() {
+				fileuplaod_wgt.uploadContent.find("tr.ui-state-error").remove();
+			}
+		</script>
 	</h:body>
 </f:view>
 </html>
