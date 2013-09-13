@@ -1,0 +1,39 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+	<p:layoutUnit position="west" size="290" style="border:0"
+		id="layoutUnitGroupDesc">
+		<h:form id="groupForm">
+			<p:panel style="width:200px;height:130px;padding:0px 0px;border:0px"
+				styleClass="imagePadLeft">
+				<p:panel style="border:0;float:left;padding:0px 0px"
+					styleClass="imagePadLeft">
+					<p:graphicImage value="#{userProfileController.image}"
+						style="margin-left:0px;margin-top:-11px;width:60px;height:63px"
+						id="groupPhoto" />
+				</p:panel>
+				<h:outputText value="#{userProfileController.displayName}"
+					style="text-align: justify;font-size:18px" />
+				<br />
+				<h:outputText value="#{userProfileController.userType}"
+					style="text-align: justify;font-size:14px;font-color:gray" />
+
+			</p:panel>
+
+		</h:form>
+		<h:form id="groupCreatePanel">
+			<p:panel id="pnlGroup" header="Groups" toggleable="true"
+				style="border:0;margin-right:10px">
+				<p:menu style="margin-left:-13px;border:0;width:247px">
+				  <p:menuitem value="Posts" icon="ui-icon-mail-open" action="#"/>
+				  <p:menuitem value="Folder" icon="ui-icon-folder-open" action="#"/>
+				  <p:menuitem value="Members" icon="ui-icon-person" action="#"/>
+				  
+				</p:menu>
+			</p:panel>
+		</h:form>
+	</p:layoutUnit>
+</ui:composition>

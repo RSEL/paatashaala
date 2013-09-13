@@ -28,11 +28,10 @@ public class LoginFilter implements Filter {
         // Get the loginController from session attribute
         LoginController loginController = (LoginController)((HttpServletRequest)request).getSession().getAttribute("loginController");
          HttpServletRequest req=(HttpServletRequest)request;
-        
          HttpServletResponse res=(HttpServletResponse)response;
         if (loginController == null || !loginController.isLoggedIn()) {
         	String contextPath = req.getContextPath();
-        	 
+        	System.out.println(req.getSession());
                 res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
                 res.setHeader("Pragma", "no-cache"); // HTTP 1.0.
                 res.setDateHeader("Expires", 0); // Proxies.

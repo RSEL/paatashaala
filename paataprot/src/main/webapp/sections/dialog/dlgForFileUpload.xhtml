@@ -1,0 +1,26 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+	<p:dialog widgetVar="dlgPhotoUpload" header="Choose your images"
+			id="fileUploadDlg" modal="true">
+			<h:form id="fileUpload">
+				<p:fileUpload
+					fileUploadListener="#{fileUploadController.handleFileUpload}"
+					uploadLabel="Upload" cancelLabel="Cancel" label="Choose"
+					allowTypes="/(\.|\/)(gif|jpe?g|png)$/" sizeLimit="300000"
+					widgetVar="fileuplaod_wgt"
+					id="fileUploadId"
+					oncomplete="beforeUpdate(),dlgPhotoUpload.hide(); return false;"
+					update="msgFileUp,:toolBarFor:profileIcon,:profileLargePhotoForm:profilePhoto" />
+					<p:remoteCommand name="beforeUpdate" partialSubmit="true" update=":tabViewNewsFeed:pendingMessageForm:postPendingFor,:tabViewNewsFeed:pendingMessageForm,:tabViewNewsFeed:postfor,:notifyForm:notifyList" oncomplete="reloadPage()" value="" >
+					<f:actionListener binding="#{newsFeedController}" />
+					<f:actionListener binding="#{alertFeedController}" />
+					<f:actionListener binding="#{pendingPostsController}" />
+                    </p:remoteCommand>
+				<p:growl id="msgFileUp" for="serverMsg" />
+			</h:form>
+		</p:dialog>
+		</ui:composition>

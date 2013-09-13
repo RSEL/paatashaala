@@ -1,12 +1,15 @@
 package com.ramselabs.education.controller;
 
 import java.io.Serializable;
+import java.util.Collection;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.springframework.context.annotation.Scope;
 
+import com.ramselabs.education.entity.PostShare;
+import com.ramselabs.education.entity.UserProfile;
 import com.ramselabs.education.managedbean.ManagedLoginBean;
 import com.ramselabs.education.service.UserService;
 @Named
@@ -28,6 +31,7 @@ public class UserProfileController implements Serializable{
 	}
 	private String displayName;
 	private String image ; 
+	private String userType;
 	public String getDisplayName() {
 		if(displayName==null){
 			if(login.getUsername() != null & login.getPassword()!=null){
@@ -46,9 +50,17 @@ public class UserProfileController implements Serializable{
 		  }
 			  return image;
 	}
-	
-	
-	
-	
-
+	public String getUserType() {
+		if(login.getUsername() != null & login.getPassword()!=null){
+			 UserProfile user=userService.getUserProfile(login.getUsername(),login.getPassword());
+			 Collection<PostShare> pShare=user.getUserPostShare();
+			 for (PostShare postShare:pShare){
+				 if(postShare.getUserType().equals("User")){
+					 userType=postShare.getUserType();
+				 }
+			 }
+			 
+		}
+		   return userType;
+	}
 }

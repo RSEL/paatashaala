@@ -4,7 +4,8 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
 <f:view contentType="text/html" locale="en">
 	<h:head>
 		<f:facet name="first">
@@ -117,7 +118,7 @@
 
 			<p:dock id="dock" position="bottom" itemWidth="60" maxWidth="70">
 				<p:menuitem value="Store" icon="/resources/img/cart-icon.png"
-					url="/views/FrontPage.xhtml" update="centerLayout" />
+					url="#" update="centerLayout" />
 				<p:menuitem value="Manage" icon="/resources/img/icon-setting.png"
 					url="#" />
 				<p:menuitem value="Apps Launcher"
@@ -132,15 +133,26 @@
 			<p:layout style="min-width:400px;min-height:900px" id="layout">
 				<p:layoutUnit position="west" size="290" style="border:0"
 					id="layoutUnit">
-					<h:panelGrid columns="2" cellpadding="10">
-						<h:form id="profileLargePhotoForm">
-							<p:graphicImage value="#{userProfileController.image}"
-								style="height: 84px;width: 75px" id="profilePhoto" />
-							<p:spacer width="20" />
-							<h:outputText value="Hi #{userProfileController.displayName}" />
-						</h:form>
-					</h:panelGrid>
-					<h:form>
+					<h:form id="profileLargePhotoForm">
+						<p:panel
+							style="width:400px;height:130px;padding:0px 0px;border:0px"
+							styleClass="imagePadLeft">
+							<p:panel
+								style="border:0;float:left;padding:0px 0px"
+								styleClass="imagePadLeft">
+								<p:graphicImage value="#{userProfileController.image}"
+									style="margin-left:0px;margin-top:-11px;width:60px;height:63px" id="profilePhoto" />
+							</p:panel>
+							<h:outputText value="Hi #{userProfileController.displayName}"
+								style="text-align: justify;font-size:18px" />
+							<br />
+							<h:outputText value="#{userProfileController.userType}"
+								style="text-align: justify;font-size:14px;font-color:gray" />
+
+						</p:panel>
+
+					</h:form>
+					<h:form id="groupPanel">
 						<p:panel id="pnl" header="Groups" toggleable="true"
 							style="border:0;margin-right:10px">
 
@@ -312,14 +324,17 @@ text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);border-color: rgba(0, 0, 0, 0.1) rgba(
 													styleClass="imagePadLeft">
 													<p:panel
 														style="border:0;float:left;background: #ffffff;padding:0px 0px"
-														 styleClass="imagePadLeft">
+														styleClass="imagePadLeft">
 														<p:graphicImage value="#{post.shareToImage}"
 															style="margin-left:0px;width:60px;height:63px" />
 													</p:panel>
 
-													<h:outputText value="Shared to : #{post.shareToName}" style="text-align: justify" /><br/>
-														<h:outputText value="Status : #{post.rejectStatus}"/><br/>
-														<h:outputText value="#{post.rejectReason}" />
+													<h:outputText value="Shared to : #{post.shareToName}"
+														style="text-align: justify" />
+													<br />
+													<h:outputText value="Status : #{post.rejectStatus}" />
+													<br />
+													<h:outputText value="#{post.rejectReason}" />
 
 												</p:panel>
 											</p:tooltip>
@@ -413,24 +428,24 @@ text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);border-color: rgba(0, 0, 0, 0.1) rgba(
 									</p:panel>
 
 									<h:outputFormat value="#{post.postDescription} #{post}"
-										style="font-size:10px;text-align: justify" escape="false"/>
+										style="font-size:10px;text-align: justify" escape="false" />
 
 								</p:panel>
-								<p:tooltip for="panelNotify" style="background: #ffffff" >
-												<p:panel
-													style="background: #ffffff;width:400px;height:130px;padding:0px 0px;border:0px"
-													styleClass="imagePadLeft">
-													<p:panel
-														style="border:0;float:left;background: #ffffff;padding:0px 0px"
-														 styleClass="imagePadLeft">
-														<p:graphicImage value="#{post.shareToImage}"
-															style="margin-left:0px;width:60px;height:63px" />
-													</p:panel>
-                                                               <h:outputFormat value="#{post.postDescription} #{post}"
-										                          style="text-align: justify" escape="false"/>
+								<p:tooltip for="panelNotify" style="background: #ffffff">
+									<p:panel
+										style="background: #ffffff;width:400px;height:130px;padding:0px 0px;border:0px"
+										styleClass="imagePadLeft">
+										<p:panel
+											style="border:0;float:left;background: #ffffff;padding:0px 0px"
+											styleClass="imagePadLeft">
+											<p:graphicImage value="#{post.shareToImage}"
+												style="margin-left:0px;width:60px;height:63px" />
+										</p:panel>
+										<h:outputFormat value="#{post.postDescription} #{post}"
+											style="text-align: justify" escape="false" />
 
-												</p:panel>
-											</p:tooltip>
+									</p:panel>
+								</p:tooltip>
 							</p:dataList>
 						</p:scrollPanel>
 						<br></br>
@@ -449,8 +464,13 @@ text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);border-color: rgba(0, 0, 0, 0.1) rgba(
 					uploadLabel="Upload" cancelLabel="Cancel" label="Choose"
 					allowTypes="/(\.|\/)(gif|jpe?g|png)$/" sizeLimit="300000"
 					widgetVar="fileuplaod_wgt"
-					oncomplete="dlgPhotoUpload.hide(); return false;"
+					oncomplete="beforeUpdate(),dlgPhotoUpload.hide(); return false;"
 					update="msgFileUp,:toolBarFor:profileIcon,:profileLargePhotoForm:profilePhoto" />
+					<p:remoteCommand name="beforeUpdate" partialSubmit="true" update=":tabViewNewsFeed:pendingMessageForm:postPendingFor,:tabViewNewsFeed:pendingMessageForm,:tabViewNewsFeed:postfor,:notifyForm:notifyList" oncomplete="reloadPage()" value="" >
+					<f:actionListener binding="#{newsFeedController}" />
+					<f:actionListener binding="#{alertFeedController}" />
+					<f:actionListener binding="#{pendingPostsController}" />
+                    </p:remoteCommand>
 				<p:growl id="msgFileUp" for="serverMsg" />
 			</h:form>
 		</p:dialog>
@@ -498,75 +518,57 @@ text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);border-color: rgba(0, 0, 0, 0.1) rgba(
 						style="text-decoration:none" />
 				</p>
 			</h:form>
-
-			<p:tabView style="border:0">
-				<p:tab id="tab1" title="Basic" titleStyle="">
-					<h:form id="groupFormBasic">
+			<h:form id="group">
+				<p:growl for="groupStatus" id="groupGrowl" />
+				<p:wizard>
+					<p:tab id="tabGroup1" title="Basic" titleStyle="">
+						<hr />
 						<p:inputText id="groupText" style="width: 330px"
-							label="Group Name" required="true" />
+							label="Group Name" required="true"
+							value="#{groupWizardController.group.groupName}" />
 						<p:message for="groupText" />
 						<p:watermark for="groupText" value="Group Name" />
 						<hr />
-						<p:selectOneMenu id="gradeMenu" label="Grade" required="true">
+						<p:selectOneMenu id="gradeMenu" label="Grade" required="true"
+							value="#{groupWizardController.group.grade}">
 							<f:selectItem itemLabel="[Select Grade]" itemValue="" />
-							<f:selectItem itemLabel="None" itemValue="no" />
-							<f:selectItem itemLabel="Prekindergarten" itemValue="pkg" />
-							<f:selectItem itemLabel="Kindergarten" itemValue="kg" />
-							<f:selectItem itemLabel="1st" itemValue="1" />
-							<f:selectItem itemLabel="2nd" itemValue="2" />
-							<f:selectItem itemLabel="3rd" itemValue="3" />
-							<f:selectItem itemLabel="4th" itemValue="4" />
-							<f:selectItem itemLabel="5th" itemValue="5" />
-							<f:selectItem itemLabel="6th" itemValue="6" />
-							<f:selectItem itemLabel="7th" itemValue="7" />
-							<f:selectItem itemLabel="8th" itemValue="8" />
-							<f:selectItem itemLabel="9th" itemValue="9" />
-							<f:selectItem itemLabel="10th" itemValue="10" />
-							<f:selectItem itemLabel="11th" itemValue="11" />
-							<f:selectItem itemLabel="12th" itemValue="12" />
-							<f:selectItem itemLabel="Higher Education" itemValue="he" />
+							<f:selectItems value="#{groupWizardController.grades}" />
 						</p:selectOneMenu>
 						<p:message for="gradeMenu" />
 						<hr />
-						<p:selectOneMenu id="areaMenu" label="Area" required="true">
+						<p:selectOneMenu id="areaMenu" label="Area" required="true"
+							value="#{groupWizardController.group.area}">
 							<f:selectItem itemLabel="[Select Area]" itemValue="" />
-							<f:selectItem itemLabel="All" itemValue="all" />
-							<f:selectItem itemLabel="Computer Technology" itemValue="pkg" />
-							<f:selectItem itemLabel="Mathemetics" itemValue="mth" />
-							<f:selectItem itemLabel="Science" itemValue="sc" />
-							<f:selectItem itemLabel="Art" itemValue="art" />
-							<f:selectItem itemLabel="World Language" itemValue="wl" />
-							<f:selectItem itemLabel="Professional Developement"
-								itemValue="pd" />
-							<f:selectItem itemLabel="Social Studies" itemValue="ss" />
-							<f:selectItem itemLabel="Health/P.E." itemValue="hl" />
+							<f:selectItems value="#{groupWizardController.areas}" />
 						</p:selectOneMenu>
 						<p:message for="areaMenu" />
 						<hr />
-						<p:commandButton value="Create" update="groupFormBasic" />
-					</h:form>
-				</p:tab>
-				<p:tab id="tab2" title="Advance" titleStyle="">
-					<h:form id="groupFormAdvance">
+					</p:tab>
+					<p:tab id="tabGroup2" title="Advance" titleStyle="">
+						<hr />
 						<p:selectManyCheckbox layout="pageDirection" label="Check"
-							required="true" id="checkBox">
-							<f:selectItem itemLabel="Default all new members to read-only"
-								itemValue="readOnly" />
-							<f:selectItem itemLabel="Moderate all Posts and Replies"
-								itemValue="moderate" />
+							required="true" id="checkBox"
+							value="#{groupWizardController.group.groupModerationOption}">
+							<f:selectItems
+								value="#{groupWizardController.moderateGroupOption}" />
 						</p:selectManyCheckbox>
 						<p:message for="checkBox" />
 						<hr />
 						<p:inputText id="groupDescription"
 							style="width:330px;margin-bottom:0px" label="Group Description"
-							required="true" />
+							required="true"
+							value="#{groupWizardController.group.groupDescription}" />
 						<p:message for="groupDescription" />
 						<p:watermark for="groupDescription" value="GroupDescription" />
+						<br />
+						<p:commandButton value="Create"
+							oncomplete="dlg2.hide();return false;"
+							update="group,group:groupGrowl"
+							actionListener="#{groupWizardController.save}" />
 						<hr />
-						<p:commandButton value="Create" update="groupFormAdvance" />
-					</h:form>
-				</p:tab>
-			</p:tabView>
+					</p:tab>
+				</p:wizard>
+			</h:form>
 		</p:dialog>
 		<style type="text/css">
 .ui-autocomplete-multiple-container {
@@ -645,7 +647,7 @@ text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);border-color: rgba(0, 0, 0, 0.1) rgba(
 	position: absolute;
 }
 
-.tabMargin.ui-tabs .ui-tabs-panel {
+.tabMargin .ui-tabs-panel {
 	padding-left: 0px;
 	padding-right: 0px;
 	padding-bottom: 0px;
@@ -667,6 +669,10 @@ text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);border-color: rgba(0, 0, 0, 0.1) rgba(
 			function clearInvalidFileMsg() {
 				fileuplaod_wgt.uploadContent.find("tr.ui-state-error").remove();
 			}
+			function reloadPage()
+			  {
+			  location.reload()
+			  }
 		</script>
 	</h:body>
 </f:view>

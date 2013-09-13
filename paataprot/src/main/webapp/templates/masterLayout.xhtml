@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+	
+<f:view contentType="text/html" locale="en">
+	<h:head>
+		<f:facet name="first">
+			<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+			<meta http-equiv="pragma" content="no-cache" />
+			<meta http-equiv="cache-control" content="no-cache" />
+			<meta http-equiv="expires" content="0" />
+
+		</f:facet>
+		<f:facet name="last">
+			<h:outputScript library="js" name="jquery.mousewheel.js" />
+			<h:outputScript library="js" name="perfect-scrollbar.js" />
+			<h:outputScript library="js" name="pageScript.js" />
+			<h:outputStylesheet library="css" name="perfect-scrollbar.css" />
+			<h:outputStylesheet library="css" name="bootstrap-responsive.css" />
+			<h:outputStylesheet library="css" name="bootstrap.css" />
+			<h:outputStylesheet library="css" name="bootstrap-support.css" />
+			
+			<h:outputStylesheet library="css" name="themeSwitcher.css" />
+		</f:facet>
+		</h:head>
+		<h:body style="padding:0px 0px;margin:0px 0px">
+		<ui:insert name="navigationBar"/>
+		<p:scrollPanel style="width:1363px;height:610px;border:0"
+			mode="native" id="srollPannel" styleClass="srollPannelStyle">
+			<p:layout style="min-width:400px;min-height:900px" id="layout">
+			  <ui:insert name="contentLeft"/>
+			  <p:layoutUnit position="center"
+					style="border:0;background:transparent" id="centerLayout">
+					<ui:insert name="postAlertContent"/>
+			        <ui:insert name="newsFeedContent"/>
+			  </p:layoutUnit>
+			  <ui:insert name="contentRight"/>
+			</p:layout>
+			</p:scrollPanel>
+		<ui:insert name="dlgForFileUpload"/>
+		<ui:insert name="dlgForThemeSwitch"/>
+		<ui:insert name="dlgForGroupCreate"/>
+		<ui:insert name="dlgForMessageReject"/>
+		
+    <script type="text/javascript">
+		$(document).ready(
+				function() {
+					fileuplaod_wgt.buttonBar.find("button.cancel").bind(
+							"click", function(e) {
+								clearInvalidFileMsg();
+							});
+				});
+
+		function clearInvalidFileMsg() {
+			fileuplaod_wgt.uploadContent.find("tr.ui-state-error").remove();
+		}
+		</script>
+		<h:outputStylesheet library="css" name="pageStyle.css" />
+        </h:body>
+		</f:view>
+		</html>

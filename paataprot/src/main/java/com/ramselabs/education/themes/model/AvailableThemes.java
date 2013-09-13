@@ -29,6 +29,7 @@ public class AvailableThemes implements Serializable {
 		themeNames.add("dot-luv");
 		themeNames.add("glass-x");
 		themeNames.add("hot-sneaks");
+		themeNames.add("aristo");
 
 		themesAsMap = new HashMap<String, Theme>();
 		themes = new ArrayList<Theme>();

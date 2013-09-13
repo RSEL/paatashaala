@@ -54,6 +54,7 @@ public class UserSettingsController implements Serializable {
 		themes.put("Dot-Luv", "dot-luv");
 		themes.put("Glass-X", "glass-x");
 		themes.put("Hot-Sneaks", "hot-sneaks");
+		themes.put("Aristo", "aristo");
 	}
 
 	// Stateful Switcher (Full page refresh)

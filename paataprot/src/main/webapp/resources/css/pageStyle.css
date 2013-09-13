@@ -1,0 +1,85 @@
+.ui-autocomplete-multiple-container {
+	width: 682px;
+}
+
+.ui-autocomplete-input.ui-inputfield {
+	width: 682px !important;
+}
+
+.ui-tabs-nav {
+	background: transparent !important;
+}
+
+.fileupload-buttonbar .fileinput-button .ui-icon-plusthick {
+	display: none !important;
+}
+
+.fileupload-buttonbar .fileinput-button  .ui-button-text {
+	padding-left: 1em !important;
+	background: transparent !important;
+}
+
+.fileupload-buttonbar {
+	padding: 0.0em 0.0em;
+	background: transparent !important;
+	padding-top: 4px;
+	padding-left: 3px;
+}
+/*  
+#customSrollBar .ui-scrollpanel-native {                    
+                overflow:hidden !important;
+            } */
+.ui-panelgrid td {
+	border-width: 0px;
+	border-style: none;
+	border-color: black;
+	padding: 0px 13px;
+}
+/* .fileupload-content {
+    display: inline;
+} */
+/* .fileinput-button {
+    background: #157FF0;
+} */
+
+/* .mousescroll {
+    overflow: hidden !important;
+}
+.mousescroll:hover {
+    overflow-y: scroll !important;
+}
+
+.srollForThis::-webkit-scrollbar {
+   -moz-appearance: none !important;
+    width: 12px;
+}
+ 
+
+.srollForThis::-webkit-scrollbar-track {
+     -moz-appearance: none !important;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+}
+ 
+.srollForThis::-webkit-scrollbar-thumb {
+    -moz-appearance: none !important;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    background: rgb(165, 152, 152); 
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+} */
+.srollPannelStyle {
+	overflow: hidden !important;
+	position: absolute;
+}
+
+.tabMargin .ui-tabs-panel {
+	padding-left: 0px;
+	padding-right: 0px;
+	padding-bottom: 0px;
+}
+
+.imagePadLeft .ui-panel-content .ui-widget-content {
+	padding-left: 0px;
+}

@@ -1,0 +1,21 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+	<p:dialog id="basicDialog" header="Choose your theme" widgetVar="dlg1"
+			modal="true">
+			<h:form id="themeForm">
+				<p:themeSwitcher id="statefulSwitcher1"
+					value="#{userSettingsController.theme}" var="theme"
+					style="width:165px" effect="drop">
+					<f:selectItem itemLabel="Choose Theme" itemValue="" />
+					<f:selectItems value="#{userSettingsController.themes}" />
+					<p:ajax listener="#{userSettingsController.saveTheme}"
+						oncomplete="dlg1.hide(); return false;" />
+				</p:themeSwitcher>
+
+			</h:form>
+		</p:dialog>
+		</ui:composition>

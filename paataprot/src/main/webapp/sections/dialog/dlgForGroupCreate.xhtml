@@ -1,0 +1,104 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+<p:dialog id="createGroupDia" header="Create Group" widgetVar="dlg2"
+			modal="true" style="background:#dfe4e8;height:30%;width:40%">
+
+			<h:form id="commandLink">
+				<p>
+					<p:commandLink
+						value="Important:Learn about Group Management features"
+						style="text-decoration:none" />
+				</p>
+			</h:form>
+			<h:form id="group">
+				<p:growl for="groupStatus" id="groupGrowl" />
+				<p:wizard>
+					<p:tab id="tabGroup1" title="Basic" titleStyle="">
+						<hr />
+						<p:inputText id="groupText" style="width: 330px"
+							label="Group Name" required="true"
+							value="#{groupWizardController.group.groupName}" />
+						<p:message for="groupText" />
+						<p:watermark for="groupText" value="Group Name" />
+						<hr />
+						<p:selectOneMenu id="gradeMenu" label="Grade" required="true"
+							value="#{groupWizardController.group.grade}">
+							<f:selectItem itemLabel="[Select Grade]" itemValue="" />
+							<f:selectItems value="#{groupWizardController.grades}" />
+						</p:selectOneMenu>
+						<p:message for="gradeMenu" />
+						<hr />
+						<p:selectOneMenu id="areaMenu" label="Area" required="true"
+							value="#{groupWizardController.group.area}">
+							<f:selectItem itemLabel="[Select Area]" itemValue="" />
+							<f:selectItems value="#{groupWizardController.areas}" />
+						</p:selectOneMenu>
+						<p:message for="areaMenu" />
+						<hr />
+					</p:tab>
+					<p:tab id="tabGroup2" title="Advance" titleStyle="">
+						<hr />
+						<p:selectManyCheckbox layout="pageDirection" label="Check"
+							required="true" id="checkBox"
+							value="#{groupWizardController.group.groupModerationOption}">
+							<f:selectItems
+								value="#{groupWizardController.moderateGroupOption}" />
+						</p:selectManyCheckbox>
+						<p:message for="checkBox" />
+						<hr />
+						<p:inputText id="groupDescription"
+							style="width:330px;margin-bottom:0px" label="Group Description"
+							required="true"
+							value="#{groupWizardController.group.groupDescription}" />
+						<p:message for="groupDescription" />
+						<p:watermark for="groupDescription" value="GroupDescription" />
+						<br />
+						
+					</p:tab>
+		<p:tab id="tabGroup3" title="Confirmation" titleStyle="">
+			<p:panel header="Confirmation">  
+              
+                <h:panelGrid id="confirmation" columns="4">  
+                    <h:outputText value="Group Name: " />  
+                    <h:outputText styleClass="outputLabel"  
+                                value="#{groupWizardController.group.groupName}" />  
+                      
+                    <h:outputText value="Grade: " />  
+                    <h:outputText  styleClass="outputLabel"  
+                                value="#{groupWizardController.group.grade}"/>  
+                      
+                    <h:outputText value="Area: " />  
+                    <h:outputText styleClass="outputLabel"  
+                                value="#{groupWizardController.group.area}" />  
+                      
+                    <h:outputText value="Moderate Option: " />  
+                    <h:outputText styleClass="outputLabel"  
+                                value="#{groupWizardController.group.groupModerationOption}" />  
+                      
+                    <h:outputText value="Group Description: " />  
+                    <h:outputText styleClass="outputLabel"  
+                                value="#{groupWizardController.group.groupDescription}" />  
+                    <h:outputText />  
+                    <h:outputText />
+                      
+                    <h:outputText />  
+                    <h:outputText />
+                    <h:outputText />  
+                    <h:outputText />
+                </h:panelGrid>  
+                  <br/>
+                <p:commandButton value="Create"
+							oncomplete="dlg2.hide();return false;"
+							update="group,group:groupGrowl"
+							actionListener="#{groupWizardController.save}" action="groupCreate.xhtml?faces-redirect=true"/>  
+              
+                    </p:panel>  
+				  </p:tab>
+				</p:wizard>
+			</h:form>
+		</p:dialog>
+		</ui:composition>

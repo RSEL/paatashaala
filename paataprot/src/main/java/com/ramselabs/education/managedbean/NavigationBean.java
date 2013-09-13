@@ -38,7 +38,7 @@ public class NavigationBean implements Serializable {
      * @return Welcome page name.
      */
     public String redirectToWelcome() {
-        return "/secured/homePage.xhtml?faces-redirect=true";
+        return "/secured/userHomePage.xhtml?faces-redirect=true";
     }
      
     /**
@@ -46,7 +46,7 @@ public class NavigationBean implements Serializable {
      * @return Welcome page name.
      */
     public String toWelcome() {
-        return "/secured/homePage.xhtml";
+        return "/secured/userHomePage.xhtml";
     }
      
 }

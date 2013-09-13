@@ -6,7 +6,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.context.annotation.Scope;
 
@@ -66,8 +65,7 @@ public class LoginController implements Serializable {
 	}
      public String doLogout() {
 	        // Set the paremeter indicating that user is logged in to false
-    	 HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
-    	 session.invalidate();
+    	 FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
 	        loggedIn = false;
             return navigationBean.toLogin();
 	    }

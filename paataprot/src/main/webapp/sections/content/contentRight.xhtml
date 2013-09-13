@@ -1,0 +1,53 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+<p:layoutUnit position="east" size="290" style="border:0">
+					<h:form id="notifyForm">
+						<p:scrollPanel style="width:275px;height:314px;border:0"
+							mode="native" id="notiScroll" styleClass="srollPannelStyle">
+							<p:dataList var="post" value="#{alertFeedController.listofAlert}"
+								style="margin:0px 0px;border:0" type="none" id="notifyList">
+
+
+
+								<p:panel
+									style="background: #ffffff;width: 272px;padding:0px 0px"
+									styleClass="imagePadLeft" id="panelNotify">
+									<p:panel
+										style="border:0;float:left;background: #ffffff;padding:0px 0px"
+										id="panelImage" styleClass="imagePadLeft">
+										<p:graphicImage value="#{post.userImage}"
+											style="margin-left:0px;width:25px;height:25px" />
+									</p:panel>
+
+									<h:outputFormat value="#{post.postDescription} #{post}"
+										style="font-size:10px;text-align: justify" escape="false" />
+
+								</p:panel>
+								<p:tooltip for="panelNotify" style="background: #ffffff">
+									<p:panel
+										style="background: #ffffff;width:400px;height:130px;padding:0px 0px;border:0px"
+										styleClass="imagePadLeft">
+										<p:panel
+											style="border:0;float:left;background: #ffffff;padding:0px 0px"
+											styleClass="imagePadLeft">
+											<p:graphicImage value="#{post.shareToImage}"
+												style="margin-left:0px;width:60px;height:63px" />
+										</p:panel>
+										<h:outputFormat value="#{post.postDescription} #{post}"
+											style="text-align: justify" escape="false" />
+
+									</p:panel>
+								</p:tooltip>
+							</p:dataList>
+						</p:scrollPanel>
+						<br></br>
+						<p:calendar showButtonPanel="true" navigator="true" mode="inline"
+							id="enCal"
+							style="width:100%;margin:0px 0px;margin-top: 300px;position: absolute" />
+					</h:form>
+				</p:layoutUnit>
+  </ui:composition>
