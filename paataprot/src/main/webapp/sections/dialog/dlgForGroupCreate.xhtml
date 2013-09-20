@@ -21,7 +21,13 @@
 						<hr />
 						<p:inputText id="groupText" style="width: 330px"
 							label="Group Name" required="true"
-							value="#{groupWizardController.group.groupName}" />
+							value="#{groupWizardController.group.groupName}" >
+							<p:ajax event="blur" listener="#{groupNameVerifyController.verify}" update="grpNameVerify" >
+							   <f:param name="groupName"
+						            value="#{groupWizardController.group.groupName}" />
+							</p:ajax>  
+							</p:inputText><br/>
+							<h:outputText id="grpNameVerify" value="#{groupNameVerifyController.strResponse}" style="color:red"/>
 						<p:message for="groupText" />
 						<p:watermark for="groupText" value="Group Name" />
 						<hr />
@@ -93,8 +99,9 @@
                   <br/>
                 <p:commandButton value="Create"
 							oncomplete="dlg2.hide();return false;"
-							update="group,group:groupGrowl"
-							actionListener="#{groupWizardController.save}" action="groupCreate.xhtml?faces-redirect=true"/>  
+							update="group,group:groupGrowl,:groupPanel:groupList"
+							actionListener="#{groupController.save}">
+							</p:commandButton>  
               
                     </p:panel>  
 				  </p:tab>

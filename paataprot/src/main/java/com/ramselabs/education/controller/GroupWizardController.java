@@ -2,17 +2,17 @@ package com.ramselabs.education.controller;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
 import javax.inject.Named;
 
+import org.apache.commons.lang3.StringUtils;
 import org.primefaces.event.FlowEvent;
 import org.springframework.context.annotation.Scope;
 
+import com.ramselabs.education.entity.Group;
 import com.ramselabs.education.model.GroupModel;
 
 @Named
@@ -25,8 +25,9 @@ public class GroupWizardController implements Serializable{
 	private Map<String,String> moderateGroupOption;
 	private GroupModel group=new GroupModel();  
     private static Logger logger = Logger.getLogger(GroupWizardController.class.getName());  
-        
-    public GroupWizardController() {
+   
+
+	public GroupWizardController() {
     	grades=new HashMap<String, String>();
     	grades.put("None", "no");
     	grades.put("Prekindergarten", "pkg");
@@ -58,7 +59,7 @@ public class GroupWizardController implements Serializable{
     	
     	moderateGroupOption=new HashMap<String, String>();
     	moderateGroupOption.put("Default all new members to read-only", "readOnly");
-    	moderateGroupOption.put("Moderate all Posts and Replies","moderate");
+    	moderateGroupOption.put("Moderate all Posts and Replies","moderate all");
 	}
 
 	public GroupModel getGroup() {
@@ -79,14 +80,7 @@ public class GroupWizardController implements Serializable{
 
 	public Map<String, String> getModerateGroupOption() {
 		return moderateGroupOption;
-	}
-
-	public void save(ActionEvent actionEvent) {  
-        //Persist user  
-          
-        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Group is Created" ,null);  
-        FacesContext.getCurrentInstance().addMessage("groupStatus", msg);  
-    }  
+	}  
       
     public String onFlowProcess(FlowEvent event) {  
         logger.info("Current wizard step:" + event.getOldStep());  
@@ -96,6 +90,17 @@ public class GroupWizardController implements Serializable{
           
     }  
     
+    public static Group mappToGroupEntity(GroupWizardController groupWzrd){
+    	Group group =new Group();
+    	group.setArea(groupWzrd.group.getArea());
+    	group.setGrade(groupWzrd.group.getGrade());
+    	group.setGroupDescription(groupWzrd.group.getGroupDescription());
+    	group.setDisplayName(groupWzrd.group.getGroupName());
+    	List<String> moderationOptios=groupWzrd.group.getGroupModerationOption();
+    	String moderationOptioString=StringUtils.join(moderationOptios, ";");
+    	group.setModerateOptions(moderationOptioString);
+    	return group;
+    }
     @Override
     public String toString(){
     	return "name:"+group.getGroupName()+",grade:"+group.getGrade()+",area:"+group.getArea()+",moderate list:"+group.getGroupModerationOption()+",description:"+group.getGroupDescription();

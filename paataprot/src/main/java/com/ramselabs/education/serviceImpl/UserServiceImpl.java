@@ -1,4 +1,4 @@
-package com.ramselabs.education.service.impl;
+package com.ramselabs.education.serviceImpl;
 
 import java.io.Serializable;
 import java.util.List;
@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Scope;
 
 import com.ramselabs.education.dao.service.UserDAO;
 import com.ramselabs.education.entity.UserProfile;
+import com.ramselabs.education.model.AutocompleteTemplate;
 import com.ramselabs.education.service.UserService;
 
 @Named
@@ -34,7 +35,7 @@ public class UserServiceImpl implements UserService,Serializable {
 	}
 
 	@Override
-	public List<UserProfile> getAutocompleteUserList(UserProfile user) {
+	public List<AutocompleteTemplate> getAutocompleteUserList(UserProfile user) {
 		UserProfile userProfile=getPersistentUser(user);
 		int userId=userProfile.getUserId();
 		System.out.println("User Service"+userId);

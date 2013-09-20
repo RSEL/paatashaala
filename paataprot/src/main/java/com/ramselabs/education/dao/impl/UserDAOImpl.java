@@ -14,6 +14,7 @@ import org.springframework.context.annotation.Scope;
 
 import com.ramselabs.education.dao.service.UserDAO;
 import com.ramselabs.education.entity.UserProfile;
+import com.ramselabs.education.model.AutocompleteTemplate;
 
 @Named
 @Scope("session")
@@ -89,12 +90,12 @@ public class UserDAOImpl implements UserDAO {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<UserProfile> getUserAutoCompleteList(int userId) {
+	public List<AutocompleteTemplate> getUserAutoCompleteList(int userId) {
 		Session session=sessionFactory.openSession();
 		Criteria ctr=session.createCriteria(UserProfile.class);
 		ctr.add(Restrictions.ne("userId",userId));
 		
-		return (List<UserProfile>)ctr.list();
+		return (List<AutocompleteTemplate>)ctr.list();
 	}
 
 	@Override

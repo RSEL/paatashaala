@@ -31,6 +31,10 @@ public class PostShare {
     @Column(name="post_date")
     private Date postDate;
 	
+    @ManyToOne
+    @JoinColumn(name="group_id")
+    private Group shareGroup;
+    
 	public int getIdPostShare() {
 		return idPostShare;
 	}
@@ -64,8 +68,16 @@ public class PostShare {
 	public void setPostDate(Date postDate) {
 		this.postDate = postDate;
 	}
- @Override
+	
+public Group getShareGroup() {
+		return shareGroup;
+	}
+	public void setShareGroup(Group shareGroup) {
+		this.shareGroup = shareGroup;
+	}
+@Override
  public String toString(){
 	 return post.getDescription();
  }
+ 
 }

@@ -31,6 +31,7 @@
       <mapping class="com.ramselabs.education.entity.PostShare"/>
       <mapping class="com.ramselabs.education.entity.UserProfile"/>
       <mapping class="com.ramselabs.education.entity.MessageApproval"/>
+      <mapping class="com.ramselabs.education.entity.Group"/>
     </session-factory>
 
 </hibernate-configuration>

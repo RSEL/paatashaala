@@ -61,7 +61,7 @@ public class AlertController implements Serializable{
       MessageApproval approval=new MessageApproval();
       approval.setStatus("pending");
       
-      UserProfile user=autoCmplController.getSelectedUserProfiles();
+      UserProfile user=(UserProfile)autoCmplController.getSelectedUserProfiles();
       System.out.println("selected user profiles"+user);
       Post post=PostBean.mapToPost(postBean);
       post.setPosterId(posterId);

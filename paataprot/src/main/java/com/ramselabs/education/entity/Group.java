@@ -7,18 +7,23 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.ramselabs.education.model.AutocompleteTemplate;
 
 @Entity
 @Table(name="groups")
-public class Group {
+public class Group extends AutocompleteTemplate{
 	@Id @GeneratedValue
 	@Column(name="id")
-	private String groupId;
+	private int groupId;
 	
 	@Column(name="group_name")
-	private String groupName;
+	private String displayName;
 	
 	@Column(name="grade")
 	private String grade;
@@ -32,23 +37,32 @@ public class Group {
 	@Column(name="group_desc")
 	private String groupDescription;
 	
+	@Column(name="image_path")
+	private String imagePath;
+	
 	@ManyToMany
+	@JoinTable(name="group_users",joinColumns=@JoinColumn(name="group_id"),inverseJoinColumns=@JoinColumn(name="user_id"))
 	private Collection<UserProfile> groupUsers=new ArrayList<UserProfile>();
 	
 	@ManyToMany
+	@JoinTable(name="group_posts",joinColumns=@JoinColumn(name="group_id"),inverseJoinColumns=@JoinColumn(name="post_id"))
 	private Collection<Post> groupPosts=new ArrayList<Post>();
 	
-	public String getGroupId() {
+	@OneToMany(mappedBy="shareGroup")
+	private Collection<PostShare> groupShares=new ArrayList<PostShare>();
+	
+	public int getGroupId() {
 		return groupId;
 	}
-	public void setGroupId(String groupId) {
+	public void setGroupId(int groupId) {
 		this.groupId = groupId;
 	}
-	public String getGroupName() {
-		return groupName;
+	
+	public String getDisplayName() {
+		return displayName;
 	}
-	public void setGroupName(String groupName) {
-		this.groupName = groupName;
+	public void setDisplayName(String displayName) {
+		this.displayName = displayName;
 	}
 	public String getGrade() {
 		return grade;
@@ -86,5 +100,20 @@ public class Group {
 	public void setGroupPosts(Collection<Post> groupPosts) {
 		this.groupPosts = groupPosts;
 	}
-	
+	public Collection<PostShare> getGroupShares() {
+		return groupShares;
+	}
+	public void setGroupShares(Collection<PostShare> groupShares) {
+		this.groupShares = groupShares;
+	}
+	public String getImagePath() {
+		return imagePath;
+	}
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
+	}
+	@Override
+	public String toString(){
+		return displayName;
+	}
 }

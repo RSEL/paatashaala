@@ -1,4 +1,4 @@
-package com.ramselabs.education.service.impl;
+package com.ramselabs.education.serviceImpl;
 
 import java.util.List;
 

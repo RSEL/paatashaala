@@ -14,14 +14,14 @@ import org.primefaces.event.UnselectEvent;
 import org.springframework.context.annotation.Scope;
 
 import com.ramselabs.education.converter.UserAutocompleteConverter;
-import com.ramselabs.education.entity.UserProfile;
+import com.ramselabs.education.model.AutocompleteTemplate;
 
 @Named
 @Scope("session")
 public class AutocompleteBeanController implements Serializable {
 
 	private static final long serialVersionUID = 4205128731491922702L;
-	private UserProfile selectedUserProfiles;
+	private AutocompleteTemplate selectedUserProfiles;
 	@Inject
 	private UserAutocompleteConverter userConverter;
     
@@ -40,24 +40,23 @@ public class AutocompleteBeanController implements Serializable {
 	}
 	
 
-	
-
-	public UserProfile getSelectedUserProfiles() {
+	public AutocompleteTemplate getSelectedUserProfiles() {
 		return selectedUserProfiles;
 	}
 
-	public void setSelectedUserProfiles(UserProfile selectedUserProfiles) {
+	public void setSelectedUserProfiles(AutocompleteTemplate selectedUserProfiles) {
 		this.selectedUserProfiles = selectedUserProfiles;
 	}
 
-	public List<UserProfile> completeUserProfile(String input) {
-		List<UserProfile> suggestions = new ArrayList<UserProfile>();
-		List<UserProfile> list=userConverter.getList();
-		for (UserProfile user:list) {
-			   if (StringUtils.startsWithIgnoreCase(user.getDisplayName(), input)) {
-				suggestions.add(user);
+	public List<AutocompleteTemplate> completeUserProfile(String input) {
+		List<AutocompleteTemplate> suggestions = new ArrayList<AutocompleteTemplate>();
+		List<AutocompleteTemplate> list=userConverter.getList();
+		for (AutocompleteTemplate auto:list) {
+			   if (StringUtils.startsWithIgnoreCase(auto.getDisplayName(), input)) {
+				suggestions.add(auto);
 			   }
-		}
+			}
+		
         
 		return suggestions;
 	}

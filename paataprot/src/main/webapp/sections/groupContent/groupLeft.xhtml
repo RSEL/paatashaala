@@ -7,25 +7,31 @@
 	<p:layoutUnit position="west" size="290" style="border:0"
 		id="layoutUnitGroupDesc">
 		<h:form id="groupForm">
-			<p:panel style="width:200px;height:130px;padding:0px 0px;border:0px"
+			<p:panel style="width:275px;height:140px;padding:0px 0px;border:0px"
 				styleClass="imagePadLeft">
 				<p:panel style="border:0;float:left;padding:0px 0px"
 					styleClass="imagePadLeft">
-					<p:graphicImage value="#{userProfileController.image}"
+					<p:graphicImage value="#{groupProfileController.imagePath}"
 						style="margin-left:0px;margin-top:-11px;width:60px;height:63px"
 						id="groupPhoto" />
 				</p:panel>
-				<h:outputText value="#{userProfileController.displayName}"
-					style="text-align: justify;font-size:18px" />
-				<br />
-				<h:outputText value="#{userProfileController.userType}"
-					style="text-align: justify;font-size:14px;font-color:gray" />
-
+				<h:outputText value="#{groupProfileController.displayName}"
+					style="text-align: justify;font-size:18px" /><br/><br/><br/><br/>
+					<p:commandLink
+							onclick="dlgPhotoUpload.show(); return false;"
+							title="Change Profile Picture">
+							  <p:graphicImage value="/resources/img/edit-photo-icon.png" style="height: 20px;width: 23px"/>
+							  <f:param name="groupId" value="#{groupProfileController.groupId}"/>
+							</p:commandLink>
 			</p:panel>
-
+             <p:panel id="descGroup" header="Description" toggleable="true"
+				style="border:0;margin-right:10px">
+				<h:outputText value="#{groupProfileController.groupDescription}"
+					style="text-align: justify;font-size:14px;font-color:gray" />
+				</p:panel>
 		</h:form>
 		<h:form id="groupCreatePanel">
-			<p:panel id="pnlGroup" header="Groups" toggleable="true"
+			<p:panel id="pnlGroup" header="Group" toggleable="true"
 				style="border:0;margin-right:10px">
 				<p:menu style="margin-left:-13px;border:0;width:247px">
 				  <p:menuitem value="Posts" icon="ui-icon-mail-open" action="#"/>
@@ -36,4 +42,5 @@
 			</p:panel>
 		</h:form>
 	</p:layoutUnit>
+	
 </ui:composition>

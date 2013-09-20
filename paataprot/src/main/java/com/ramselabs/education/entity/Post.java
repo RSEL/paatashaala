@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -42,6 +43,10 @@ public class Post{
 	
 	@Column(name="message_type")
 	private String messageType;
+	
+
+	@ManyToMany(mappedBy="groupPosts")
+	private Collection<Group> groups=new ArrayList<Group>();
 	
 	public String getMessageType() {
 		return messageType;
@@ -84,6 +89,12 @@ public class Post{
 	}
 	public void setPostApproval(MessageApproval postApproval) {
 		this.postApproval = postApproval;
+	}
+	public Collection<Group> getGroups() {
+		return groups;
+	}
+	public void setGroups(Collection<Group> groups) {
+		this.groups = groups;
 	}
 	
 }

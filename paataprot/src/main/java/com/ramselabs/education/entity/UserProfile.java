@@ -7,12 +7,15 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.ramselabs.education.model.AutocompleteTemplate;
+
 @Entity
 @Table(name="userprofiles")
-public class UserProfile{
+public class UserProfile extends AutocompleteTemplate{
 	@Id @GeneratedValue
 	@Column(name="id")
     private int userId;
@@ -32,6 +35,10 @@ public class UserProfile{
 	
 	@OneToMany(mappedBy="userApproval")
 	private Collection<MessageApproval> approvals=new ArrayList<MessageApproval>();
+	
+	@ManyToMany(mappedBy="groupUsers")
+	private Collection<Group> groups=new ArrayList<Group>();
+	
 	
 	public String getImagePath() {
 		return imagePath;
@@ -85,6 +92,12 @@ public class UserProfile{
 	@Override
 	public String toString(){
 		return displayName;
+	}
+	public Collection<Group> getGroups() {
+		return groups;
+	}
+	public void setGroups(Collection<Group> groups) {
+		this.groups = groups;
 	}
 	
 }

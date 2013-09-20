@@ -13,6 +13,8 @@ import org.springframework.context.annotation.Scope;
 
 import com.ramselabs.education.entity.UserProfile;
 import com.ramselabs.education.managedbean.ManagedLoginBean;
+import com.ramselabs.education.model.AutocompleteTemplate;
+import com.ramselabs.education.service.GroupService;
 import com.ramselabs.education.service.UserService;
 
 @Named
@@ -20,12 +22,17 @@ import com.ramselabs.education.service.UserService;
 public class UserAutocompleteConverter implements Converter {
 	@Inject
 	private UserService userService;
-	private List<UserProfile> list;
+	private List<AutocompleteTemplate> list;
 
 	@Inject
 	private ManagedLoginBean login;
+	@Inject
+    private GroupService groupSer;
 	
-	
+	public void setGroupSer(GroupService groupSer) {
+		this.groupSer = groupSer;
+	}
+
 	public void setLogin(ManagedLoginBean login) {
 		this.login = login;
 	}
@@ -41,10 +48,12 @@ public class UserAutocompleteConverter implements Converter {
 		return userService;
 	}
 
-	public List<UserProfile> getList() {
+	public List<AutocompleteTemplate> getList() {
 		if (list == null) {
 			UserProfile user=ManagedLoginBean.mappToUserEntity(login);
 			list = userService.getAutocompleteUserList(user);
+			List<AutocompleteTemplate> list1=groupSer.getAllGroupForAutocomplete();
+			list.addAll(list1);
 		}
 		return list;
 	}
@@ -57,9 +66,9 @@ public class UserAutocompleteConverter implements Converter {
 		}
 		else{
 			System.out.println("converter String value is not blank");
-			for(UserProfile user : list){
-				if(user.getDisplayName().equals(value)){
-					return user;
+			for(Object obj : list){
+				if(((AutocompleteTemplate)obj).getDisplayName().equals(value)){
+					return obj;
 				}
 			}
 		}
@@ -73,7 +82,7 @@ public class UserAutocompleteConverter implements Converter {
 			return "";
 		} else {
 			System.out.println("converter Object value is not blank");
-			return String.valueOf(((UserProfile) value).getDisplayName());
+			return String.valueOf(((AutocompleteTemplate) value).getDisplayName());
 		}
 	}
 
