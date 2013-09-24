@@ -44,8 +44,7 @@ public class Group extends AutocompleteTemplate{
 	@JoinTable(name="group_users",joinColumns=@JoinColumn(name="group_id"),inverseJoinColumns=@JoinColumn(name="user_id"))
 	private Collection<UserProfile> groupUsers=new ArrayList<UserProfile>();
 	
-	@ManyToMany
-	@JoinTable(name="group_posts",joinColumns=@JoinColumn(name="group_id"),inverseJoinColumns=@JoinColumn(name="post_id"))
+	@ManyToMany(mappedBy="groups")
 	private Collection<Post> groupPosts=new ArrayList<Post>();
 	
 	@OneToMany(mappedBy="shareGroup")

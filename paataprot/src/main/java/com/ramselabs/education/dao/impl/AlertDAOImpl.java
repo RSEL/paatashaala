@@ -57,7 +57,7 @@ public class AlertDAOImpl implements AlertDAO {
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
 		session.save(pShare);
-		session.save(post);
+		session.saveOrUpdate(post);
 		session.save(approval);
 		session.getTransaction().commit();
 		session.flush();
@@ -98,9 +98,23 @@ public class AlertDAOImpl implements AlertDAO {
 				postDescModel.setUserType(pShare.getUserType());
 				postDescModel.setDateOfPosting(pShare.getPostDate());
 				postDescModel.setMessageType(pShare.getPost().getMessageType());
+				if(pShare.getPostShareUser()==null){
+					postDescModel.setShareToName(pShare.getShareGroup().getDisplayName());
+				}
+				else{
 				postDescModel.setShareToName(pShare.getPostShareUser().getDisplayName());
+				}
 				postDescModel.setRejectStatus(pShare.getPost().getPostApproval().getStatus());
-				postDescModel.setShareToImage(pShare.getPostShareUser().getImagePath());
+				if(pShare.getPostShareUser()==null){
+					if(pShare.getShareGroup().getImagePath()==null)
+						pShare.getShareGroup().setImagePath("/resources/img/profile-photo/group-blank.png");
+					postDescModel.setShareToImage(pShare.getShareGroup().getImagePath());
+				}
+				else{
+					if(pShare.getPostShareUser().getImagePath()==null)
+						pShare.getPostShareUser().setImagePath("/resources/img/profile-photo/profile-icon.jpg");
+				    postDescModel.setShareToImage(pShare.getPostShareUser().getImagePath());
+				}
 				list.add(postDescModel);
 			}
 		}

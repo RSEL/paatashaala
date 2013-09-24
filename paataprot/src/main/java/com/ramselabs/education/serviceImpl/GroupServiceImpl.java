@@ -12,6 +12,7 @@ import com.ramselabs.education.entity.Group;
 import com.ramselabs.education.entity.UserProfile;
 import com.ramselabs.education.managedbean.ManagedLoginBean;
 import com.ramselabs.education.model.AutocompleteTemplate;
+import com.ramselabs.education.model.PostDescriptionModel;
 import com.ramselabs.education.service.GroupService;
 
 @Named
@@ -59,6 +60,11 @@ public class GroupServiceImpl implements GroupService {
 	@Override
 	public int updateGroupImage(int groupId,String imagePath) {
 		return groupDao.updateImage(groupId,imagePath);
+	}
+
+	@Override
+	public List<PostDescriptionModel> getAllPostsForGroup(int groupId) {
+		return groupDao.getAllMessagesForGroup(groupId);
 	}
 
 	

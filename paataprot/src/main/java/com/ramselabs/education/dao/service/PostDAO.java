@@ -16,5 +16,6 @@ public interface PostDAO {
 	public List<PostDescriptionModel> getAllPendingPosts(UserProfile user);
 	public int updateCheckedMessageStatus(int approvalId);
 	public int setRejectReason(int approvalId, String rejectReason);
+	public List<PostDescriptionModel> getAllPostsForModeration(UserProfile user);
 
 }

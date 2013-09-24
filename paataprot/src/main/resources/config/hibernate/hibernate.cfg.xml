@@ -32,6 +32,7 @@
       <mapping class="com.ramselabs.education.entity.UserProfile"/>
       <mapping class="com.ramselabs.education.entity.MessageApproval"/>
       <mapping class="com.ramselabs.education.entity.Group"/>
+      <mapping class="com.ramselabs.education.entity.Role"/>
     </session-factory>
 
 </hibernate-configuration>

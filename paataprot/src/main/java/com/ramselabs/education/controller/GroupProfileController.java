@@ -71,6 +71,7 @@ public class GroupProfileController implements ActionListener,Serializable{
 	public void setGroupId(ActionEvent event){
 		FacesContext context = FacesContext.getCurrentInstance();
 	    groupId = context.getApplication().evaluateExpressionGet(context, "#{group.groupId}", Integer.class);
+	    System.out.println("GrpPro"+groupId);
 	}
 
 

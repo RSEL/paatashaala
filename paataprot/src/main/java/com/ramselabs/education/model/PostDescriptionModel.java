@@ -18,7 +18,14 @@ public class PostDescriptionModel implements Comparator<PostDescriptionModel>{
 	private String rejectStatus;
 	private String rejectReason;
 	private String shareToImage;
+	private String displayType;
 	
+	public String getDisplayType() {
+		return displayType;
+	}
+	public void setDisplayType(String displayType) {
+		this.displayType = displayType;
+	}
 	public String getMessageType() {
 		return messageType;
 	}

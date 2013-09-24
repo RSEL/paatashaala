@@ -62,4 +62,9 @@ public class PostServiceImpl implements PostService {
 		return postDao.setRejectReason(approvalId, rejectReason);
 	}
 
+	@Override
+	public List<PostDescriptionModel> getAllPostsForModeration(UserProfile user) {
+		return postDao.getAllPostsForModeration(user);
+	}
+
 }

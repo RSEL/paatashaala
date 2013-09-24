@@ -52,7 +52,7 @@ public class PendingPostsController implements ActionListener ,Serializable{
 	public List<PostDescriptionModel> getAllPendingPosts(){
 		
 		UserProfile user=ManagedLoginBean.mappToUserEntity(login);
-		List<PostDescriptionModel> postDescs=postService.getAllPendingPostsForUser(user);
+		List<PostDescriptionModel> postDescs=postService.getAllPostsForModeration(user);
 		if(login==null || postDescs==null)
 			return null;
 		Collections.sort(postDescs, new Comparator<PostDescriptionModel>() {

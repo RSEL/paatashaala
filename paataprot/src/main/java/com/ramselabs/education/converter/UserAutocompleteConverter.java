@@ -5,6 +5,9 @@ import java.util.List;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
+import javax.faces.event.AbortProcessingException;
+import javax.faces.event.ActionEvent;
+import javax.faces.event.ActionListener;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -19,7 +22,7 @@ import com.ramselabs.education.service.UserService;
 
 @Named
 @Scope("session")
-public class UserAutocompleteConverter implements Converter {
+public class UserAutocompleteConverter implements Converter,ActionListener {
 	@Inject
 	private UserService userService;
 	private List<AutocompleteTemplate> list;
@@ -84,6 +87,12 @@ public class UserAutocompleteConverter implements Converter {
 			System.out.println("converter Object value is not blank");
 			return String.valueOf(((AutocompleteTemplate) value).getDisplayName());
 		}
+	}
+
+	@Override
+	public void processAction(ActionEvent arg0) throws AbortProcessingException {
+		getList();
+		
 	}
 
 }

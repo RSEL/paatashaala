@@ -101,6 +101,7 @@
 							oncomplete="dlg2.hide();return false;"
 							update="group,group:groupGrowl,:groupPanel:groupList"
 							actionListener="#{groupController.save}">
+							<f:actionListener binding="#{userAutocompleteConverter}"/>
 							</p:commandButton>  
               
                     </p:panel>  

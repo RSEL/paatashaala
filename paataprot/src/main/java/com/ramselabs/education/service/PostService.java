@@ -16,4 +16,5 @@ public interface PostService {
 	public List<PostDescriptionModel> getAllPendingPostsForUser(UserProfile user);
 	public int updateMessageStatus(int approvalId);
 	public int updateMessageStatusReason(int approvalId, String rejectReason);
+	public List<PostDescriptionModel> getAllPostsForModeration(UserProfile user);
 }

@@ -100,13 +100,13 @@
 
 										</p:panel>
 										<h:outputText value="Shared to : #{post.shareToName}"
-											style="margin-left:17px" />
+											style="margin-left:17px;float: left" /><br/>
 
 										<p:commandLink type="push" title="Accept" id="CheckIconLink"
-											actionListener="#{pendingPostCheckedListener.checkPost}"
+											actionListener="#{pendingPostCheckedListener.checkPost}" style="display: #{post.displayType}"
 											update=":tabViewNewsFeed:pendingMessageForm:postPendingFor,:tabViewNewsFeed:pendingMessageForm,:tabViewNewsFeed:postfor,:notifyForm:notifyList">
 											<p:graphicImage value="/resources/img/checked-icon.png"
-												style="height: 30px;width: 30px;margin-left: 463px"
+												style="height: 30px;width: 30px;margin-left:616px"
 												id="checkedIcon" />
 											<f:attribute name="approvalId" value="#{post.approvalId}" />
 											<f:actionListener binding="#{pendingPostsController}" />
@@ -114,7 +114,7 @@
 											<f:actionListener binding="#{alertFeedController}" />
 										</p:commandLink>
 										<p:commandLink type="push" title="Reject" id="CrossIconLink"
-											oncomplete="dlgForRejectMessage.show(); return false;"
+											oncomplete="dlgForRejectMessage.show(); return false;" style="display: #{post.displayType}"
 											actionListener="#{setApprovalIdListener.setApprovalIdForMessage}">
 											<p:graphicImage value="/resources/img/cross-icon.png"
 												style="height: 30px;width: 30px;margin-left:7px"

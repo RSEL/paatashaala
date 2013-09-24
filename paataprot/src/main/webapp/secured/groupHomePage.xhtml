@@ -1,0 +1,24 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+   xmlns:ui="http://java.sun.com/jsf/facelets"
+   template="/templates/masterLayout.xhtml">
+     
+  <ui:define name="navigationBar">
+    <ui:include src="/sections/navigationBar/navigationBar.xhtml"/>
+  </ui:define>
+  <ui:define name="contentLeft">
+    <ui:include src="/sections/groupContent/groupLeft.xhtml"/>
+  </ui:define>
+  <ui:define name="newsFeedContent">
+    <ui:include src="/sections/groupContent/groupMiddle.xhtml"/>
+  </ui:define>
+  <ui:define name="contentRight">
+    <ui:include src="/sections/content/contentRight.xhtml"/>
+  </ui:define>
+ 
+  <ui:define name="dlgForThemeSwitch">
+    <ui:include src="/sections/dialog/dlgForThemeSwitch.xhtml"/>
+  </ui:define>
+  <ui:define name="dlgForFileUpload">
+    <ui:include src="/sections/groupDialog/groupDlgForFileUpload.xhtml"/>
+  </ui:define>
+  </ui:composition>

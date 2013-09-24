@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -45,7 +46,8 @@ public class Post{
 	private String messageType;
 	
 
-	@ManyToMany(mappedBy="groupPosts")
+	@ManyToMany
+	@JoinTable(name="group_posts",joinColumns=@JoinColumn(name="post_id"),inverseJoinColumns=@JoinColumn(name="group_id"))
 	private Collection<Group> groups=new ArrayList<Group>();
 	
 	public String getMessageType() {

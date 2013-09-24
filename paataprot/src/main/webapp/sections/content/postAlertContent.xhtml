@@ -41,7 +41,7 @@
 										style="width:70px;height:35px;padding:1px 1px;margin-left:616px;background:#096DC5;border-radius: 1pc;margin-top: 10px;color: #ffffff;
 text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25)"
 										actionListener="#{postController.insertPosts}"
-										update=":tabViewNewsFeed:postfor,postForm,blui"
+										update=":tabViewNewsFeed:pendingMessageForm:postPendingFor,postForm,blui"
 										onsuccess="bui.hide();return false;" oncomplete="clearText()">
 										<p:blockUI block="postForm" trigger="sendButt" id="blui"
 											widgetVar="bui">  
@@ -49,7 +49,7 @@ text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);border-color: rgba(0, 0, 0, 0.1) rgba(
         <br />
 											<p:graphicImage value="/resources/img/ajax-loader.gif" />
 										</p:blockUI>
-										<f:actionListener binding="#{newsFeedController}" />
+										<f:actionListener binding="#{pendingPostsController}" />
 									</p:commandButton>
 								</div>
 
@@ -91,7 +91,7 @@ text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);border-color: rgba(0, 0, 0, 0.1) rgba(
 										style="width:70px;height:35px;padding:1px 1px;margin-left:616px;background:#096DC5;border-radius: 1pc;margin-top: 10px;color: #ffffff;
 text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25)"
 										actionListener="#{alertController.insertAlerts}"
-										update=":notifyForm:notifyList,:tabViewNewsFeed:postfor,alertForm,blui"
+										update=":notifyForm:notifyList,:tabViewNewsFeed:pendingMessageForm:postPendingFor,alertForm,blui"
 										onsuccess="bui.hide();return false;"
 										oncomplete="clearTextAlert()">
 										<p:blockUI block="alertForm" trigger="sendButtAlert" id="blui"
@@ -100,7 +100,7 @@ text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);border-color: rgba(0, 0, 0, 0.1) rgba(
         <br />
 											<p:graphicImage value="/resources/img/ajax-loader.gif" />
 										</p:blockUI>
-										<f:actionListener binding="#{newsFeedController}" />
+										<f:actionListener binding="#{pendingPostsController}" />
 										<f:actionListener binding="#{alertFeedController}" />
 									</p:commandButton>
 								</div>

@@ -39,7 +39,15 @@ public class UserProfile extends AutocompleteTemplate{
 	@ManyToMany(mappedBy="groupUsers")
 	private Collection<Group> groups=new ArrayList<Group>();
 	
+	@ManyToMany(mappedBy="roleUsers")
+	private Collection<Role> userRoles=new ArrayList<Role>();
 	
+	public Collection<Role> getUserRoles() {
+		return userRoles;
+	}
+	public void setUserRoles(Collection<Role> userRoles) {
+		this.userRoles = userRoles;
+	}
 	public String getImagePath() {
 		return imagePath;
 	}
