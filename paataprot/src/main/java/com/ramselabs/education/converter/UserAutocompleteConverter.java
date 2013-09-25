@@ -91,7 +91,7 @@ public class UserAutocompleteConverter implements Converter,ActionListener {
 
 	@Override
 	public void processAction(ActionEvent arg0) throws AbortProcessingException {
-		getList();
+		list=getList();
 		
 	}
 

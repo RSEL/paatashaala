@@ -153,8 +153,12 @@ public class GroupDAOImpl implements GroupDAO {
 				postDescription.setDateOfPosting(postShare.getPostDate());
 				postDescription.setShareToName(postShare.getShareGroup()
 						.getDisplayName());
-				postDescription.setShareToImage(postShare.getShareGroup()
-						.getImagePath());
+				String shareImage=postShare.getShareGroup().getImagePath();
+				if(shareImage==null)
+					postDescription.setShareToImage("/resources/img/profile-photo/group-blank.png");
+				else
+				    postDescription.setShareToImage(postShare.getShareGroup().getImagePath());
+				
 				postDescription.setRejectStatus("approved");
 
 				listPerson.add(postDescription);

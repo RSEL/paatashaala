@@ -39,7 +39,7 @@ public class GroupProfileController implements ActionListener,Serializable{
     private String groupDescription;
     
 	public String getGroupDescription() {
-		if(groupId==0)
+		if(groupId==0 | groupService==null)
 			return null;
 		groupDescription=groupService.getGroup(groupId).getGroupDescription();
 		return groupDescription;
@@ -52,7 +52,7 @@ public class GroupProfileController implements ActionListener,Serializable{
 
 
 	public String getImagePath() {
-		if(groupId==0)
+		if(groupId==0 |  groupService==null)
 			return null;
 		if(groupService.getGroup(groupId).getImagePath()==null)
 			imagePath="/resources/img/profile-photo/group-blank.png";
@@ -63,7 +63,7 @@ public class GroupProfileController implements ActionListener,Serializable{
 
 
 	public String getDisplayName() {
-		if(groupId==0)
+		if(groupId==0 | groupService==null)
 			return null;
 		displayName=groupService.getGroup(groupId).getDisplayName();
 		return displayName;

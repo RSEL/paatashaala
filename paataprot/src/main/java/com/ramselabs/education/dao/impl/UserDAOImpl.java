@@ -94,8 +94,12 @@ public class UserDAOImpl implements UserDAO {
 		Session session=sessionFactory.openSession();
 		Criteria ctr=session.createCriteria(UserProfile.class);
 		ctr.add(Restrictions.ne("userId",userId));
-		
-		return (List<AutocompleteTemplate>)ctr.list();
+		List<AutocompleteTemplate> listUsers=(List<AutocompleteTemplate>)ctr.list();
+		for(AutocompleteTemplate listUser:listUsers){
+			if(((UserProfile)listUser).getImagePath()==null)
+				((UserProfile)listUser).setImagePath("/resources/img/profile-photo/default-profile.jpg");
+		}
+		return listUsers;
 	}
 
 	@Override

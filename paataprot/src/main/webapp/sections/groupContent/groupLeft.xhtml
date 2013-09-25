@@ -34,7 +34,7 @@
 			<p:panel id="pnlGroup" header="Group" toggleable="true"
 				style="border:0;margin-right:10px">
 				<p:menu style="margin-left:-13px;border:0;width:247px" >
-				  <p:menuitem value="Posts" icon="ui-icon-mail-open" action="/secured/groupHomePage.xhtml?faces-redirect=true" actionListener="#{groupPostsController.setGroupId}">
+				  <p:menuitem value="Posts" icon="ui-icon-mail-open" action="/secured/groupHomePage.xhtml?faces-redirect=true" actionListener="#{groupPostsController.setGroupId}" ajax="true">
 				     <f:param name="groupId" value="#{groupProfileController.groupId}"/>
 				  </p:menuitem>
 				  <p:menuitem value="Folder" icon="ui-icon-folder-open" action="#"/>

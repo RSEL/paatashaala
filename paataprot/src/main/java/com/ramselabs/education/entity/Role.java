@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.ramselabs.education.enums.RoleEnum;
 
@@ -27,7 +28,7 @@ public class Role {
 	@ManyToMany
 	@JoinTable(name="user_role",joinColumns=@JoinColumn(name="role_id"),inverseJoinColumns=@JoinColumn(name="user_id"))
 	private Collection<UserProfile> roleUsers=new ArrayList<UserProfile>();
-	
+	@Transient
 	private RoleEnum roleEnum;
 	
 	public RoleEnum getRoleEnum() {

@@ -140,8 +140,12 @@ public class PostDAOImpl implements PostDAO {
 					PostDescriptionModel postDescModel = new PostDescriptionModel();
 					postDescModel.setPersonName(getPoster(posterId)
 							.getDisplayName());
-					postDescModel.setUserImage(getPoster(posterId)
-							.getImagePath());
+					String image=getPoster(posterId).getImagePath();
+					if(image==null)
+						postDescModel.setUserImage("/resources/img/profile-photo/default-profile.jpg");
+					else
+					    postDescModel.setUserImage(getPoster(posterId).getImagePath());
+					
 					if (pShare.getPost().getPostApproval().getStatus()
 							.equals("rejected")) {
 						postDescModel.setPostDescription("<strike>"
@@ -162,23 +166,17 @@ public class PostDAOImpl implements PostDAO {
 					if (pShare.getPostShareUser() == null) {
 						postDescModel.setShareToName(pShare.getShareGroup()
 								.getDisplayName());
-					} else {
-						postDescModel.setShareToName(pShare.getPostShareUser()
-								.getDisplayName());
-					}
-					if (pShare.getPostShareUser() == null) {
 						if (pShare.getShareGroup().getImagePath() == null)
-							pShare.getShareGroup()
-									.setImagePath(
-											"/resources/img/profile-photo/group-blank.png");
+							 pShare.getShareGroup().setImagePath("/resources/img/profile-photo/group-blank.png");
 						postDescModel.setShareToImage(pShare.getShareGroup()
 								.getImagePath());
-					} else {
+					} 
+					 else {
+						 postDescModel.setShareToName(pShare.getPostShareUser()
+									.getDisplayName());
 						if (pShare.getPostShareUser().getImagePath() == null)
-							pShare.getPostShareUser()
-									.setImagePath(
-											"/resources/img/profile-photo/profile-icon.jpg");
-						postDescModel.setShareToImage(pShare.getPostShareUser()
+							pShare.getPostShareUser().setImagePath("/resources/img/profile-photo/profile-icon.jpg");
+						 postDescModel.setShareToImage(pShare.getPostShareUser()
 								.getImagePath());
 					}
 					postDescModel.setRejectStatus(pShare.getPost()
@@ -233,8 +231,12 @@ public class PostDAOImpl implements PostDAO {
 					PostDescriptionModel postDescModel = new PostDescriptionModel();
 					postDescModel.setPersonName(getPoster(posterId)
 							.getDisplayName());
-					postDescModel.setUserImage(getPoster(posterId)
-							.getImagePath());
+					String image=getPoster(posterId).getImagePath();
+					if(image==null)
+						postDescModel.setUserImage("/resources/img/profile-photo/default-profile.jpg");
+					else
+					    postDescModel.setUserImage(getPoster(posterId).getImagePath());
+					
 					postDescModel.setPostDescription(pShare.getPost()
 							.getDescription());
 					postDescModel.setUserType(pShare.getUserType());
@@ -245,24 +247,17 @@ public class PostDAOImpl implements PostDAO {
 					if (pShare.getPostShareUser() == null) {
 						postDescModel.setShareToName(pShare.getShareGroup()
 								.getDisplayName());
+						if (pShare.getShareGroup().getImagePath() == null)
+						    postDescModel.setShareToImage("/resources/img/profile-photo/group-blank.png");
+						else
+							postDescModel.setShareToImage(pShare.getShareGroup().getImagePath());
 					} else {
 						postDescModel.setShareToName(pShare.getPostShareUser()
 								.getDisplayName());
-					}
-					if (pShare.getPostShareUser() == null) {
-						if (pShare.getShareGroup().getImagePath() == null)
-							pShare.getShareGroup()
-									.setImagePath(
-											"/resources/img/profile-photo/group-blank.png");
-						postDescModel.setShareToImage(pShare.getShareGroup()
-								.getImagePath());
-					} else {
 						if (pShare.getPostShareUser().getImagePath() == null)
-							pShare.getPostShareUser()
-									.setImagePath(
-											"/resources/img/profile-photo/profile-icon.jpg");
-						postDescModel.setShareToImage(pShare.getPostShareUser()
-								.getImagePath());
+						    postDescModel.setShareToImage("/resources/img/profile-photo/profile-icon.jpg");
+						else
+							postDescModel.setShareToImage(pShare.getPostShareUser().getImagePath());
 					}
 					postDescModel.setRejectStatus(pShare.getPost()
 							.getPostApproval().getStatus());

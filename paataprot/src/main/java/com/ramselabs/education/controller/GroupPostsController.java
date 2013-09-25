@@ -4,7 +4,9 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.faces.context.FacesContext;
+import javax.faces.event.AbortProcessingException;
 import javax.faces.event.ActionEvent;
+import javax.faces.event.ActionListener;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -15,7 +17,7 @@ import com.ramselabs.education.service.GroupService;
 
 @Named
 @Scope("session")
-public class GroupPostsController implements Serializable{
+public class GroupPostsController implements Serializable,ActionListener{
 
 	private static final long serialVersionUID = -3882733305144666977L;
 	
@@ -47,5 +49,11 @@ public class GroupPostsController implements Serializable{
 	public void setGroupId(ActionEvent event){
 		FacesContext context = FacesContext.getCurrentInstance();
 	    groupId = context.getApplication().evaluateExpressionGet(context, "#{groupProfileController.groupId}", Integer.class);
+	}
+
+	@Override
+	public void processAction(ActionEvent arg0) throws AbortProcessingException {
+		listOfPosts=getListOfPosts();
+		
 	}
 }

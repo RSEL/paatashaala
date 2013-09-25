@@ -13,14 +13,15 @@
 					allowTypes="/(\.|\/)(gif|jpe?g|png)$/" sizeLimit="300000"
 					widgetVar="fileuplaod_wgt"
 					id="groupFileUploadId"
-					oncomplete="dlgPhotoUpload.hide(); return false;"
+					oncomplete="beforeUpdate1(),dlgPhotoUpload.hide(); return false;"
 					update="msgFileUp,:groupForm:groupPhoto" >
 					<f:param name="groupId" value="#{groupProfileController.groupId}"/>
 					
 					</p:fileUpload>
-					<!-- <p:remoteCommand name="beforeUpdate" partialSubmit="true" update=":groupForm:groupPhoto">
-					<f:actionListener binding="#{groupProfileController}"/>
-					</p:remoteCommand> -->
+					<p:remoteCommand name="beforeUpdate1" partialSubmit="true" actionListener="#{userAutocompleteConverter.list}" update=":groupForm:groupPhoto" oncomplete="reloadPage()">
+					<f:actionListener binding="#{userAutocompleteConverter}"/>
+					<f:actionListener binding="#{groupPostsController}"/>
+					</p:remoteCommand>
 				<p:growl id="msgFileUp" for="serverMsg" />
 			</h:form>
 		</p:dialog>
