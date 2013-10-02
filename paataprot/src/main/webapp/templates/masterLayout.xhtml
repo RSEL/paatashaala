@@ -47,7 +47,8 @@
 		<ui:insert name="dlgForThemeSwitch"/>
 		<ui:insert name="dlgForGroupCreate"/>
 		<ui:insert name="dlgForMessageReject"/>
-		
+		<ui:insert name="dlgForSampleDataFeed"/>
+		<ui:insert name="dlgForDataUpload"/>
     <script type="text/javascript">
 		$(document).ready(
 				function() {
@@ -60,6 +61,17 @@
 		function clearInvalidFileMsg() {
 			fileuplaod_wgt.uploadContent.find("tr.ui-state-error").remove();
 		}
+		 $(document).ready(
+				function() {
+					dataFileuplaod_wgt.buttonBar.find("button.cancel").bind(
+							"click", function(e) {
+								clearInvalidFileMsgForDataUplaod();
+							});
+				});
+
+		function clearInvalidFileMsgForDataUplaod() {
+			dataFileuplaod_wgt.uploadContent.find("tr.ui-state-error").remove();
+		} 
 		</script>
 		<h:outputStylesheet library="css" name="pageStyle.css" />
         </h:body>

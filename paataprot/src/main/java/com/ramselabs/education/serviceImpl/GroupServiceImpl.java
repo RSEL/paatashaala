@@ -12,12 +12,13 @@ import com.ramselabs.education.entity.Group;
 import com.ramselabs.education.entity.UserProfile;
 import com.ramselabs.education.managedbean.ManagedLoginBean;
 import com.ramselabs.education.model.AutocompleteTemplate;
+import com.ramselabs.education.model.GroupUserUploadModel;
 import com.ramselabs.education.model.PostDescriptionModel;
 import com.ramselabs.education.service.GroupService;
 
 @Named
 @Scope("session")
-public class GroupServiceImpl implements GroupService {
+public  class GroupServiceImpl implements GroupService {
 	
 	@Inject
 	private GroupDAO groupDao;  
@@ -26,7 +27,7 @@ public class GroupServiceImpl implements GroupService {
 	}
 
 	@Override
-	public int inserGroups(Group group) {
+	public int insertGroups(Group group) {
 		return groupDao.createGroup(group);
 	}
 
@@ -65,6 +66,11 @@ public class GroupServiceImpl implements GroupService {
 	@Override
 	public List<PostDescriptionModel> getAllPostsForGroup(int groupId) {
 		return groupDao.getAllMessagesForGroup(groupId);
+	}
+
+	@Override
+	public int insertGroupUser(GroupUserUploadModel gruopUser) {
+		return groupDao.createGroupUser(gruopUser);
 	}
 
 	

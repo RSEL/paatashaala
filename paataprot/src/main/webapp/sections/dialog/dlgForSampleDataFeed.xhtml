@@ -1,0 +1,31 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+	<p:dialog id="dlgDataFeed" widgetVar="dlgForDataInsert"
+		header="Data to be inserted" modal="true">
+		<h:form id="dataUploadForm">
+			<p:dataTable var="model"
+				value="#{dialogueDataFeedController.listModel}" id="dataUpTable">
+
+
+				<p:column headerText="UserName">
+					<h:outputText value="#{model.userName}" />
+				</p:column>
+
+				<p:column headerText="Password">
+					<h:outputText value="#{model.password}" />
+				</p:column>
+
+				<p:column headerText="DisplayName">
+					<h:outputText value="#{model.displayName}" />
+				</p:column>
+			</p:dataTable><br/>
+			<p:commandButton value="insert"
+				actionListener="#{sampleDataInsertController.insert}"
+				oncomplete="dlgForDataInsert.hide();return false;" style="float:right"/>
+		</h:form>
+	</p:dialog>
+</ui:composition>

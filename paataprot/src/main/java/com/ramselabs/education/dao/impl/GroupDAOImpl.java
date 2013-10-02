@@ -1,6 +1,8 @@
 package com.ramselabs.education.dao.impl;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -17,6 +19,7 @@ import com.ramselabs.education.entity.PostShare;
 import com.ramselabs.education.entity.UserProfile;
 import com.ramselabs.education.managedbean.ManagedLoginBean;
 import com.ramselabs.education.model.AutocompleteTemplate;
+import com.ramselabs.education.model.GroupUserUploadModel;
 import com.ramselabs.education.model.PostDescriptionModel;
 
 @Named
@@ -30,11 +33,19 @@ public class GroupDAOImpl implements GroupDAO {
 		this.sessionFactory = sessionFactory;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public int createGroup(Group group) {
 		Session session = sessionFactory.openSession();
+		Query query=session.createQuery("from Group");
+		List<Group> groups=(List<Group>)query.list();
+		for(Group grp:groups){
+			if(grp.getDisplayName().equalsIgnoreCase(group.getDisplayName())){
+				return 0;
+			}
+		}
 		session.beginTransaction();
-		session.save(group);
+		session.saveOrUpdate(group);
 		session.getTransaction().commit();
 		session.flush();
 		return 1;
@@ -165,6 +176,7 @@ public class GroupDAOImpl implements GroupDAO {
 
 			}
 		}
+		Collections.sort(listPerson, new PostDescriptionModel());
 		return listPerson;
 	}
 
@@ -172,5 +184,41 @@ public class GroupDAOImpl implements GroupDAO {
 		Session session = sessionFactory.openSession();
 		UserProfile user = (UserProfile) session.get(UserProfile.class, userId);
 		return user;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public int createGroupUser(GroupUserUploadModel groupUser) {
+		Session session = sessionFactory.openSession();
+		Query queryUser=session.createQuery("from UserProfile where username = :userName");
+		queryUser.setString("userName", groupUser.getUserName());
+		Collection<UserProfile> users=(Collection<UserProfile>)queryUser.list();
+		Query queryGroup=session.createQuery("from Group where displayName = :displayName");
+		queryGroup.setString("displayName", groupUser.getGroupName());
+		Collection<Group> groups=(Collection<Group>)queryGroup.list();
+		boolean flag=false;
+		for(UserProfile user:users){
+			for(Group group:groups){
+				Collection<UserProfile> userProfiles=group.getGroupUsers();
+				if(userProfiles.isEmpty())
+					flag=true;
+				for(UserProfile userProfile:userProfiles){
+					if(userProfile.getUsername().equalsIgnoreCase(user.getUsername())){
+						flag=false;
+						return 2;
+					}
+					else
+						flag=true;
+				}
+				if(flag){
+				user.getGroups().add(group);
+				group.getGroupUsers().add(user);
+				session.beginTransaction();
+				session.saveOrUpdate(group);
+				session.getTransaction().commit();
+				}
+			}
+		}
+		return 1;
 	}
 }

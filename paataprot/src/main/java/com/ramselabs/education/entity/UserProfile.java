@@ -19,7 +19,7 @@ public class UserProfile extends AutocompleteTemplate{
 	@Id @GeneratedValue
 	@Column(name="id")
     private int userId;
-	@Column(name="user_name")
+	@Column(name="user_name",unique=true)
 	private String username;
 	@Column(name="password")
 	private String password;
@@ -99,7 +99,7 @@ public class UserProfile extends AutocompleteTemplate{
 	}
 	@Override
 	public String toString(){
-		return displayName;
+		return displayName+":"+username;
 	}
 	public Collection<Group> getGroups() {
 		return groups;

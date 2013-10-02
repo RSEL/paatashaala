@@ -307,8 +307,10 @@ public class PostDAOImpl implements PostDAO {
 				userId);
 		List<Role> userRole = (List<Role>) userProfile.getUserRoles();
 		for (Role role : userRole) {
-			if (role.equals(role.getRoleEnum()))
+			if (role.equals(role.getRoleEnum())){
+				if(role.getRoleName().equalsIgnoreCase("moderator"))
 				flag = true;
+			}
 		}
 
 		Query query = session

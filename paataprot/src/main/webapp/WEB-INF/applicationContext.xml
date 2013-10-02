@@ -13,5 +13,5 @@ http://www.springframework.org/schema/context/spring-context-3.1.xsd">
 	<!-- Database Configuration -->
 	<import resource="classpath:/config/hibernate/DataSource.xml"/>
 	<import resource="classpath:/config/hibernate/HibernateSessionFactory.xml"/>
-
+    
 </beans>

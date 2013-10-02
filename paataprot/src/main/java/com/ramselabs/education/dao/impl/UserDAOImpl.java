@@ -13,12 +13,13 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.context.annotation.Scope;
 
 import com.ramselabs.education.dao.service.UserDAO;
+import com.ramselabs.education.entity.Role;
 import com.ramselabs.education.entity.UserProfile;
 import com.ramselabs.education.model.AutocompleteTemplate;
 
 @Named
 @Scope("session")
-public class UserDAOImpl implements UserDAO {
+public  class UserDAOImpl implements UserDAO {
 
 	@Inject
 	SessionFactory sessionFactory;
@@ -28,31 +29,33 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public boolean loginAuthenticate(UserProfile user) {
+	public String loginAuthenticate(UserProfile user) {
 		Session session=sessionFactory.openSession();
 		Query query=session.createQuery("from UserProfile where username='"+user.getUsername()+"' and password='"+user.getPassword()+"'");
-		if(query.list().size()==0)
-		    return false;
-		else
-			return true;
+		if(query.list().size()!=0){
+			UserProfile userProfile=getUserProfile(user);
+			System.out.println(user);
+			List<Role> roles=(List<Role>)userProfile.getUserRoles();
+			for(Role role:roles){
+				if(role.getRoleName().equalsIgnoreCase("admin"))
+					return "admin";
+				if(role.getRoleName().equalsIgnoreCase("moderator"))
+					return "moderator";
+				if(role.getRoleName().equalsIgnoreCase("user"))
+					return "user";
+			}
+		}
+			return "notLoggedIn";
+		
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
-	public UserProfile getUserProfile(String username, String password) {
+	public UserProfile getUserProfile(UserProfile user) {
 		Session session=sessionFactory.openSession();
-		UserProfile userProfile=null;
-		Query query=session.createQuery("from UserProfile where username = :username and password = :password");
-		query.setString("username",username);
-		query.setString("password", password);
-		List<UserProfile> list=(List<UserProfile>)query.list();
-		if(list.isEmpty()){
-			System.out.println("UserProfile is empty"+list);
+		int userId=getUserId(user);
+		if(userId==0)
 			return null;
-		}
-		for(UserProfile profile:list)
-			  userProfile=profile;
-		return userProfile;
+		return (UserProfile)session.get(UserProfile.class, userId);
 	}
 
 	@Override
@@ -109,5 +112,28 @@ public class UserDAOImpl implements UserDAO {
 		System.out.println((UserProfile)session.get(UserProfile.class, userId));
     	return (UserProfile)session.get(UserProfile.class, userId);
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public int insertUser(UserProfile user) {
+		Session session=sessionFactory.openSession();
+		Query query=session.createQuery("from UserProfile");
+		List<UserProfile> users=(List<UserProfile>)query.list();
+		for(UserProfile userProfile:users){
+			if(userProfile.getUsername().equalsIgnoreCase(user.getUsername())){
+				return 0;
+			}
+		}
+		Role role=new Role();
+		role.getRoleUsers().add(user);
+		role.setRoleName("user");
+		user.getUserRoles().add(role);
+		session.beginTransaction();
+		session.saveOrUpdate(user);
+		session.saveOrUpdate(role);
+		session.getTransaction().commit();
+		return 1;
+	}
+
 
 }

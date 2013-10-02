@@ -22,7 +22,7 @@ public class Group extends AutocompleteTemplate{
 	@Column(name="id")
 	private int groupId;
 	
-	@Column(name="group_name")
+	@Column(name="group_name",unique=true)
 	private String displayName;
 	
 	@Column(name="grade")

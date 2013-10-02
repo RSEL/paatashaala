@@ -38,17 +38,19 @@
 						style="margin:10px 7px 10px 70px">
 						<p:graphicImage url="#{resource['img:bell1.png']}" />
 					</p:commandLink>
-
+                 
 					<p:commandLink id="dynaButton" type="push" title="Settings"
 						style="margin:5px 15px 5px 0px">
 						<p:graphicImage url="#{resource['img:sett-icon1.png']}" />
 					</p:commandLink>
+					
 					<p:menu overlay="true" trigger="dynaButton" my="left top"
-						at="left bottom">
+						at="left bottom" id="menuButt">
 						<p:menuitem value="Logout" action="#{loginController.doLogout}" oncomplete="reloadPage()"/>
 						<p:menuitem value="Themes" onclick="dlg1.show(); return false;"
 							type="button" />
-
+					    <p:menuitem value="Upload Data" oncomplete="dlgForDataUpload.show(); return false;" actionListener="#{dataFileUploadController.checkUploadedFile}"
+							type="button" id="dataUpload" rendered="#{loginController.visible}" update=":dataFileUpload:selectUploadType"/>
 					</p:menu>
 				</p:toolbarGroup>
 			</p:toolbar>

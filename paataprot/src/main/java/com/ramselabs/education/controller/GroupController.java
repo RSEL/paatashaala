@@ -48,7 +48,7 @@ public class GroupController implements Serializable {
         System.out.println(user);
         group.getGroupUsers().add(user);
         user.getGroups().add(group);
-        int status=groupService.inserGroups(group);
+        int status=groupService.insertGroups(group);
         FacesMessage msg=null;
         if(status==1){
         msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Group is Created" ,null);  

@@ -58,7 +58,10 @@ public class UserProfileController implements Serializable{
 	public String getDisplayName() {
 		if(displayName==null){
 			if(login.getUsername() != null & login.getPassword()!=null){
-			displayName=userService.getUserProfile(login.getUsername(), login.getPassword()).getDisplayName();
+				UserProfile user=userService.getUserProfile(ManagedLoginBean.mappToUserEntity(login));
+				if(user==null)
+					return null;
+			displayName=user.getDisplayName();
 		   }
 		}
 		System.out.println("UserProfile"+displayName);
@@ -66,8 +69,15 @@ public class UserProfileController implements Serializable{
 	}
 	public String getImage() {
 		  System.out.println("UserService"+userService);
+		  System.out.println(login.getUsername()+login.getPassword());
+		  UserProfile user=ManagedLoginBean.mappToUserEntity(login);
 		  if(login.getUsername() != null & login.getPassword()!=null){
-			  image=userService.getUserProfile(login.getUsername(),login.getPassword()).getImagePath();
+			  System.out.println(userService);
+			  System.out.println(userService.getUserProfile(user));
+			  UserProfile dataBaseUser=userService.getUserProfile(user);
+			  if(dataBaseUser==null)
+				  return null;
+			  image=dataBaseUser.getImagePath();
 		      if(image==null)
 		    	  image="/resources/img/profile-photo/default-profile.jpg";
 		  }
@@ -75,7 +85,9 @@ public class UserProfileController implements Serializable{
 	}
 	public String getUserType() {
 		if(login.getUsername() != null & login.getPassword()!=null){
-			 UserProfile user=userService.getUserProfile(login.getUsername(),login.getPassword());
+			 UserProfile user=userService.getUserProfile(ManagedLoginBean.mappToUserEntity(login));
+			 if(user==null)
+				 return null;
 			 Collection<PostShare> pShare=user.getUserPostShare();
 			 for (PostShare postShare:pShare){
 				 if(postShare.getUserType().equals("User")){

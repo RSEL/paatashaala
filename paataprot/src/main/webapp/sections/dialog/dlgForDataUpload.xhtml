@@ -1,0 +1,84 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+	<p:dialog id="dlgDataUpload" widgetVar="dlgForDataUpload"
+		header="Choose File" modal="true">
+		<h:form id="dataFileUpload">
+               <p:fileUpload
+					fileUploadListener="#{dataFileUploadController.handleFileUpload}"
+					uploadLabel="Upload" cancelLabel="Cancel" label="Choose"
+					allowTypes="/(\.|\/)(xlsx)$/" sizeLimit="30000000"
+					widgetVar="dataFileuplaod_wgt"
+					id="dataFileUploadId"
+					oncomplete="commandForAction()"
+					update="msgFileUpData,selectUploadType"/>
+					<p:remoteCommand name="commandForAction" partialSubmit="true" update=":dataFileUpload:selectUploadType">
+					   <f:actionListener binding="#{dialogueDataFeedController}"/>
+					</p:remoteCommand>
+				<p:growl id="msgFileUpData" for="serverMsg" /><br/>
+				<p:growl for="serverDataInsert" id="dataInsertInfo"/>
+			<p:selectOneMenu  id="selectUploadType" value="#{dialogueDataFeedController.sheetName}" style="display:#{dataFileUploadController.visibility}">
+			  <f:selectItem itemLabel="[SelectUpload]" itemValue=""/>
+			  <f:selectItems value="#{dialogueDataFeedController.sheetNames}"/>
+			  <p:ajax update="dataUploadTable,insertButtn,dataUploadTableGroup,dataUploadTableGroupUser"  
+                        listener="#{dialogueDataFeedController.getExcelData}" /> 
+			</p:selectOneMenu><br/>	
+			<p:dataTable var="model"
+				value="#{dialogueDataFeedController.listModel}" id="dataUploadTable" style="display:#{dialogueDataFeedController.tableDisplay}">
+
+
+				<p:column headerText="UserName">
+					<h:outputText value="#{model.userName}" />
+				</p:column>
+
+				<p:column headerText="Password">
+					<h:outputText value="#{model.password}" />
+				</p:column>
+
+				<p:column headerText="DisplayName">
+					<h:outputText value="#{model.displayName}" />
+				</p:column>
+			</p:dataTable><br/>
+			<p:dataTable var="grp"
+				value="#{dialogueDataFeedController.listModel}" id="dataUploadTableGroup" style="display:#{dialogueDataFeedController.tableGroup}">
+
+
+				<p:column headerText="DisplayName">
+					<h:outputText value="#{grp.displayName}" />
+				</p:column>
+
+				<p:column headerText="Grade">
+					<h:outputText value="#{grp.grade}" />
+				</p:column>
+
+				<p:column headerText="Area">
+					<h:outputText value="#{grp.area}" />
+				</p:column>
+				<p:column headerText="ModerateOptions">
+					<h:outputText value="#{grp.moderateOptions}" />
+				</p:column>
+				<p:column headerText="GroupDescription">
+					<h:outputText value="#{grp.groupDescription}" />
+				</p:column>
+			</p:dataTable><br/>
+			<p:dataTable var="grpUser"
+				value="#{dialogueDataFeedController.listModel}" id="dataUploadTableGroupUser" style="display:#{dialogueDataFeedController.tableGroupUser}">
+
+
+				<p:column headerText="UserName">
+					<h:outputText value="#{grpUser.userName}" />
+				</p:column>
+
+				<p:column headerText="GroupName">
+					<h:outputText value="#{grpUser.groupName}" />
+				</p:column>
+			</p:dataTable><br/>
+			<p:commandButton value="insert" update="dataInsertInfo"
+				actionListener="#{sampleDataInsertController.insert}" id="insertButtn"
+			    style="float:right;display:#{dialogueDataFeedController.commandButtDispl}"/>	
+		</h:form>
+	</p:dialog>
+</ui:composition>
