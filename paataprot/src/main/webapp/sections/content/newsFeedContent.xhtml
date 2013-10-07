@@ -67,7 +67,9 @@
 										style="float:left;padding:0px 0px;border: 1px solid #cccccc"
 										id="panelSharedIcon" >
 										<h:outputText value="#{shrdFile.metaData}" style="display:none"/>
-										<p:commandLink><p:graphicImage value="#{shrdFile.iconPath}"
+										<p:commandLink actionListener="#{browserContentDisplayController.setContentId}" action="#{browserContentDisplayController.toRedirect}" target="_blank">
+										<f:param name="shareFileId" value="#{shrdFile.sharedFileId}"/>
+										<p:graphicImage value="#{shrdFile.iconPath}"
 											style="margin-left:0px;width: 67px;height: 62px;" /></p:commandLink>
 									</p:panel>
 

@@ -68,6 +68,8 @@ public class FileDownloadController implements Serializable{
     		contentType="image/png";
     	if(extention.equalsIgnoreCase("gif"))
     		contentType="image/gif";
+    	if(extention.equalsIgnoreCase("pptx") || extention.equalsIgnoreCase("ppt"))
+    	   contentType="application/vnd.openxmlformats-officedocument.presentationml.presentation";
         file = new DefaultStreamedContent(stream,contentType,shrdFileModel.getFileName());  
         System.out.println(file);
     }
