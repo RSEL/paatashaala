@@ -50,6 +50,15 @@ public class Post{
 	@JoinTable(name="group_posts",joinColumns=@JoinColumn(name="post_id"),inverseJoinColumns=@JoinColumn(name="group_id"))
 	private Collection<Group> groups=new ArrayList<Group>();
 	
+	@OneToMany(mappedBy="shredFilePost")
+	private Collection<SharedFile> sharedFiles=new ArrayList<SharedFile>();
+	
+	public Collection<SharedFile> getSharedFiles() {
+		return sharedFiles;
+	}
+	public void setSharedFiles(Collection<SharedFile> sharedFiles) {
+		this.sharedFiles = sharedFiles;
+	}
 	public String getMessageType() {
 		return messageType;
 	}

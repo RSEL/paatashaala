@@ -1,6 +1,7 @@
 package com.ramselabs.education.controller;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 
 import javax.faces.application.FacesMessage;
@@ -14,6 +15,7 @@ import com.ramselabs.education.entity.Group;
 import com.ramselabs.education.entity.MessageApproval;
 import com.ramselabs.education.entity.Post;
 import com.ramselabs.education.entity.PostShare;
+import com.ramselabs.education.entity.SharedFile;
 import com.ramselabs.education.entity.UserProfile;
 import com.ramselabs.education.managedbean.ManagedLoginBean;
 import com.ramselabs.education.managedbean.PostBean;
@@ -76,6 +78,10 @@ public class PostController implements Serializable {
 					.getSelectedUserProfiles();
 			System.out.println("selected user profiles" + user);
 			Post post = PostBean.mapToPost(postBean);
+			Collection<SharedFile> sharedFiles=PostBean.getAllSharedFiles(postBean);
+			
+			post.setSharedFiles(sharedFiles);
+			
 			post.setPosterId(posterId);
 			post.setMessageType("post");
 
@@ -95,7 +101,10 @@ public class PostController implements Serializable {
 			approval.setUserApproval(user);
 			approval.setApprovalPost(post);
 
-			int i = postService.inserPost(post, postShare, approval);
+			for(SharedFile shrdFile:sharedFiles)
+				shrdFile.setShredFilePost(post);
+			
+			int i = postService.inserPost(post, postShare, approval,sharedFiles);
 			FacesMessage message = null;
 			if (i == 1) {
 				message = new FacesMessage(FacesMessage.SEVERITY_INFO,
@@ -123,6 +132,10 @@ public class PostController implements Serializable {
 			Group group = (Group) autoCmplController
 					.getSelectedUserProfiles();
 			Post post = PostBean.mapToPost(postBean);
+			Collection<SharedFile> sharedFiles=PostBean.getAllSharedFiles(postBean);
+			
+			post.setSharedFiles(sharedFiles);
+			
 			post.setPosterId(posterId);
 			post.setMessageType("post");
 
@@ -138,7 +151,10 @@ public class PostController implements Serializable {
 			
 			approval.setApprovalPost(post);
 
-			int i = postService.inserPost(post, postShare, approval);
+			for(SharedFile sharedFile:sharedFiles)
+				sharedFile.setShredFilePost(post);
+			
+			int i = postService.inserPost(post, postShare, approval,sharedFiles);
 			FacesMessage message = null;
 			if (i == 1) {
 				message = new FacesMessage(FacesMessage.SEVERITY_INFO,

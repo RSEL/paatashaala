@@ -5,128 +5,188 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:pe="http://primefaces.org/ui/extensions">
 
-					<p:tabView id="tabViewNewsFeed"
-						style="background:transparent;padding-left: 0px;padding-right: 0px;padding-bottom: 0px;height: 57px"
-						styleClass="tabMargin">
-						<p:tab id="tabLatestPost" title="Latest Posts">
+	<p:tabView id="tabViewNewsFeed"
+		style="background:transparent;padding-left: 0px;padding-right: 0px;padding-bottom: 0px;height: 57px"
+		styleClass="tabMargin">
+		<p:tab id="tabLatestPost" title="Latest Posts">
 
-							<p:dataList value="#{newsFeedController.listOfPost}" var="post"
-								id="postfor" type="none">
-								<p:panel style="background: #ffffff">
+			<p:dataList value="#{newsFeedController.listOfPost}" var="post"
+				id="postfor" type="none">
+				<p:panel style="background: #ffffff">
 
-									<p:panel style="border:0;float:left;background: #ffffff">
-										<p:graphicImage value="#{post.userImage}"
+					<p:panel style="border:0;float:left;background: #ffffff">
+						<p:graphicImage value="#{post.userImage}"
+							style="margin-left:0px;width:60px;height:63px" />
+					</p:panel>
+					<p:panel style="border:0;background: #ffffff">
+						<h:outputText value="#{post.personName}" style="" />
+						<p:spacer width="15" />
+						<h:outputText value="#{post.dateOfPosting}">
+							<f:convertDateTime dateStyle="short" timeStyle="short"
+								type="both" />
+						</h:outputText>
+						<p:spacer width="15" />
+						<h:outputText value="#{post.userType}" />
+						<p:spacer width="15" />
+						<h:outputText value="#{post.messageType}" />
+
+						<p:panel style="margin-left: 80px">
+							<p:graphicImage value="/resources/img/show-dedail.png"
+								style="width:27px;height:28px;float:right" title="Show details"
+								id="toolTipImage" />
+							<p:tooltip for="toolTipImage" style="background: #ffffff">
+								<p:panel
+									style="background: #ffffff;width:300px;padding:0px 0px;border:0px"
+									styleClass="imagePadLeft">
+									<p:panel
+										style="border:0;float:left;background: #ffffff;padding:0px 0px"
+										styleClass="imagePadLeft">
+										<p:graphicImage value="#{post.shareToImage}"
 											style="margin-left:0px;width:60px;height:63px" />
 									</p:panel>
-									<p:panel style="border:0;background: #ffffff">
-										<h:outputText value="#{post.personName}" style="" />
-								         <p:spacer width="15"/>
-										<h:outputText value="#{post.dateOfPosting}">
-											<f:convertDateTime dateStyle="short" timeStyle="short"
-												type="both" />
-										</h:outputText>
-										<p:spacer width="15"/>
-										<h:outputText value="#{post.userType}" />
-										<p:spacer width="15"/>
-										<h:outputText
-											value="#{post.messageType}" />
 
-										<p:panel style="margin-left: 80px">
-											<p:graphicImage value="/resources/img/show-dedail.png"
-												style="width:27px;height:28px;float:right"
-												title="Show details" id="toolTipImage" />
-											<p:tooltip for="toolTipImage" style="background: #ffffff">
-												<p:panel
-													style="background: #ffffff;width:300px;padding:0px 0px;border:0px"
-													styleClass="imagePadLeft">
-													<p:panel
-														style="border:0;float:left;background: #ffffff;padding:0px 0px"
-														styleClass="imagePadLeft">
-														<p:graphicImage value="#{post.shareToImage}"
-															style="margin-left:0px;width:60px;height:63px" />
-													</p:panel>
-
-													<h:outputText value="Shared to : #{post.shareToName}"
-														style="text-align: justify" />
-													<br />
-													<h:outputText value="Status : #{post.rejectStatus}" />
-													<br />
-													<h:outputText value="#{post.rejectReason}" />
-
-												</p:panel>
-											</p:tooltip>
-											<h:outputFormat value="#{post.postDescription}"
-												escape="false" />
-
-										</p:panel>
-
-									</p:panel>
 									<h:outputText value="Shared to : #{post.shareToName}"
-										style="margin-left:17px" />
+										style="text-align: justify" />
 									<br />
+									<h:outputText value="Status : #{post.rejectStatus}" />
+									<br />
+									<h:outputText value="#{post.rejectReason}" />
 
 								</p:panel>
-							</p:dataList>
-						</p:tab>
+							</p:tooltip>
+							<h:outputFormat value="#{post.postDescription}" escape="false" />
 
-						<p:tab id="tabPendingPost" title="Pending Posts" titleStyle="">
+						</p:panel><br/>
 
-							<h:form id="pendingMessageForm">
-								<p:growl for="approvalStatus" id="approvalGrowl" />
-								<p:dataList value="#{pendingPostsController.listOfPendingPost}"
-									var="post" id="postPendingFor" type="none">
-									<p:panel style="background: #ffffff">
-										<p:panel style="border:0;float:left;background: #ffffff">
-											<p:graphicImage value="#{post.userImage}"
-												style="margin-left:0px;width:60px;height:63px" />
-										</p:panel>
-										<p:panel style="border:0;background: #ffffff">
-											<h:outputText value="#{post.personName}" style="" />
-								              <p:spacer width="15"/>
-										<h:outputText value="#{post.dateOfPosting}">
-												<f:convertDateTime dateStyle="short" timeStyle="short"
-													type="both" />
-											</h:outputText>
-											<p:spacer width="15"/>
-										<h:outputText value="#{post.userType}" />
-										<p:spacer width="15"/>
-										<h:outputText
-												value="#{post.messageType}" />
-
-											<p:panel style="margin-left: 80px">
-												<h:outputText value="#{post.postDescription}" />
-
-											</p:panel>
-
-										</p:panel>
-										<h:outputText value="Shared to : #{post.shareToName}"
-											style="margin-left:17px;float: left" /><br/>
-
-										<p:commandLink type="push" title="Accept" id="CheckIconLink"
-											actionListener="#{pendingPostCheckedListener.checkPost}" style="display: #{post.displayType}"
-											update=":tabViewNewsFeed:pendingMessageForm:postPendingFor,:tabViewNewsFeed:pendingMessageForm,:tabViewNewsFeed:postfor,:notifyForm:notifyList">
-											<p:graphicImage value="/resources/img/checked-icon.png"
-												style="height: 30px;width: 30px;margin-left:616px"
-												id="checkedIcon" />
-											<f:attribute name="approvalId" value="#{post.approvalId}" />
-											<f:actionListener binding="#{pendingPostsController}" />
-											<f:actionListener binding="#{newsFeedController}" />
-											<f:actionListener binding="#{alertFeedController}" />
-										</p:commandLink>
-										<p:commandLink type="push" title="Reject" id="CrossIconLink"
-											oncomplete="dlgForRejectMessage.show(); return false;" style="display: #{post.displayType}"
-											actionListener="#{setApprovalIdListener.setApprovalIdForMessage}">
-											<p:graphicImage value="/resources/img/cross-icon.png"
-												style="height: 30px;width: 30px;margin-left:7px"
-												id="crossedIcon" />
-											<f:attribute name="approvalId" value="#{post.approvalId}" />
-										</p:commandLink>
+						<p:dataList value="#{post.listOfSharedFiles}" var="shrdFile"
+							type="none" id="sharedFileTable" styleClass="dataListFiles sharedData">
+								<p:panel
+									style="width: 602px;height:100px;padding:0px 0px;border: 1px solid #cccccc;"
+									styleClass="" id="panelSharedFiles">
+									<p:panel
+										style="float:left;padding:0px 0px;border: 1px solid #cccccc"
+										id="panelSharedIcon" >
+										<h:outputText value="#{shrdFile.metaData}" style="display:none"/>
+										<p:commandLink><p:graphicImage value="#{shrdFile.iconPath}"
+											style="margin-left:0px;width: 67px;height: 62px;" /></p:commandLink>
 									</p:panel>
-								</p:dataList>
-							</h:form>
-						</p:tab>
 
-					</p:tabView>
+									<p:spacer width="20px"/><h:outputText value="#{shrdFile.fileName}"
+										style="text-align: justify"  /><br/>
+								    <p:spacer width="20px"/><h:outputText value="#{shrdFile.extention}" /><br/>
+								    <h:form><p:commandLink title="Download" ajax="false" onclick="PrimeFaces.monitorDownload(start, stop)" actionListener="#{fileDownloadController.setSharedLink}">
+								      <p:spacer width="20px"/> <p:graphicImage value="/resources/img/file-icon/download-icon.png" style="width:25px"/>
+								                               <f:param name="shareFileId" value="#{shrdFile.sharedFileId}"/>
+								                                <p:fileDownload value="#{fileDownloadController.file}" /> 
+								                            </p:commandLink></h:form>
+							</p:panel><br/>
+						</p:dataList>
 
-		
-</ui:composition>				
+					</p:panel>
+					<h:outputText value="Shared to : #{post.shareToName}"
+						style="margin-left:17px" />
+					<br />
+
+				</p:panel>
+			</p:dataList>
+		</p:tab>
+
+		<p:tab id="tabPendingPost" title="Pending Posts" titleStyle="">
+
+			<h:form id="pendingMessageForm">
+				<p:growl for="approvalStatus" id="approvalGrowl" />
+				<p:dataList value="#{pendingPostsController.listOfPendingPost}"
+					var="post" id="postPendingFor" type="none">
+					<p:panel style="background: #ffffff">
+						<p:panel style="border:0;float:left;background: #ffffff">
+							<p:graphicImage value="#{post.userImage}"
+								style="margin-left:0px;width:60px;height:63px" />
+						</p:panel>
+						<p:panel style="border:0;background: #ffffff">
+							<h:outputText value="#{post.personName}" style="" />
+							<p:spacer width="15" />
+							<h:outputText value="#{post.dateOfPosting}">
+								<f:convertDateTime dateStyle="short" timeStyle="short"
+									type="both" />
+							</h:outputText>
+							<p:spacer width="15" />
+							<h:outputText value="#{post.userType}" />
+							<p:spacer width="15" />
+							<h:outputText value="#{post.messageType}" />
+
+							<p:panel style="margin-left: 80px">
+								<h:outputText value="#{post.postDescription}" />
+
+							</p:panel><br/>
+
+							<p:dataList value="#{post.listOfSharedFiles}" var="shrdFile"
+							type="none" id="sharedFileTablePending" styleClass="dataListFiles sharedData">
+								<p:panel
+									style="width: 602px;height:100px;padding:0px 0px;border: 1px solid #cccccc;"
+									styleClass="" id="panelSharedFiles">
+									<p:panel
+										style="float:left;padding:0px 0px;border: 1px solid #cccccc"
+										id="panelSharedIcon" >
+										<h:outputText value="#{shrdFile.metaData}" style="display:none"/>
+										<p:graphicImage value="#{shrdFile.iconPath}"
+											style="margin-left:0px;width: 67px;height: 62px;" />
+									</p:panel>
+
+									<p:spacer width="20px"/><h:outputText value="#{shrdFile.fileName}"
+										style="text-align: justify"  /><br/>
+								    <p:spacer width="20px"/><h:outputText value="#{shrdFile.extention}" /><br/>
+								    <h:form><p:commandLink title="Download" ajax="false" onclick="PrimeFaces.monitorDownload(start, stop)" actionListener="#{fileDownloadController.setSharedLink}">
+								      <p:spacer width="20px"/> <p:graphicImage value="/resources/img/file-icon/download-icon.png" style="width:25px"/>
+								                               <f:param name="shareFileId" value="#{shrdFile.sharedFileId}"/>
+								                                <p:fileDownload value="#{fileDownloadController.file}" /> 
+								                            </p:commandLink></h:form>
+							</p:panel><br/>
+						</p:dataList>
+
+						</p:panel>
+						<h:outputText value="Shared to : #{post.shareToName}"
+							style="margin-left:17px;float: left" />
+						<br />
+
+						<p:commandLink type="push" title="Accept" id="CheckIconLink"
+							actionListener="#{pendingPostCheckedListener.checkPost}"
+							style="display: #{post.displayType}"
+							update=":tabViewNewsFeed:pendingMessageForm:postPendingFor,:tabViewNewsFeed:pendingMessageForm,:tabViewNewsFeed:postfor,:notifyForm:notifyList">
+							<p:graphicImage value="/resources/img/checked-icon.png"
+								style="height: 30px;width: 30px;margin-left:616px"
+								id="checkedIcon" />
+							<f:attribute name="approvalId" value="#{post.approvalId}" />
+							<f:actionListener binding="#{pendingPostsController}" />
+							<f:actionListener binding="#{newsFeedController}" />
+							<f:actionListener binding="#{alertFeedController}" />
+						</p:commandLink>
+						<p:commandLink type="push" title="Reject" id="CrossIconLink"
+							oncomplete="dlgForRejectMessage.show(); return false;"
+							style="display: #{post.displayType}"
+							actionListener="#{setApprovalIdListener.setApprovalIdForMessage}">
+							<p:graphicImage value="/resources/img/cross-icon.png"
+								style="height: 30px;width: 30px;margin-left:7px"
+								id="crossedIcon" />
+							<f:attribute name="approvalId" value="#{post.approvalId}" />
+						</p:commandLink>
+					</p:panel>
+				</p:dataList>
+			</h:form>
+		</p:tab>
+
+	</p:tabView>
+	
+<p:dialog modal="true" widgetVar="statusDialog" header="Status" draggable="false" closable="false" resizable="false" id="downloadDlg">  
+    <p:graphicImage value="/resources/img/ajax-loader.gif" />  
+</p:dialog>
+
+<script type="text/javascript">  
+function start() {  
+    statusDialog.show();  
+}  
+  
+function stop() {  
+    statusDialog.hide();  
+}  
+</script> 
+</ui:composition>

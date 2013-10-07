@@ -1,5 +1,6 @@
 package com.ramselabs.education.serviceImpl;
 
+import java.util.Collection;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -11,8 +12,10 @@ import com.ramselabs.education.dao.service.PostDAO;
 import com.ramselabs.education.entity.MessageApproval;
 import com.ramselabs.education.entity.Post;
 import com.ramselabs.education.entity.PostShare;
+import com.ramselabs.education.entity.SharedFile;
 import com.ramselabs.education.entity.UserProfile;
 import com.ramselabs.education.model.PostDescriptionModel;
+import com.ramselabs.education.model.SharedFileModel;
 import com.ramselabs.education.service.PostService;
 
 @Named
@@ -27,8 +30,8 @@ public class PostServiceImpl implements PostService {
 	}
 
 	@Override
-	public int inserPost(Post post, PostShare postShare,MessageApproval approval) {
-		return postDao.insertPosts(post, postShare,approval);
+	public int inserPost(Post post, PostShare postShare,MessageApproval approval,Collection<SharedFile> sharedFiles) {
+		return postDao.insertPosts(post, postShare,approval,sharedFiles);
 	}
 
 	@Override
@@ -65,6 +68,11 @@ public class PostServiceImpl implements PostService {
 	@Override
 	public List<PostDescriptionModel> getAllPostsForModeration(UserProfile user) {
 		return postDao.getAllPostsForModeration(user);
+	}
+
+	@Override
+	public SharedFileModel getSharedFileModel(int shareId) {
+		return postDao.getSharedFile(shareId);
 	}
 
 }

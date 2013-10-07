@@ -3,8 +3,12 @@ package com.ramselabs.education.model;
 import java.text.DateFormat;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
+
+import com.ramselabs.education.entity.SharedFile;
 
 public class PostDescriptionModel implements Comparator<PostDescriptionModel>{
 	private String personName;
@@ -19,7 +23,14 @@ public class PostDescriptionModel implements Comparator<PostDescriptionModel>{
 	private String rejectReason;
 	private String shareToImage;
 	private String displayType;
+	private List<SharedFile> listOfSharedFiles=new ArrayList<SharedFile>();
 	
+	public List<SharedFile> getListOfSharedFiles() {
+		return listOfSharedFiles;
+	}
+	public void setListOfSharedFiles(List<SharedFile> listOfSharedFiles) {
+		this.listOfSharedFiles = listOfSharedFiles;
+	}
 	public String getDisplayType() {
 		return displayType;
 	}

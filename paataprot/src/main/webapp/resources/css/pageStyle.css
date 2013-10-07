@@ -83,3 +83,66 @@
 .imagePadLeft .ui-panel-content .ui-widget-content {
 	padding-left: 0px;
 }
+.file .ui-fileupload .start {
+    display: none;
+}
+.file .ui-fileupload .cancel {
+    display: none;
+}
+.file .ui-fileupload .progress {
+  display: none; /* - if you wanted to hide the progress bar as well*/
+}
+.file .ui-fileupload  {
+    border: none;
+}
+.file .ui-progressbar {  /* made progress bar smaller to fit on same line */
+    display: none;
+    width: 100px!important;
+    height: 5px!important;
+}
+.file .fileupload-buttonbar .fileinput-button .ui-icon-plusthick { /* remove icon from browse button */
+    display: none !important;
+}
+.file .fileupload-buttonbar .fileinput-button  .ui-button-text { /* removed icon from browse button so shifting text left*/
+    padding-left: 1em!important;
+    font-size: 13px
+}
+.file .fileupload-buttonbar {
+    border: none!important;
+    background: transparent;
+    background-color: transparent;
+    padding:0px 0px;
+    float: left; /* Keep button on left */
+} 
+.file .fileupload-content {
+    border: none!important;
+    border-bottom-left-radius: 0px!important;
+    border-bottom-right-radius: 0px!important;
+    background: transparent!important;
+    background-color: transparent!important;
+    float: right; /* and content on right */
+}
+.file .ui-button-icon-only{
+display: none;
+}
+.file .name{
+display: none;
+}
+.file .size{
+display: none;
+}
+.files{
+	visibility: visible;
+}
+.fileUpPanel .ui-panel-content{
+	padding: 0px 0px;
+}
+.dataListBorder .ui-widget-content{
+	border:0;
+}
+.dataListFileShare .ui-widget-content{
+	border:0;
+}
+.panelOverFlow .ui-layout-unit-content{
+	overflow: visible;
+}

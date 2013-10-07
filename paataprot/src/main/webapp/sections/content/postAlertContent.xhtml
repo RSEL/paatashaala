@@ -4,107 +4,121 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:pe="http://primefaces.org/ui/extensions">
-<p:tabView id="tabView" style="background:transparent"
-						effect="drop" onTabShow="hidePostText()">
-						<p:tab id="tab1" title="Post" titleStyle="">
+	<p:tabView id="tabView" style="background:transparent" effect="drop"
+		onTabShow="hidePostText()">
+		<p:tab id="tab1" title="Post" titleStyle="">
 
-							<h:form style="margin:0px 0px" id="postForm">
-								<p:message for="postText" id="messages" />
-								<p:message for="autoComp" id="messages1" />
-								<p:growl for="postSave" />
-								<p:inputTextarea rows="1" autoResize="true" id="postText"
-									onclick="addElement()" cols="450" style="width:686px"
-									value="#{postBean.description}" required="true"
-									label="PostText" />
-								<p:watermark for="postText" value="Type your post here..." />
-								<div id="clickedText" style="display: none">
-									<p:autoComplete id="autoComp"
-										value="#{autocompleteBeanController.selectedUserProfiles}"
-										completeMethod="#{autocompleteBeanController.completeUserProfile}"
-										var="auto" itemLabel="#{auto.displayName}"
-										itemValue="#{auto}"
-										converter="#{userAutocompleteConverter}" forceSelection="true"
-										required="true" rerequiredMessage="Send to is required"
-										label="Send to" minQueryLength="1" maxResults="5">
+			<h:form style="margin:0px 0px" id="postForm">
+				<p:message for="postText" id="messages" />
+				<p:message for="autoComp" id="messages1" />
+				<p:growl for="postSave" />
+				<p:inputTextarea rows="1" autoResize="true" id="postText"
+					onclick="addElement()" cols="450" style="width:686px"
+					value="#{postBean.description}" required="true" label="PostText" />
+				<p:watermark for="postText" value="Type your post here..." />
+				<div id="clickedText" style="display: none">
+					<p:autoComplete id="autoComp"
+						value="#{autocompleteBeanController.selectedUserProfiles}"
+						completeMethod="#{autocompleteBeanController.completeUserProfile}"
+						var="auto" itemLabel="#{auto.displayName}" itemValue="#{auto}"
+						converter="#{userAutocompleteConverter}" forceSelection="true"
+						required="true" rerequiredMessage="Send to is required"
+						label="Send to" minQueryLength="1" maxResults="5">
 
-										<p:ajax event="itemUnselect"
-											listener="#{autocompleteBeanController.handleUnselect}" />
-										<p:column>
-											<p:graphicImage value="#{auto.imagePath}" width="30"
-												height="20" />
+						<p:ajax event="itemUnselect"
+							listener="#{autocompleteBeanController.handleUnselect}" />
+						<p:column>
+							<p:graphicImage value="#{auto.imagePath}" width="30" height="20" />
 											#{auto.displayName}
 										</p:column>
 
-									</p:autoComplete>
-									<p:watermark for="autoComp" value="send to.." />
-									<p:commandButton value="Send" id="sendButt"
-										style="width:70px;height:35px;padding:1px 1px;margin-left:616px;background:#096DC5;border-radius: 1pc;margin-top: 10px;color: #ffffff;
-text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25)"
-										actionListener="#{postController.insertPosts}"
-										update=":tabViewNewsFeed:pendingMessageForm:postPendingFor,postForm,blui"
-										onsuccess="bui.hide();return false;" oncomplete="clearText()">
-										<p:blockUI block="postForm" trigger="sendButt" id="blui"
-											widgetVar="bui">  
-        Sending..... 
-        <br />
-											<p:graphicImage value="/resources/img/ajax-loader.gif" />
-										</p:blockUI>
-										<f:actionListener binding="#{pendingPostsController}" />
-									</p:commandButton>
-								</div>
+					</p:autoComplete>
+					<p:watermark for="autoComp" value="send to.." />
+					<p:panel id="displ" style="border:0;padding:0px 0px"
+						styleClass="fileUpPanel">
+						
+						<p:dataList id="files"
+							value="#{uplController.uplFiles}" var="file"
+							type="none" styleClass="dataListBorder">
+                             <p:commandLink>
+                                 <p:graphicImage value="/resources/img/cancel.png"/>
+                             </p:commandLink><p:spacer width="10px"/>
+                             <h:outputText value="#{file.fileName}"
+							rendered="#{uplController.renderFileName}" /><br/>
+                        </p:dataList>
+					</p:panel>
+					<br />
+					<p:commandLink style="float:left" onclick="getElementById('tabView:postForm:fileShared_input').click()" title="Upload File">
+					    <p:graphicImage value="/resources/img/fileIcon.png"/>
+					</p:commandLink>
+					<p:fileUpload widgetVar="uploadSharedFile" process="@this" styleClass="file"
+						label="File" fileUploadListener="#{uplController.handle}"
+						uploadLabel="Upload" multiple="true" mode="advanced"
+						showButtons="false" auto="true" sizeLimit="4000000" 
+						allowTypes="/(\.|\/)(txt|gif|jpe?g|png|doc|docx|ppt|pptx|xls|xlsx|pdf)$/" required="true"
+						
+						update="displ,files,growl,invalidFileMess" style="float:left;visibility:hidden" id="fileShared">
+					</p:fileUpload>
+					<p:growl for="invalidFile" id="invalidFileMess" sticky="true"/>
+					<p:growl id="growl" sticky="true" for="serMsg" />
 
-							</h:form>
+					<p:commandButton value="Send" id="sendButt"
+						style="width:70px;height:35px;padding:1px 1px;background:#096DC5;border-radius: 1pc;color: #ffffff;
+text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);margin-left: 548px"
+						actionListener="#{postController.insertPosts}"
+						update=":tabViewNewsFeed:pendingMessageForm:postPendingFor,postForm,displ"
+						onsuccess="" oncomplete="clearText()">
+						<f:actionListener binding="#{uplController}"/>
+						<f:actionListener binding="#{pendingPostsController}" />
+					</p:commandButton>
+				</div>
 
-						</p:tab>
+			</h:form>
+
+		</p:tab>
 
 
 
-						<p:tab id="tab2" title="Alert">
-							<h:form style="margin:0px 0px" id="alertForm">
-								<p:message for="alertText" id="messages" />
-								<p:message for="autoCompAlert" id="messages1" />
-								<p:growl for="alertSave" />
-								<p:inputText id="alertText" onclick="addAlertText()"
-									style="width:681px" value="#{postBean.description}"
-									required="true" label="alert text" />
-								<p:watermark for="alertText" value="Type your alert here..." />
-								<div id="clickedAlertText" style="display: none">
-									<p:autoComplete id="autoCompAlert"
-										value="#{autocompleteBeanController.selectedUserProfiles}"
-										completeMethod="#{autocompleteBeanController.completeUserProfile}"
-										var="userProfile" itemLabel="#{userProfile.displayName}"
-										itemValue="#{userProfile}"
-										converter="#{userAutocompleteConverter}" forceSelection="true"
-										label="Send to" required="true">
+		<p:tab id="tab2" title="Alert">
+			<h:form style="margin:0px 0px" id="alertForm">
+				<p:message for="alertText" id="messages" />
+				<p:message for="autoCompAlert" id="messages1" />
+				<p:growl for="alertSave" />
+				<p:inputText id="alertText" onclick="addAlertText()"
+					style="width:681px" value="#{postBean.description}" required="true"
+					label="alert text" />
+				<p:watermark for="alertText" value="Type your alert here..." />
+				<div id="clickedAlertText" style="display: none">
+					<p:autoComplete id="autoCompAlert"
+						value="#{autocompleteBeanController.selectedUserProfiles}"
+						completeMethod="#{autocompleteBeanController.completeUserProfile}"
+						var="userProfile" itemLabel="#{userProfile.displayName}"
+						itemValue="#{userProfile}"
+						converter="#{userAutocompleteConverter}" forceSelection="true"
+						label="Send to" required="true">
 
-										<p:ajax event="itemUnselect"
-											listener="#{autocompleteBeanController.handleUnselect}" />
-										<p:column>
-											<p:graphicImage value="#{userProfile.imagePath}" width="30"
-												height="20" />
+						<p:ajax event="itemUnselect"
+							listener="#{autocompleteBeanController.handleUnselect}" />
+						<p:column>
+							<p:graphicImage value="#{userProfile.imagePath}" width="30"
+								height="20" />
 										      #{userProfile.displayName}
 										</p:column>
 
-									</p:autoComplete>
-									<p:watermark for="autoCompAlert" value="send to.." />
-									<p:commandButton value="Send" id="sendButtAlert"
-										style="width:70px;height:35px;padding:1px 1px;margin-left:616px;background:#096DC5;border-radius: 1pc;margin-top: 10px;color: #ffffff;
+					</p:autoComplete>
+					<p:watermark for="autoCompAlert" value="send to.." />
+					<p:commandButton value="Send" id="sendButtAlert"
+						style="width:70px;height:35px;padding:1px 1px;margin-left:616px;background:#096DC5;border-radius: 1pc;margin-top: 10px;color: #ffffff;
 text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25)"
-										actionListener="#{alertController.insertAlerts}"
-										update=":notifyForm:notifyList,:tabViewNewsFeed:pendingMessageForm:postPendingFor,alertForm,blui"
-										onsuccess="bui.hide();return false;"
-										oncomplete="clearTextAlert()">
-										<p:blockUI block="alertForm" trigger="sendButtAlert" id="blui"
-											widgetVar="bui">  
-        Sending..... 
-        <br />
-											<p:graphicImage value="/resources/img/ajax-loader.gif" />
-										</p:blockUI>
-										<f:actionListener binding="#{pendingPostsController}" />
-										<f:actionListener binding="#{alertFeedController}" />
-									</p:commandButton>
-								</div>
-							</h:form>
-						</p:tab>
-					</p:tabView>
-</ui:composition>					
+						actionListener="#{alertController.insertAlerts}"
+						update=":notifyForm:notifyList,:tabViewNewsFeed:pendingMessageForm:postPendingFor,alertForm"
+						onsuccess="" oncomplete="clearTextAlert()">
+					
+						<f:actionListener binding="#{pendingPostsController}" />
+						<f:actionListener binding="#{alertFeedController}" />
+					</p:commandButton>
+				</div>
+			</h:form>
+		</p:tab>
+	</p:tabView>
+</ui:composition>

@@ -36,7 +36,7 @@
 			<p:layout style="min-width:400px;min-height:900px" id="layout">
 			  <ui:insert name="contentLeft"/>
 			  <p:layoutUnit position="center"
-					style="border:0;background:transparent" id="centerLayout">
+					style="border:0;background:transparent;overflow:visible" id="centerLayout" styleClass="panelOverFlow">
 					<ui:insert name="postAlertContent"/>
 			        <ui:insert name="newsFeedContent"/>
 			  </p:layoutUnit>
@@ -72,8 +72,10 @@
 		function clearInvalidFileMsgForDataUplaod() {
 			dataFileuplaod_wgt.uploadContent.find("tr.ui-state-error").remove();
 		} 
+		
+		
 		</script>
-		<h:outputStylesheet library="css" name="pageStyle.css" />
+		  <h:outputStylesheet library="css" name="pageStyle.css" />
         </h:body>
 		</f:view>
 		</html>

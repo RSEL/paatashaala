@@ -1,6 +1,7 @@
 package com.ramselabs.education.dao.impl;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -17,8 +18,10 @@ import com.ramselabs.education.entity.MessageApproval;
 import com.ramselabs.education.entity.Post;
 import com.ramselabs.education.entity.PostShare;
 import com.ramselabs.education.entity.Role;
+import com.ramselabs.education.entity.SharedFile;
 import com.ramselabs.education.entity.UserProfile;
 import com.ramselabs.education.model.PostDescriptionModel;
+import com.ramselabs.education.model.SharedFileModel;
 
 @Named
 @Scope("session")
@@ -57,6 +60,8 @@ public class PostDAOImpl implements PostDAO {
 				postDescription.setUserType(postShare.getUserType());
 				postDescription.setMessageType(postShare.getPost()
 						.getMessageType());
+				if(!postShare.getPost().getSharedFiles().isEmpty())
+				    postDescription.setListOfSharedFiles((List<SharedFile>)postShare.getPost().getSharedFiles());
 				String image = getPoster(postShare.getPost().getPosterId())
 						.getImagePath();
 				System.out.println(image);
@@ -67,8 +72,16 @@ public class PostDAOImpl implements PostDAO {
 				postDescription.setDateOfPosting(postShare.getPostDate());
 				postDescription.setShareToName(postShare.getPostShareUser()
 						.getDisplayName());
+				String shareToImage=postShare.getPostShareUser()
+						.getImagePath();
+				if(shareToImage==null){
+					shareToImage="/resources/img/profile-photo/profile-icon.jpg";
+					postDescription.setShareToImage(shareToImage);
+				}
+				else{
 				postDescription.setShareToImage(postShare.getPostShareUser()
 						.getImagePath());
+				}
 				postDescription.setRejectStatus("approved");
 
 				listPerson.add(postDescription);
@@ -81,9 +94,11 @@ public class PostDAOImpl implements PostDAO {
 
 	@Override
 	public int insertPosts(Post post, PostShare postShare,
-			MessageApproval approval) {
+			MessageApproval approval,Collection<SharedFile> sharedFiles) {
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
+		for(SharedFile shrdFile:sharedFiles)
+			session.save(shrdFile);
 		session.save(postShare);
 		session.saveOrUpdate(post);
 		session.save(approval);
@@ -140,6 +155,8 @@ public class PostDAOImpl implements PostDAO {
 					PostDescriptionModel postDescModel = new PostDescriptionModel();
 					postDescModel.setPersonName(getPoster(posterId)
 							.getDisplayName());
+					if(!pShare.getPost().getSharedFiles().isEmpty())
+					    postDescModel.setListOfSharedFiles((List<SharedFile>)pShare.getPost().getSharedFiles());
 					String image=getPoster(posterId).getImagePath();
 					if(image==null)
 						postDescModel.setUserImage("/resources/img/profile-photo/default-profile.jpg");
@@ -231,6 +248,8 @@ public class PostDAOImpl implements PostDAO {
 					PostDescriptionModel postDescModel = new PostDescriptionModel();
 					postDescModel.setPersonName(getPoster(posterId)
 							.getDisplayName());
+					if(!pShare.getPost().getSharedFiles().isEmpty())
+					     postDescModel.setListOfSharedFiles((List<SharedFile>)pShare.getPost().getSharedFiles());
 					String image=getPoster(posterId).getImagePath();
 					if(image==null)
 						postDescModel.setUserImage("/resources/img/profile-photo/default-profile.jpg");
@@ -332,6 +351,8 @@ public class PostDAOImpl implements PostDAO {
 					postDescription.setUserType(postShare.getUserType());
 					postDescription.setMessageType(postShare.getPost()
 							.getMessageType());
+					if(!postShare.getPost().getSharedFiles().isEmpty())
+					     postDescription.setListOfSharedFiles((List<SharedFile>)postShare.getPost().getSharedFiles());
 					String image = getPoster(postShare.getPost().getPosterId())
 							.getImagePath();
 					System.out.println(image);
@@ -358,5 +379,19 @@ public class PostDAOImpl implements PostDAO {
 			listPerson = getAllPendingPosts(user);
 		}
 		return listPerson;
+	}
+
+	@Override
+	public SharedFileModel getSharedFile(int sharedId) {
+		Session session = sessionFactory.openSession();
+		SharedFile sharedFile=(SharedFile)session.get(SharedFile.class, sharedId);
+		SharedFileModel sharedModel=new SharedFileModel();
+		sharedFile.getMetaData();
+		sharedModel.setExtention(sharedFile.getExtention());
+		sharedModel.setFileName(sharedFile.getFileName());
+		sharedModel.setIconPath(sharedFile.getIconPath());
+		sharedModel.setLink(sharedFile.getLink());
+		sharedModel.setId(sharedFile.getSharedFileId());
+		return sharedModel;
 	}
 }
