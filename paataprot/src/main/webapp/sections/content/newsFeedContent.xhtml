@@ -71,8 +71,10 @@
 											style="margin-left:0px;width: 67px;height: 62px;" /></p:commandLink>
 									</p:panel>
 
-									<p:spacer width="20px"/><h:outputText value="#{shrdFile.fileName}"
-										style="text-align: justify"  /><br/>
+									<p:spacer width="20px"/><p:commandLink style="text-decoration:none;color:#3399FF" actionListener="#{browserContentDisplayController.setContentId}" action="#{browserContentDisplayController.toRedirect}" target="_blank"><h:outputText value="#{shrdFile.fileName}"
+										style="text-align: justify"  />
+										   <f:param name="shareFileId" value="#{shrdFile.sharedFileId}"/>
+										</p:commandLink><br/>
 								    <p:spacer width="20px"/><h:outputText value="#{shrdFile.extention}" /><br/>
 								    <h:form><p:commandLink title="Download" ajax="false" onclick="PrimeFaces.monitorDownload(start, stop)" actionListener="#{fileDownloadController.setSharedLink}">
 								      <p:spacer width="20px"/> <p:graphicImage value="/resources/img/file-icon/download-icon.png" style="width:25px"/>
