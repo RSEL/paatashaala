@@ -87,12 +87,47 @@
 						</p:dataList>
 
 					</p:panel>
+					<p:dataList value="#{post.listReplies}" var="reply" id="replyDataList" type="none" style="margin:0px 0px;border:0" styleClass="dataListFiles sharedData">
+					 	<p:panel
+									style="width: 622px;height:auto;padding:0px 0px;background: #F2F1F1;border: 1px solid #cccccc"
+									styleClass="imagePadLeft" id="replyPanel">
+									<p:panel style="padding:0px 0px;background: #F2F1F1">
+										<p:graphicImage value="#{reply.imagePath}"
+											style="margin-left:0px;width:40px;height:43px;float:left;margin-right: 20px;" id="replyPosterImg"/>
+								    </p:panel>
+                                           
+                                 <p:panel style="background: #F2F1F1;margin-top: -20px;">
+                                      <h:outputText value="#{reply.posterName} on "/>
+                                      <h:outputText value="#{reply.sentDate}">
+							               <f:convertDateTime dateStyle="short" timeStyle="short"
+								           type="both" />
+						              </h:outputText><br/>    
+								      <h:outputText value="#{reply.postDescription}"
+										style="text-align: justify" />
+                                     </p:panel>
+								</p:panel>
+					</p:dataList><br/>
 					<h:outputText value="Shared to : #{post.shareToName}"
-						style="margin-left:17px" />
-					<br />
-
+						style="margin-left:17px;float:left" />
+						<p:commandLink title="Reply to this post" onclick="showReplyText()">
+						   <p:graphicImage value="/resources/img/reply-icon.png" style="width: 27px;height: 31px;float:right;margin-right: 209px"/>
+						</p:commandLink><br /><br/>
+				<div id="replyDiv" style="display:none">
+				<h:form id="replyForm">		
+					<h:inputText id="replyText"  style="height: 28px;margin-left: 99px;width: 502px" value="#{replyBean.replyDescription}"/>
+					<p:watermark value="Type a reply...." for="replyText"/>
+					<p:spacer width="20px"/><p:commandButton value="Send" style="background: #3399FF;padding-top: 0px;margin-top: -10px" 
+					                                          actionListener="#{postReplyController.insertReplies}" update="replyGrowl,:tabViewNewsFeed:postfor:replyDataList" oncomplete="hideReplyText()">
+					                           <f:param name="postId" value="#{post.postId}"/>
+					                           <f:param name="userType" value="#{post.userType}"/>
+					                           <f:actionListener binding="#{newsFeedController}"/>
+					                        </p:commandButton>
+			       <p:growl id="replyGrowl" for="replySave"/>
+					                        
+			    </h:form>		                        
+                </div>
 				</p:panel>
-			</p:dataList>
+			</p:dataList><br/><br/><br/><br/>
 		</p:tab>
 
 		<p:tab id="tabPendingPost" title="Pending Posts" titleStyle="">
@@ -124,7 +159,7 @@
 							</p:panel><br/>
 
 							<p:dataList value="#{post.listOfSharedFiles}" var="shrdFile"
-							type="none" id="sharedFileTablePending" styleClass="dataListFiles sharedData">
+							type="none" id="sharedFileTablePending" styleClass="dataListFiles sharedData ">
 								<p:panel
 									style="width: 602px;height:100px;padding:0px 0px;border: 1px solid #cccccc;"
 									styleClass="" id="panelSharedFiles">
@@ -132,14 +167,19 @@
 										style="float:left;padding:0px 0px;border: 1px solid #cccccc"
 										id="panelSharedIcon" >
 										<h:outputText value="#{shrdFile.metaData}" style="display:none"/>
+										<p:commandLink actionListener="#{browserContentDisplayController.setContentId}" action="#{browserContentDisplayController.toRedirect}" target="_blank">
+										<f:param name="shareFileId" value="#{shrdFile.sharedFileId}"/>
 										<p:graphicImage value="#{shrdFile.iconPath}"
-											style="margin-left:0px;width: 67px;height: 62px;" />
+											style="margin-left:0px;width: 67px;height: 62px;" /></p:commandLink>
 									</p:panel>
 
-									<p:spacer width="20px"/><h:outputText value="#{shrdFile.fileName}"
-										style="text-align: justify"  /><br/>
+									<p:spacer width="20px"/>
+									<p:commandLink actionListener="#{browserContentDisplayController.setContentId}" style="text-decoration:none;color:#3399FF" action="#{browserContentDisplayController.toRedirect}" target="_blank">
+										<f:param name="shareFileId" value="#{shrdFile.sharedFileId}"/>
+									<h:outputText value="#{shrdFile.fileName}"
+										style="text-align: justify"  /></p:commandLink><br/>
 								    <p:spacer width="20px"/><h:outputText value="#{shrdFile.extention}" /><br/>
-								    <h:form><p:commandLink title="Download" ajax="false" onclick="PrimeFaces.monitorDownload(start, stop)" actionListener="#{fileDownloadController.setSharedLink}">
+								    <h:form><p:commandLink title="Download" ajax="false"  onclick="PrimeFaces.monitorDownload(start, stop)" actionListener="#{fileDownloadController.setSharedLink}">
 								      <p:spacer width="20px"/> <p:graphicImage value="/resources/img/file-icon/download-icon.png" style="width:25px"/>
 								                               <f:param name="shareFileId" value="#{shrdFile.sharedFileId}"/>
 								                                <p:fileDownload value="#{fileDownloadController.file}" /> 

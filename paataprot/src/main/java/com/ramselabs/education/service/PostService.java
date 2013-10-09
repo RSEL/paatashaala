@@ -21,4 +21,6 @@ public interface PostService {
 	public int updateMessageStatusReason(int approvalId, String rejectReason);
 	public List<PostDescriptionModel> getAllPostsForModeration(UserProfile user);
 	public SharedFileModel getSharedFileModel(int shareId);
+	public Post getPost(int postId);
+	public int insertReply(Post post,PostShare postShare,int postId);
 }

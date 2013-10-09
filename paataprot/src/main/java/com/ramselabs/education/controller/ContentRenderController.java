@@ -90,7 +90,8 @@ public class ContentRenderController implements Serializable {
 			is.read(b);
 			ec.setResponseContentType("application/vnd.openxmlformats-officedocument.wordprocessingml.document");
 			ec.setResponseCharacterEncoding("UTF-8");
-
+            ec.setResponseContentLength((int) 8000000);
+            ec.setResponseHeader("Content-Disposition", "attachment; filename=\"" + sharedFile.getFileName() + "\"");
 			ServletOutputStream response = (ServletOutputStream) ec
 					.getResponseOutputStream();
 			response.write(b);
@@ -99,7 +100,8 @@ public class ContentRenderController implements Serializable {
 			is.read(b);
 			ec.setResponseContentType("application/vnd.ms-excel");
 			ec.setResponseCharacterEncoding("UTF-8");
-
+			ec.setResponseContentLength((int) 8000000);
+			ec.setResponseHeader("Content-Disposition", "attachment; filename=\"" + sharedFile.getFileName() + "\"");
 			ServletOutputStream response = (ServletOutputStream) ec
 					.getResponseOutputStream();
 			response.write(b);
@@ -108,7 +110,8 @@ public class ContentRenderController implements Serializable {
 			is.read(b);
 			ec.setResponseContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
 			ec.setResponseCharacterEncoding("UTF-8");
-
+			ec.setResponseContentLength((int) 8000000);
+			ec.setResponseHeader("Content-Disposition", "attachment; filename=\"" + sharedFile.getFileName() + "\"");
 			ServletOutputStream response = (ServletOutputStream) ec
 					.getResponseOutputStream();
 			response.write(b);
@@ -117,7 +120,8 @@ public class ContentRenderController implements Serializable {
 			is.read(b);
 			ec.setResponseContentType("application/vnd.openxmlformats-officedocument.presentationml.presentation");
 			ec.setResponseCharacterEncoding("UTF-8");
-
+			ec.setResponseContentLength((int) 8000000);
+			ec.setResponseHeader("Content-Disposition", "attachment; filename=\"" + sharedFile.getFileName() + "\"");
 			ServletOutputStream response = (ServletOutputStream) ec
 					.getResponseOutputStream();
 			response.write(b);

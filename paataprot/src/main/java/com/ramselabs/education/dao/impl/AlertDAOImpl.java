@@ -78,6 +78,8 @@ public class AlertDAOImpl implements AlertDAO {
 		if (posts.isEmpty())
 			return null;
 		for (Post post : posts) {
+			if(post.getPostApproval()==null)
+				continue;
 			List<PostShare> postShares = (List<PostShare>) post.getPostShare();
 
 			for (PostShare pShare : postShares) {
@@ -136,6 +138,8 @@ public class AlertDAOImpl implements AlertDAO {
 			return null;
 
 		for (PostShare postShare : posts) {
+			if(postShare.getPost().getPostApproval()==null)
+				continue;
 			PostDescriptionModel postDescription = new PostDescriptionModel();
 			if (postShare.getPost().getMessageType().equals("alert")
 					& postShare.getPost().getPostApproval().getStatus()

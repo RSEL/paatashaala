@@ -37,3 +37,9 @@ $(document).ready(function($) {
 			  {
 			  location.reload();
 			  }
+			function showReplyText(){
+				document.getElementById('replyDiv').style.display = 'inline';
+			}
+			function hideReplyText(){
+				document.getElementById('replyDiv').style.display = 'none';
+			}

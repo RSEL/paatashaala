@@ -3,6 +3,7 @@ package com.ramselabs.education.entity;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -52,6 +53,13 @@ public class Post{
 	
 	@OneToMany(mappedBy="shredFilePost")
 	private Collection<SharedFile> sharedFiles=new ArrayList<SharedFile>();
+	
+	@ManyToOne(cascade = { CascadeType.ALL })
+	@JoinColumn(name="parent_post_id")
+	private Post parentPost;
+	
+	@OneToMany(mappedBy="parentPost")
+	private Collection<Post> subPosts=new ArrayList<Post>();
 	
 	public Collection<SharedFile> getSharedFiles() {
 		return sharedFiles;
@@ -106,6 +114,18 @@ public class Post{
 	}
 	public void setGroups(Collection<Group> groups) {
 		this.groups = groups;
+	}
+	public Post getParentPost() {
+		return parentPost;
+	}
+	public void setParentPost(Post parentPost) {
+		this.parentPost = parentPost;
+	}
+	public Collection<Post> getSubPosts() {
+		return subPosts;
+	}
+	public void setSubPosts(Collection<Post> subPosts) {
+		this.subPosts = subPosts;
 	}
 	
 }

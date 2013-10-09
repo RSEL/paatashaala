@@ -75,4 +75,14 @@ public class PostServiceImpl implements PostService {
 		return postDao.getSharedFile(shareId);
 	}
 
+	@Override
+	public Post getPost(int postId) {
+		return postDao.getPost(postId);
+	}
+
+	@Override
+	public int insertReply(Post post,PostShare postShare,int postId) {
+		return postDao.insertReply(post,postShare,postId);
+	}
+
 }

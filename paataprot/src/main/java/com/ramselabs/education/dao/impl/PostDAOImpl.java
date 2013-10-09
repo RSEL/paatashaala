@@ -21,6 +21,7 @@ import com.ramselabs.education.entity.Role;
 import com.ramselabs.education.entity.SharedFile;
 import com.ramselabs.education.entity.UserProfile;
 import com.ramselabs.education.model.PostDescriptionModel;
+import com.ramselabs.education.model.ReplyDescriptionModel;
 import com.ramselabs.education.model.SharedFileModel;
 
 @Named
@@ -49,14 +50,40 @@ public class PostDAOImpl implements PostDAO {
 			return null;
 
 		for (PostShare postShare : posts) {
+			 if(postShare.getPost().getPostApproval()==null)
+				 continue;
 			PostDescriptionModel postDescription = new PostDescriptionModel();
 			if (postShare.getPost().getPostApproval().getStatus()
 					.equals("approved")) {
-
+				List<Post> subPosts=(List<Post>)postShare.getPost().getSubPosts();
+				List<ReplyDescriptionModel> replyPostList=new ArrayList<ReplyDescriptionModel>();
+				for(Post subPost:subPosts){
+					
+					for(PostShare replyPostShare:subPost.getPostShare()){
+						ReplyDescriptionModel replyDesc=new ReplyDescriptionModel();
+						if(getPoster(replyPostShare.getPost().getPosterId()).getImagePath()==null){
+							replyDesc.setImagePath("/resources/img/profile-photo/default-profile.jpg");
+						}
+						else
+						   replyDesc.setImagePath(getPoster(replyPostShare.getPost().getPosterId()).getImagePath());
+						replyDesc.setPostDescription(replyPostShare.getPost().getDescription());
+						replyDesc.setSentDate(replyPostShare.getPostDate());
+						replyDesc.setPostId(replyPostShare.getPost().getPostId());
+						replyDesc.setPosterName(getPoster(replyPostShare.getPost().getPosterId()).getDisplayName());
+						replyPostList.add(replyDesc);
+						
+						
+					}
+					
+					
+				}
+				Collections.sort(replyPostList,new ReplyDescriptionModel());
+				postDescription.setListReplies(replyPostList);
 				postDescription.setPersonName(getPoster(
 						postShare.getPost().getPosterId()).getDisplayName());
 				postDescription.setPostDescription(postShare.getPost()
 						.getDescription());
+				postDescription.setPostId(postShare.getPost().getPostId());
 				postDescription.setUserType(postShare.getUserType());
 				postDescription.setMessageType(postShare.getPost()
 						.getMessageType());
@@ -147,12 +174,36 @@ public class PostDAOImpl implements PostDAO {
 		if (posts.isEmpty())
 			return null;
 		for (Post post : posts) {
+			if(post.getPostApproval()==null)
+				continue;
 			List<PostShare> postShares = (List<PostShare>) post.getPostShare();
 			for (PostShare pShare : postShares) {
 				if (pShare.getPost().getPostApproval().getStatus()
 						.equals("approved") | pShare.getPost().getPostApproval().getStatus()
 						.equals("rejected")) {
 					PostDescriptionModel postDescModel = new PostDescriptionModel();
+					List<Post> subPosts=(List<Post>)pShare.getPost().getSubPosts();
+					List<ReplyDescriptionModel> replyPostList=new ArrayList<ReplyDescriptionModel>();
+					for(Post subPost:subPosts){
+						
+						for(PostShare replyPostShare:subPost.getPostShare()){
+							ReplyDescriptionModel replyDesc=new ReplyDescriptionModel();
+							if(getPoster(replyPostShare.getPost().getPosterId()).getImagePath()==null){
+								replyDesc.setImagePath("/resources/img/profile-photo/default-profile.jpg");
+							}
+							else
+							   replyDesc.setImagePath(getPoster(replyPostShare.getPost().getPosterId()).getImagePath());
+							replyDesc.setPostDescription(replyPostShare.getPost().getDescription());
+							replyDesc.setSentDate(replyPostShare.getPostDate());
+							replyDesc.setPostId(replyPostShare.getPost().getPostId());
+							replyDesc.setPosterName(getPoster(replyPostShare.getPost().getPosterId()).getDisplayName());
+							replyPostList.add(replyDesc);
+						}
+						
+						
+					}
+					Collections.sort(replyPostList,new ReplyDescriptionModel());
+					postDescModel.setListReplies(replyPostList);
 					postDescModel.setPersonName(getPoster(posterId)
 							.getDisplayName());
 					if(!pShare.getPost().getSharedFiles().isEmpty())
@@ -177,6 +228,7 @@ public class PostDAOImpl implements PostDAO {
 								.getDescription());
 					}
 					postDescModel.setUserType(pShare.getUserType());
+					postDescModel.setPostId(pShare.getPost().getPostId());
 					postDescModel.setDateOfPosting(pShare.getPostDate());
 					postDescModel.setMessageType(pShare.getPost()
 							.getMessageType());
@@ -241,6 +293,8 @@ public class PostDAOImpl implements PostDAO {
 		if (posts.isEmpty())
 			return null;
 		for (Post post : posts) {
+			if(post.getPostApproval()==null)
+				continue;
 			List<PostShare> postShares = (List<PostShare>) post.getPostShare();
 			for (PostShare pShare : postShares) {
 				if (pShare.getPost().getPostApproval().getStatus()
@@ -338,6 +392,8 @@ public class PostDAOImpl implements PostDAO {
 		List<Post> posts = (List<Post>) query.list();
 		if (flag) {
 			for (Post post : posts) {
+				if(post.getPostApproval()==null)
+					continue;
 				List<PostShare> postShares = (List<PostShare>) post
 						.getPostShare();
 				for (PostShare postShare : postShares) {
@@ -393,5 +449,42 @@ public class PostDAOImpl implements PostDAO {
 		sharedModel.setLink(sharedFile.getLink());
 		sharedModel.setId(sharedFile.getSharedFileId());
 		return sharedModel;
+	}
+
+	@Override
+	public Post getPost(int postId) {
+		Session session = sessionFactory.openSession();
+		Post post=(Post)session.get(Post.class, postId);
+		return post;
+	}
+
+	@Override
+	public int insertReply(Post childPost,PostShare postShare,int postId) {
+		Session session = sessionFactory.openSession();
+		Post parentPost=(Post)session.get(Post.class, postId);
+		UserProfile user=parentPost.getPostUser();
+		childPost.setMessageType(parentPost.getMessageType());
+		
+		user.getPost().add(childPost);
+		
+		if(childPost.getPosterId()==parentPost.getPostUser().getUserId()){
+			childPost.setPostUser(getPoster(parentPost.getPosterId()));
+			postShare.setPostShareUser(getPoster(parentPost.getPosterId()));
+		}
+		else{
+		   childPost.setPostUser(user);
+		   postShare.setPostShareUser(user);
+		}
+		
+		user.getUserPostShare().add(postShare);
+		
+		parentPost.getSubPosts().add(childPost);
+		childPost.setParentPost(parentPost);
+		session.beginTransaction();
+		session.saveOrUpdate(childPost);
+		session.saveOrUpdate(postShare);
+		session.getTransaction().commit();
+		session.flush();
+		return 1;
 	}
 }

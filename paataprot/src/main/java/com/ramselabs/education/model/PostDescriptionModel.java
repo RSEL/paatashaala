@@ -11,6 +11,7 @@ import java.util.List;
 import com.ramselabs.education.entity.SharedFile;
 
 public class PostDescriptionModel implements Comparator<PostDescriptionModel>{
+	private int postId;
 	private String personName;
 	private String postDescription;
 	private String userType;
@@ -23,6 +24,14 @@ public class PostDescriptionModel implements Comparator<PostDescriptionModel>{
 	private String rejectReason;
 	private String shareToImage;
 	private String displayType;
+	private List<ReplyDescriptionModel> listReplies=new ArrayList<ReplyDescriptionModel>();
+	
+	public List<ReplyDescriptionModel> getListReplies() {
+		return listReplies;
+	}
+	public void setListReplies(List<ReplyDescriptionModel> listReplies) {
+		this.listReplies = listReplies;
+	}
 	private List<SharedFile> listOfSharedFiles=new ArrayList<SharedFile>();
 	
 	public List<SharedFile> getListOfSharedFiles() {
@@ -105,6 +114,13 @@ public class PostDescriptionModel implements Comparator<PostDescriptionModel>{
 	}
 	public void setShareToImage(String shareToImage) {
 		this.shareToImage = shareToImage;
+	}
+	
+	public int getPostId() {
+		return postId;
+	}
+	public void setPostId(int postId) {
+		this.postId = postId;
 	}
 	@Override
 	public int compare(PostDescriptionModel o1, PostDescriptionModel o2) {
