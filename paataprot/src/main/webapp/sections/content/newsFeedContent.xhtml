@@ -120,6 +120,7 @@
 					                                          actionListener="#{postReplyController.insertReplies}" update="replyGrowl,:tabViewNewsFeed:postfor:replyDataList" oncomplete="hideReplyText()">
 					                           <f:param name="postId" value="#{post.postId}"/>
 					                           <f:param name="userType" value="#{post.userType}"/>
+					                           <f:param name="shareTo" value="#{post.shareToName}"/>
 					                           <f:actionListener binding="#{newsFeedController}"/>
 					                        </p:commandButton>
 			       <p:growl id="replyGrowl" for="replySave"/>

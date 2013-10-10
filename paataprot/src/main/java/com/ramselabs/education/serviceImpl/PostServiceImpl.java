@@ -81,8 +81,8 @@ public class PostServiceImpl implements PostService {
 	}
 
 	@Override
-	public int insertReply(Post post,PostShare postShare,int postId) {
-		return postDao.insertReply(post,postShare,postId);
+	public int insertReply(Post post,PostShare postShare,String postType,String shareTo,int postId) {
+		return postDao.insertReply(post,postShare,postType,shareTo,postId);
 	}
 
 }

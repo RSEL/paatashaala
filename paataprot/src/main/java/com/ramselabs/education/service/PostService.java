@@ -22,5 +22,5 @@ public interface PostService {
 	public List<PostDescriptionModel> getAllPostsForModeration(UserProfile user);
 	public SharedFileModel getSharedFileModel(int shareId);
 	public Post getPost(int postId);
-	public int insertReply(Post post,PostShare postShare,int postId);
+	public int insertReply(Post post,PostShare postShare,String postType,String shareTo,int postId);
 }

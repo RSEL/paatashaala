@@ -15,12 +15,15 @@ import org.springframework.context.annotation.Scope;
 
 import com.ramselabs.education.dao.service.GroupDAO;
 import com.ramselabs.education.entity.Group;
+import com.ramselabs.education.entity.Post;
 import com.ramselabs.education.entity.PostShare;
+import com.ramselabs.education.entity.SharedFile;
 import com.ramselabs.education.entity.UserProfile;
 import com.ramselabs.education.managedbean.ManagedLoginBean;
 import com.ramselabs.education.model.AutocompleteTemplate;
 import com.ramselabs.education.model.GroupUserUploadModel;
 import com.ramselabs.education.model.PostDescriptionModel;
+import com.ramselabs.education.model.ReplyDescriptionModel;
 
 @Named
 @Scope("session")
@@ -143,20 +146,45 @@ public class GroupDAOImpl implements GroupDAO {
 		List<PostDescriptionModel> listPerson = new ArrayList<PostDescriptionModel>();
 		List<PostShare> postShares = (List<PostShare>) group.getGroupShares();
 		for (PostShare postShare : postShares) {
+			if(postShare.getPost().getPostApproval()==null)
+				continue;
 			PostDescriptionModel postDescription = new PostDescriptionModel();
 			if (postShare.getPost().getPostApproval().getStatus()
 					.equals("approved")) {
-
+				List<Post> subPosts=(List<Post>)postShare.getPost().getSubPosts();
+				List<ReplyDescriptionModel> replyPostList=new ArrayList<ReplyDescriptionModel>();
+				for(Post subPost:subPosts){
+					
+					for(PostShare replyPostShare:subPost.getPostShare()){
+						ReplyDescriptionModel replyDesc=new ReplyDescriptionModel();
+						if(getPoster(replyPostShare.getPost().getPosterId()).getImagePath()==null){
+							replyDesc.setImagePath("/resources/img/profile-photo/default-profile.jpg");
+						}
+						else
+						   replyDesc.setImagePath(getPoster(replyPostShare.getPost().getPosterId()).getImagePath());
+						replyDesc.setPostDescription(replyPostShare.getPost().getDescription());
+						replyDesc.setSentDate(replyPostShare.getPostDate());
+						replyDesc.setPostId(replyPostShare.getPost().getPostId());
+						replyDesc.setPosterName(getPoster(replyPostShare.getPost().getPosterId()).getDisplayName());
+						replyPostList.add(replyDesc);
+					}
+					
+					
+				}
+				Collections.sort(replyPostList,new ReplyDescriptionModel());
+				postDescription.setListReplies(replyPostList);
 				postDescription.setPersonName(getPoster(
 						postShare.getPost().getPosterId()).getDisplayName());
 				postDescription.setPostDescription(postShare.getPost()
 						.getDescription());
 				postDescription.setUserType(postShare.getUserType());
+				postDescription.setPostId(postShare.getPost().getPostId());
 				postDescription.setMessageType(postShare.getPost()
 						.getMessageType());
 				String image = getPoster(postShare.getPost().getPosterId())
 						.getImagePath();
-				System.out.println(image);
+				if(!postShare.getPost().getSharedFiles().isEmpty())
+				    postDescription.setListOfSharedFiles((List<SharedFile>)postShare.getPost().getSharedFiles());
 				if (image == null)
 					image = "/resources/img/profile-photo/default-profile.jpg";
 				postDescription.setUserImage(image);

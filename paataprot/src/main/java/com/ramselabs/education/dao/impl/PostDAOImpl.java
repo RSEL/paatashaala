@@ -14,6 +14,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.context.annotation.Scope;
 
 import com.ramselabs.education.dao.service.PostDAO;
+import com.ramselabs.education.entity.Group;
 import com.ramselabs.education.entity.MessageApproval;
 import com.ramselabs.education.entity.Post;
 import com.ramselabs.education.entity.PostShare;
@@ -39,6 +40,7 @@ public class PostDAOImpl implements PostDAO {
 		int userId = getUserId(user);
 		if (userId == 0)
 			return null;
+		List<PostDescriptionModel> listOfGroupPostsForUser=getGroupPosts(userId);
 		List<PostDescriptionModel> listPerson = new ArrayList<PostDescriptionModel>();
 		Session session = sessionFactory.openSession();
 		UserProfile userProfile = (UserProfile) session.get(UserProfile.class,
@@ -46,8 +48,6 @@ public class PostDAOImpl implements PostDAO {
 		List<PostShare> posts = (List<PostShare>) userProfile
 				.getUserPostShare();
 		// System.out.println(posts);
-		if (posts.isEmpty())
-			return null;
 
 		for (PostShare postShare : posts) {
 			 if(postShare.getPost().getPostApproval()==null)
@@ -116,6 +116,7 @@ public class PostDAOImpl implements PostDAO {
 			}
 
 		}
+		listPerson.addAll(listOfGroupPostsForUser);
 		return listPerson;
 	}
 
@@ -459,9 +460,11 @@ public class PostDAOImpl implements PostDAO {
 	}
 
 	@Override
-	public int insertReply(Post childPost,PostShare postShare,int postId) {
+	public int insertReply(Post childPost,PostShare postShare,String userType,String shareTo,int postId) {
 		Session session = sessionFactory.openSession();
 		Post parentPost=(Post)session.get(Post.class, postId);
+		int status=0;
+		if(userType.equalsIgnoreCase("user")){
 		UserProfile user=parentPost.getPostUser();
 		childPost.setMessageType(parentPost.getMessageType());
 		
@@ -485,6 +488,91 @@ public class PostDAOImpl implements PostDAO {
 		session.saveOrUpdate(postShare);
 		session.getTransaction().commit();
 		session.flush();
-		return 1;
+		status=1;
+		}
+		else if(userType.equalsIgnoreCase("group")){
+			
+			childPost.setMessageType(parentPost.getMessageType());
+			parentPost.getSubPosts().add(childPost);
+			childPost.setParentPost(parentPost);
+			session.beginTransaction();
+			session.saveOrUpdate(childPost);
+			session.saveOrUpdate(postShare);
+			session.getTransaction().commit();
+			session.flush();
+			status=1;
+		}
+		return status;
 	}
+	private List<PostDescriptionModel> getGroupPosts(int userId){
+		List<PostDescriptionModel> listPerson = new ArrayList<PostDescriptionModel>();
+		Session session = sessionFactory.openSession();
+		UserProfile userProfile = (UserProfile) session.get(UserProfile.class,
+				userId);
+		List<Group> groups=(List<Group>)userProfile.getGroups();
+		for(Group group:groups){
+			List<PostShare> postShares=(List<PostShare>)group.getGroupShares();
+			for (PostShare postShare : postShares) {
+				if(postShare.getPost().getPostApproval()==null)
+					continue;
+				PostDescriptionModel postDescription = new PostDescriptionModel();
+				if (postShare.getPost().getPostApproval().getStatus()
+						.equals("approved")) {
+					List<Post> subPosts=(List<Post>)postShare.getPost().getSubPosts();
+					List<ReplyDescriptionModel> replyPostList=new ArrayList<ReplyDescriptionModel>();
+					for(Post subPost:subPosts){
+						
+						for(PostShare replyPostShare:subPost.getPostShare()){
+							ReplyDescriptionModel replyDesc=new ReplyDescriptionModel();
+							if(getPoster(replyPostShare.getPost().getPosterId()).getImagePath()==null){
+								replyDesc.setImagePath("/resources/img/profile-photo/default-profile.jpg");
+							}
+							else
+							   replyDesc.setImagePath(getPoster(replyPostShare.getPost().getPosterId()).getImagePath());
+							replyDesc.setPostDescription(replyPostShare.getPost().getDescription());
+							replyDesc.setSentDate(replyPostShare.getPostDate());
+							replyDesc.setPostId(replyPostShare.getPost().getPostId());
+							replyDesc.setPosterName(getPoster(replyPostShare.getPost().getPosterId()).getDisplayName());
+							replyPostList.add(replyDesc);
+						}
+						
+						
+					}
+					Collections.sort(replyPostList,new ReplyDescriptionModel());
+					postDescription.setListReplies(replyPostList);
+					postDescription.setPersonName(getPoster(
+							postShare.getPost().getPosterId()).getDisplayName());
+					postDescription.setPostDescription(postShare.getPost()
+							.getDescription());
+					postDescription.setUserType(postShare.getUserType());
+					postDescription.setPostId(postShare.getPost().getPostId());
+					postDescription.setMessageType(postShare.getPost()
+							.getMessageType());
+					String image = getPoster(postShare.getPost().getPosterId())
+							.getImagePath();
+					if(!postShare.getPost().getSharedFiles().isEmpty())
+					    postDescription.setListOfSharedFiles((List<SharedFile>)postShare.getPost().getSharedFiles());
+					if (image == null)
+						image = "/resources/img/profile-photo/default-profile.jpg";
+					postDescription.setUserImage(image);
+					System.out.println("Date of posting" + postShare.getPostDate());
+					postDescription.setDateOfPosting(postShare.getPostDate());
+					postDescription.setShareToName(postShare.getShareGroup()
+							.getDisplayName());
+					String shareImage=postShare.getShareGroup().getImagePath();
+					if(shareImage==null)
+						postDescription.setShareToImage("/resources/img/profile-photo/group-blank.png");
+					else
+					    postDescription.setShareToImage(postShare.getShareGroup().getImagePath());
+					
+					postDescription.setRejectStatus("approved");
+
+					listPerson.add(postDescription);
+
+				}
+			}
+		}
+		return listPerson;
+	}
+	
 }

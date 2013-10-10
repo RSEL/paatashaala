@@ -46,6 +46,6 @@ public class ReplyDescriptionModel implements Comparator<ReplyDescriptionModel>{
     }
 	@Override
 	public int compare(ReplyDescriptionModel o1, ReplyDescriptionModel o2) {
-		return o2.getSentDate().compareTo(o1.getSentDate());
+		return o1.getSentDate().compareTo(o2.getSentDate());
 	}
 }

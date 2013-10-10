@@ -22,5 +22,5 @@ public interface PostDAO {
 	public List<PostDescriptionModel> getAllPostsForModeration(UserProfile user);
 	public SharedFileModel getSharedFile(int sharedId);
     public Post getPost(int postId);
-    public int insertReply(Post post,PostShare postShare,int postId);
+    public int insertReply(Post post,PostShare postShare,String postType,String shareTo,int postId);
 }

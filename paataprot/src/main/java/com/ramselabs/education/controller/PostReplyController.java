@@ -61,13 +61,14 @@ public class PostReplyController implements Serializable{
 	public void insertReplies(){
 		FacesContext context = FacesContext.getCurrentInstance();
 	    postId = context.getApplication().evaluateExpressionGet(context, "#{post.postId}", Integer.class);
-	    String userType=context.getApplication().evaluateExpressionGet(context, "#{post.userType}", String.class);
+	    String postType=context.getApplication().evaluateExpressionGet(context, "#{post.userType}", String.class);
+	    String shareTo=context.getApplication().evaluateExpressionGet(context, "#{post.shareToName}", String.class);
 	    UserProfile user=ManagedLoginBean.mappToUserEntity(login);
 	    posterId=postService.getUserId(user);
 	    
 		
 	    PostShare postShare = new PostShare();
-	    postShare.setUserType(userType);
+	    postShare.setUserType(postType);
 		postShare.setPostDate(new Date());
 		
 		Post childPost=new Post();
@@ -77,7 +78,7 @@ public class PostReplyController implements Serializable{
 		
 		postShare.setPost(childPost);
 		
-		int status=postService.insertReply(childPost,postShare,postId);
+		int status=postService.insertReply(childPost,postShare,postType,shareTo,postId);
 		FacesMessage message = null;
 		if (status == 1) {
 			message = new FacesMessage(FacesMessage.SEVERITY_INFO,
