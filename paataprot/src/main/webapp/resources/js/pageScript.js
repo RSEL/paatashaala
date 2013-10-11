@@ -37,9 +37,10 @@ $(document).ready(function($) {
 			  {
 			  location.reload();
 			  }
-			function showReplyText(){
-				document.getElementById('replyDiv').style.display = 'inline';
+			function showReplyText(index){
+				
+				document.getElementById('tabViewNewsFeed:postfor:'+index+':replyPanelHide').style.display = 'inline';
 			}
-			function hideReplyText(){
-				document.getElementById('replyDiv').style.display = 'none';
+			function hideReplyText(index){
+				document.getElementById('tabViewNewsFeed:postfor:'+index+':replyPanelHide').style.display = 'none';
 			}

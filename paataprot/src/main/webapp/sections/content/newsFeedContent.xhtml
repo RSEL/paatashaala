@@ -11,7 +11,7 @@
 		<p:tab id="tabLatestPost" title="Latest Posts">
 
 			<p:dataList value="#{newsFeedController.listOfPost}" var="post"
-				id="postfor" type="none">
+				id="postfor" type="none" rowIndexVar="findex">
 				<p:panel style="background: #ffffff">
 
 					<p:panel style="border:0;float:left;background: #ffffff">
@@ -109,15 +109,15 @@
 					</p:dataList><br/>
 					<h:outputText value="Shared to : #{post.shareToName}"
 						style="margin-left:17px;float:left" />
-						<p:commandLink title="Reply to this post" onclick="showReplyText()">
+						<p:commandLink title="Reply to this post" onclick="showReplyText(#{findex})">
 						   <p:graphicImage value="/resources/img/reply-icon.png" style="width: 27px;height: 31px;float:right;margin-right: 209px"/>
 						</p:commandLink><br /><br/>
-				<div id="replyDiv" style="display:inline">
+				<p:panel id="replyPanelHide" style="display:none;border: 0;padding: 0px;;background: #ffffff;">
 				<h:form id="replyForm">		
-					<h:inputText id="replyText"  style="height: 28px;margin-left: 99px;width: 502px" value="#{replyBean.replyDescription}"/>
+					<h:inputText id="replyText"  style="height: 28px;margin-left: 78px;width: 502px" value="#{replyBean.replyDescription}"/>
 					<p:watermark value="Type a reply...." for="replyText"/>
 					<p:spacer width="20px"/><p:commandButton value="Send" style="background: #3399FF;padding-top: 0px;margin-top: -10px" 
-					                                          actionListener="#{postReplyController.insertReplies}" update="replyGrowl,:tabViewNewsFeed:postfor:replyDataList">
+					                                          actionListener="#{postReplyController.insertReplies}" update="replyGrowl,:tabViewNewsFeed:postfor:replyDataList" oncomplete="hideReplyText(#{findex})">
 					                           <f:param name="postId" value="#{post.postId}"/>
 					                           <f:param name="userType" value="#{post.userType}"/>
 					                           <f:param name="shareTo" value="#{post.shareToName}"/>
@@ -126,7 +126,7 @@
 			       <p:growl id="replyGrowl" for="replySave"/>
 					                        
 			    </h:form>		                        
-                </div>
+                </p:panel>
 				</p:panel>
 			</p:dataList><br/><br/><br/><br/>
 		</p:tab>
