@@ -44,3 +44,10 @@ $(document).ready(function($) {
 			function hideReplyText(index){
 				document.getElementById('tabViewNewsFeed:postfor:'+index+':replyPanelHide').style.display = 'none';
 			}
+           function showGroupReplyText(index){
+				
+				document.getElementById('tabViewGroupNewsFeed:postForGroup:'+index+':replyGroupPanelHide').style.display = 'inline';
+			}
+			function hideGroupReplyText(index){
+				document.getElementById('tabViewGroupNewsFeed:postForGroup:'+index+':replyGroupPanelHide').style.display = 'none';
+			}
