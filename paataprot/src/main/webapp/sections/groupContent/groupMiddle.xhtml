@@ -112,12 +112,12 @@
 						<p:commandLink title="Comment" onclick="showReplyText()">
 						   <p:graphicImage value="/resources/img/reply-icon.png" style="width: 27px;height: 31px;float:right;margin-right: 209px"/>
 						</p:commandLink><br /><br/>
-				<div id="replyDiv" style="display:none">
+				<div id="replyDiv" style="display:inline">
 				<h:form id="replyForm">		
 					<h:inputText id="replyText"  style="height: 28px;margin-left: 99px;width: 502px" value="#{replyBean.replyDescription}"/>
 					<p:watermark value="Type your comment...." for="replyText"/>
 					<p:spacer width="20px"/><p:commandButton value="Send" style="background: #3399FF;padding-top: 0px;margin-top: -10px" 
-					                                          actionListener="#{postReplyController.insertReplies}" update="replyGrowl,:tabViewGroupNewsFeed:postForGroup:replyDataList" oncomplete="hideReplyText()">
+					                                          actionListener="#{postReplyController.insertReplies}" update="replyGrowl,:tabViewGroupNewsFeed:postForGroup:replyDataList">
 					                           <f:param name="postId" value="#{post.postId}"/>
 					                           <f:param name="userType" value="#{post.userType}"/>
 					                           <f:param name="shareTo" value="#{post.shareToName}"/>
