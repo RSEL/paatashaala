@@ -30,10 +30,12 @@ public  class UserDAOImpl implements UserDAO {
 
 	@Override
 	public String loginAuthenticate(UserProfile user) {
-		Session session=sessionFactory.openSession();
+		UserProfile userProfile=getUserProfile(user);
+		Session session=sessionFactory.getCurrentSession();
+		session.beginTransaction();
 		Query query=session.createQuery("from UserProfile where username='"+user.getUsername()+"' and password='"+user.getPassword()+"'");
 		if(query.list().size()!=0){
-			UserProfile userProfile=getUserProfile(user);
+			
 			System.out.println(user);
 			List<Role> roles=(List<Role>)userProfile.getUserRoles();
 			for(Role role:roles){
@@ -45,37 +47,40 @@ public  class UserDAOImpl implements UserDAO {
 					return "user";
 			}
 		}
+		    
 			return "notLoggedIn";
 		
 	}
 
 	@Override
 	public UserProfile getUserProfile(UserProfile user) {
-		Session session=sessionFactory.openSession();
 		int userId=getUserId(user);
+		Session session=sessionFactory.getCurrentSession();
+        session.beginTransaction();
 		if(userId==0)
 			return null;
-		return (UserProfile)session.get(UserProfile.class, userId);
+		UserProfile userProfile=(UserProfile)session.get(UserProfile.class, userId);
+		return userProfile;
 	}
 
 	@Override
 	public int updateUserImage(UserProfile user) {
-		Session session=sessionFactory.openSession();
+		Session session=sessionFactory.getCurrentSession();
 		int userId=getUserId(user);
+		session.beginTransaction();
 		UserProfile userPersistent=(UserProfile)session.get(UserProfile.class,userId);
 		userPersistent.setImagePath(user.getImagePath());
 		session.beginTransaction();
 		session.update(userPersistent);
 		session.getTransaction().commit();
-		session.flush();
-		session.close();
 		return 1;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public int getUserId(UserProfile user) {
-		Session session=sessionFactory.openSession();
+		Session session=sessionFactory.getCurrentSession();
+		session.beginTransaction();
 		Query query=session.createQuery("select userId from UserProfile where username = :username and password = :password");
 		query.setString("username",user.getUsername());
 		query.setString("password", user.getPassword());
@@ -94,7 +99,8 @@ public  class UserDAOImpl implements UserDAO {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<AutocompleteTemplate> getUserAutoCompleteList(int userId) {
-		Session session=sessionFactory.openSession();
+		Session session=sessionFactory.getCurrentSession();
+		session.beginTransaction();
 		Criteria ctr=session.createCriteria(UserProfile.class);
 		ctr.add(Restrictions.ne("userId",userId));
 		List<AutocompleteTemplate> listUsers=(List<AutocompleteTemplate>)ctr.list();
@@ -107,16 +113,18 @@ public  class UserDAOImpl implements UserDAO {
 
 	@Override
 	public UserProfile getPersistentUser(UserProfile user){
-		Session session=sessionFactory.openSession();
+		Session session=sessionFactory.getCurrentSession();
 		int userId=getUserId(user);
-		System.out.println((UserProfile)session.get(UserProfile.class, userId));
-    	return (UserProfile)session.get(UserProfile.class, userId);
+		session.beginTransaction();
+		UserProfile userProfile=(UserProfile)session.get(UserProfile.class, userId);
+    	return userProfile;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public int insertUser(UserProfile user) {
-		Session session=sessionFactory.openSession();
+		Session session=sessionFactory.getCurrentSession();
+		session.beginTransaction();
 		Query query=session.createQuery("from UserProfile");
 		List<UserProfile> users=(List<UserProfile>)query.list();
 		for(UserProfile userProfile:users){
@@ -128,7 +136,7 @@ public  class UserDAOImpl implements UserDAO {
 		role.getRoleUsers().add(user);
 		role.setRoleName("user");
 		user.getUserRoles().add(role);
-		session.beginTransaction();
+		
 		session.saveOrUpdate(user);
 		session.saveOrUpdate(role);
 		session.getTransaction().commit();

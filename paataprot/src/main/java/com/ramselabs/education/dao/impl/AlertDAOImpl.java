@@ -54,14 +54,12 @@ public class AlertDAOImpl implements AlertDAO {
 	@Override
 	public int insertAlerts(Post post, PostShare pShare,
 			MessageApproval approval) {
-		Session session = sessionFactory.openSession();
+		Session session = sessionFactory.getCurrentSession();
 		session.beginTransaction();
 		session.save(pShare);
 		session.saveOrUpdate(post);
 		session.save(approval);
 		session.getTransaction().commit();
-		session.flush();
-		session.close();
 		return 1;
 	}
 
@@ -69,7 +67,8 @@ public class AlertDAOImpl implements AlertDAO {
 	private List<PostDescriptionModel> getAlertsFromSamePerson(UserProfile user) {
 		List<PostDescriptionModel> list = new ArrayList<PostDescriptionModel>();
 		int posterId = getUserId(user);
-		Session session = sessionFactory.openSession();
+		Session session = sessionFactory.getCurrentSession();
+		session.beginTransaction();
 		Query query = session
 				.createQuery("from Post where messageType =:messageType and posterId =:posterId");
 		query.setString("messageType", "alert");
@@ -86,7 +85,10 @@ public class AlertDAOImpl implements AlertDAO {
 				PostDescriptionModel postDescModel = new PostDescriptionModel();
 				postDescModel.setPersonName(getPoster(posterId)
 						.getDisplayName());
-				postDescModel.setUserImage(getPoster(posterId).getImagePath());
+				if(getPoster(posterId).getImagePath()==null)
+					postDescModel.setUserImage("/resources/img/profile-photo/default-profile.jpg");
+				else
+				    postDescModel.setUserImage(getPoster(posterId).getImagePath());
 				
 				if(pShare.getPost().getPostApproval().getStatus().equals("rejected")){
                 	postDescModel.setPostDescription("<strike>"+pShare.getPost()
@@ -128,7 +130,8 @@ public class AlertDAOImpl implements AlertDAO {
 		if (userId == 0)
 			return null;
 		List<PostDescriptionModel> listPerson = new ArrayList<PostDescriptionModel>();
-		Session session = sessionFactory.openSession();
+		Session session = sessionFactory.getCurrentSession();
+				session.beginTransaction();
 		UserProfile userProfile = (UserProfile) session.get(UserProfile.class,
 				userId);
 		List<PostShare> posts = (List<PostShare>) userProfile
@@ -201,14 +204,16 @@ public class AlertDAOImpl implements AlertDAO {
 	}
 
 	public UserProfile getPoster(int userId) {
-		Session session = sessionFactory.openSession();
+		Session session = sessionFactory.getCurrentSession();
+		session.beginTransaction();
 		UserProfile user = (UserProfile) session.get(UserProfile.class, userId);
 		return user;
 	}
 
 	@SuppressWarnings("unchecked")
 	public int getUserId(UserProfile user) {
-		Session session = sessionFactory.openSession();
+		Session session = sessionFactory.getCurrentSession();
+		session.beginTransaction();
 		Query query = session
 				.createQuery("select userId from UserProfile where username = :username and password = :password");
 		query.setString("username", user.getUsername());

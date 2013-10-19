@@ -99,7 +99,8 @@
       margin-right: 110px;
       font-size:18px;
       line-height: 165%;
-      color: #303030;
+      /*color: #303030;*/
+      color: maroon;
       text-shadow: 0 0px 0px rgba(0,0,0,0);
       text-align: justify;
       word-spacing: 1px;
@@ -306,6 +307,7 @@ font-weight: 200;
 font-size: 40px;
 margin: 25% 0 35px 0;
 line-height: 40px;
+color: navy;
 }
 .postHeader{
 background: transparent;

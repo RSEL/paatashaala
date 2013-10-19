@@ -42,7 +42,8 @@ public class PostDAOImpl implements PostDAO {
 			return null;
 		List<PostDescriptionModel> listOfGroupPostsForUser=getGroupPosts(userId);
 		List<PostDescriptionModel> listPerson = new ArrayList<PostDescriptionModel>();
-		Session session = sessionFactory.openSession();
+		Session session = sessionFactory.getCurrentSession();
+		session.beginTransaction();
 		UserProfile userProfile = (UserProfile) session.get(UserProfile.class,
 				userId);
 		List<PostShare> posts = (List<PostShare>) userProfile
@@ -123,7 +124,7 @@ public class PostDAOImpl implements PostDAO {
 	@Override
 	public int insertPosts(Post post, PostShare postShare,
 			MessageApproval approval,Collection<SharedFile> sharedFiles) {
-		Session session = sessionFactory.openSession();
+		Session session = sessionFactory.getCurrentSession();
 		session.beginTransaction();
 		for(SharedFile shrdFile:sharedFiles)
 			session.save(shrdFile);
@@ -131,14 +132,13 @@ public class PostDAOImpl implements PostDAO {
 		session.saveOrUpdate(post);
 		session.save(approval);
 		session.getTransaction().commit();
-		session.flush();
-		session.close();
 		return 1;
 	}
 
 	@Override
 	public UserProfile getPoster(int userId) {
-		Session session = sessionFactory.openSession();
+		Session session = sessionFactory.getCurrentSession();
+		session.beginTransaction();
 		UserProfile user = (UserProfile) session.get(UserProfile.class, userId);
 		return user;
 	}
@@ -146,7 +146,8 @@ public class PostDAOImpl implements PostDAO {
 	@SuppressWarnings("unchecked")
 	@Override
 	public int getUserId(UserProfile user) {
-		Session session = sessionFactory.openSession();
+		Session session = sessionFactory.getCurrentSession();
+		session.beginTransaction();
 		Query query = session
 				.createQuery("select userId from UserProfile where username = :username and password = :password");
 		query.setString("username", user.getUsername());
@@ -167,7 +168,8 @@ public class PostDAOImpl implements PostDAO {
 	public List<PostDescriptionModel> getPostsFromSamePerson(UserProfile user) {
 		List<PostDescriptionModel> list = new ArrayList<PostDescriptionModel>();
 		int posterId = getUserId(user);
-		Session session = sessionFactory.openSession();
+		Session session = sessionFactory.getCurrentSession();
+		session.beginTransaction();
 		Query query = session
 				.createQuery("from Post where posterId =:posterId");
 		query.setInteger("posterId", posterId);
@@ -286,7 +288,8 @@ public class PostDAOImpl implements PostDAO {
 		if (posterId == 0)
 			return null;
 		List<PostDescriptionModel> listPerson = new ArrayList<PostDescriptionModel>();
-		Session session = sessionFactory.openSession();
+		Session session = sessionFactory.getCurrentSession();
+		session.beginTransaction();
 		Query query = session
 				.createQuery("from Post where posterId = :posterId");
 		query.setInteger("posterId", posterId);
@@ -345,11 +348,12 @@ public class PostDAOImpl implements PostDAO {
 
 	@Override
 	public int updateCheckedMessageStatus(int approvalId) {
-		Session session = sessionFactory.openSession();
+		Session session = sessionFactory.getCurrentSession();
+		session.beginTransaction();
 		MessageApproval approval = (MessageApproval) session.get(
 				MessageApproval.class, approvalId);
 		approval.setStatus("approved");
-		session.beginTransaction();
+		
 		session.update(approval);
 		session.getTransaction().commit();
 		return 1;
@@ -357,12 +361,13 @@ public class PostDAOImpl implements PostDAO {
 
 	@Override
 	public int setRejectReason(int approvalId, String rejectReason) {
-		Session session = sessionFactory.openSession();
+		Session session = sessionFactory.getCurrentSession();
+		session.beginTransaction();
 		MessageApproval approval = (MessageApproval) session.get(
 				MessageApproval.class, approvalId);
 		approval.setStatus("rejected");
 		approval.setRejectReason(rejectReason);
-		session.beginTransaction();
+		
 		session.update(approval);
 		session.getTransaction().commit();
 		return 1;
@@ -372,7 +377,7 @@ public class PostDAOImpl implements PostDAO {
 	@Override
 	public List<PostDescriptionModel> getAllPostsForModeration(UserProfile user) {
 		List<PostDescriptionModel> listPerson = new ArrayList<PostDescriptionModel>();
-		Session session = sessionFactory.openSession();
+		Session session = sessionFactory.getCurrentSession();
 		boolean flag = false;
 		int userId = getUserId(user);
 		if (userId == 0)
@@ -440,7 +445,7 @@ public class PostDAOImpl implements PostDAO {
 
 	@Override
 	public SharedFileModel getSharedFile(int sharedId) {
-		Session session = sessionFactory.openSession();
+		Session session = sessionFactory.getCurrentSession();
 		SharedFile sharedFile=(SharedFile)session.get(SharedFile.class, sharedId);
 		SharedFileModel sharedModel=new SharedFileModel();
 		sharedFile.getMetaData();
@@ -454,14 +459,15 @@ public class PostDAOImpl implements PostDAO {
 
 	@Override
 	public Post getPost(int postId) {
-		Session session = sessionFactory.openSession();
+		Session session = sessionFactory.getCurrentSession();
 		Post post=(Post)session.get(Post.class, postId);
 		return post;
 	}
 
 	@Override
 	public int insertReply(Post childPost,PostShare postShare,String userType,String shareTo,int postId) {
-		Session session = sessionFactory.openSession();
+		Session session = sessionFactory.getCurrentSession();
+		session.beginTransaction();
 		Post parentPost=(Post)session.get(Post.class, postId);
 		int status=0;
 		if(userType.equalsIgnoreCase("user")){
@@ -483,7 +489,7 @@ public class PostDAOImpl implements PostDAO {
 		
 		parentPost.getSubPosts().add(childPost);
 		childPost.setParentPost(parentPost);
-		session.beginTransaction();
+		
 		session.saveOrUpdate(childPost);
 		session.saveOrUpdate(postShare);
 		session.getTransaction().commit();
@@ -506,7 +512,8 @@ public class PostDAOImpl implements PostDAO {
 	}
 	private List<PostDescriptionModel> getGroupPosts(int userId){
 		List<PostDescriptionModel> listPerson = new ArrayList<PostDescriptionModel>();
-		Session session = sessionFactory.openSession();
+		Session session = sessionFactory.getCurrentSession();
+		session.beginTransaction();
 		UserProfile userProfile = (UserProfile) session.get(UserProfile.class,
 				userId);
 		List<Group> groups=(List<Group>)userProfile.getGroups();

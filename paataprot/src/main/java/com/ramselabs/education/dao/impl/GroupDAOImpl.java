@@ -39,7 +39,8 @@ public class GroupDAOImpl implements GroupDAO {
 	@SuppressWarnings("unchecked")
 	@Override
 	public int createGroup(Group group) {
-		Session session = sessionFactory.openSession();
+		Session session = sessionFactory.getCurrentSession();
+		session.beginTransaction();
 		Query query=session.createQuery("from Group");
 		List<Group> groups=(List<Group>)query.list();
 		for(Group grp:groups){
@@ -47,7 +48,7 @@ public class GroupDAOImpl implements GroupDAO {
 				return 0;
 			}
 		}
-		session.beginTransaction();
+		
 		session.saveOrUpdate(group);
 		session.getTransaction().commit();
 		session.flush();
@@ -57,7 +58,8 @@ public class GroupDAOImpl implements GroupDAO {
 	@SuppressWarnings("unchecked")
 	@Override
 	public UserProfile getUserProfile(ManagedLoginBean login) {
-		Session session = sessionFactory.openSession();
+		Session session = sessionFactory.getCurrentSession();
+		session.beginTransaction();
 		UserProfile userProfile = null;
 		Query query = session
 				.createQuery("from UserProfile where username = :username and password = :password");
@@ -77,7 +79,8 @@ public class GroupDAOImpl implements GroupDAO {
 	@Override
 	public Group getGroupEntity(int groupId) {
 		Group grp = null;
-		Session session = sessionFactory.openSession();
+		Session session = sessionFactory.getCurrentSession();
+		session.beginTransaction();
 		Query query = session
 				.createQuery("from Group where groupId = :groupId");
 		query.setInteger("groupId", groupId);
@@ -93,7 +96,8 @@ public class GroupDAOImpl implements GroupDAO {
 
 	@Override
 	public boolean groupNameVerifyResponse(String value) {
-		Session session = sessionFactory.openSession();
+		Session session = sessionFactory.getCurrentSession();
+		session.beginTransaction();
 		Query query = session
 				.createQuery("from Group where displayName = :name");
 		query.setString("name", value);
@@ -107,7 +111,8 @@ public class GroupDAOImpl implements GroupDAO {
 
 	@Override
 	public List<Group> getAllGroupsForCurrentUser(int userId) {
-		Session session = sessionFactory.openSession();
+		Session session = sessionFactory.getCurrentSession();
+		session.beginTransaction();
 		UserProfile user = (UserProfile) session.get(UserProfile.class, userId);
 		if (user == null)
 			return null;
@@ -117,7 +122,8 @@ public class GroupDAOImpl implements GroupDAO {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<AutocompleteTemplate> getAllGroupForAutocomplete() {
-		Session session = sessionFactory.openSession();
+		Session session = sessionFactory.getCurrentSession();
+		session.beginTransaction();
 		Query query = session.createQuery("from Group");
 		List<AutocompleteTemplate> list = (List<AutocompleteTemplate>) query
 				.list();
@@ -130,10 +136,11 @@ public class GroupDAOImpl implements GroupDAO {
 
 	@Override
 	public int updateImage(int groupId, String imagePath) {
-		Session session = sessionFactory.openSession();
+		Session session = sessionFactory.getCurrentSession();
+		session.beginTransaction();
 		Group group = (Group) session.get(Group.class, groupId);
 		group.setImagePath(imagePath);
-		session.beginTransaction();
+		
 		session.update(group);
 		session.getTransaction().commit();
 		return 1;
@@ -141,7 +148,8 @@ public class GroupDAOImpl implements GroupDAO {
 
 	@Override
 	public List<PostDescriptionModel> getAllMessagesForGroup(int groupId) {
-		Session session = sessionFactory.openSession();
+		Session session = sessionFactory.getCurrentSession();
+		session.beginTransaction();
 		Group group = (Group) session.get(Group.class, groupId);
 		List<PostDescriptionModel> listPerson = new ArrayList<PostDescriptionModel>();
 		List<PostShare> postShares = (List<PostShare>) group.getGroupShares();
@@ -209,7 +217,8 @@ public class GroupDAOImpl implements GroupDAO {
 	}
 
 	public UserProfile getPoster(int userId) {
-		Session session = sessionFactory.openSession();
+		Session session = sessionFactory.getCurrentSession();
+		session.beginTransaction();
 		UserProfile user = (UserProfile) session.get(UserProfile.class, userId);
 		return user;
 	}
@@ -217,7 +226,8 @@ public class GroupDAOImpl implements GroupDAO {
 	@SuppressWarnings("unchecked")
 	@Override
 	public int createGroupUser(GroupUserUploadModel groupUser) {
-		Session session = sessionFactory.openSession();
+		Session session = sessionFactory.getCurrentSession();
+		session.beginTransaction();
 		Query queryUser=session.createQuery("from UserProfile where username = :userName");
 		queryUser.setString("userName", groupUser.getUserName());
 		Collection<UserProfile> users=(Collection<UserProfile>)queryUser.list();
@@ -241,7 +251,7 @@ public class GroupDAOImpl implements GroupDAO {
 				if(flag){
 				user.getGroups().add(group);
 				group.getGroupUsers().add(user);
-				session.beginTransaction();
+				
 				session.saveOrUpdate(group);
 				session.getTransaction().commit();
 				}
